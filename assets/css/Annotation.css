@@ -1,0 +1,180 @@
+@import url("ProfileTemplate.css");
+/*INICIA Bloque Anotaciones_Profesor*/
+/*Container General Usuario,Usuario_Especifico*/
+.usuario__especifico {
+  flex: 0 0 30%;
+  border-right: 1px solid black;
+}
+.anotaciones {
+  flex: 1;
+}
+/*SEGUNADA FORMA FORMULARIO*/
+.Formulario_Campos1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.input-text2 {
+  margin-top: 1rem;
+  border: none;
+  height: 3rem;
+  width: 40%;
+  background: #f5f5fa;
+  border-radius: 1rem;
+}
+.img_margen {
+  margin-top: 0.5rem;
+}
+.nombre {
+  margin-top: 1.2rem;
+}
+/*MiniVentana*/
+.miniVentana {
+  display: none;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+}
+.grid__miniventana {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+.input_miniventana {
+  padding: 1rem;
+  border: none;
+  width: 100%;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),inset 2px 2px 4px rgba(170, 170, 204, 0.25),inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+#btnCerrar,
+#btnCerrar1,
+#btnCerrar2,
+#btnCerrar3 {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
+.margen {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.grid__miniventana:nth-child(2) {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+/*terceraversion*/
+.hidden {
+  display: none;
+}
+.usuario1 {
+  display: grid;
+  grid-template-columns: 30% 70%;
+}
+.formato {
+  display: flex;
+}
+.setting {
+  margin-top: 2.5rem;
+}
+.miniVentana1 {
+  display: none;
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 80rem;
+  transform: translate(-50%, -50%);
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+}
+/*FINALIZA Bloque Anotaciones_Profesor*/
+/*INICIA Bloque Formulario ActProfe_ActTrigger*/
+/*Form-Campos input Visual*/
+.formulario {
+  padding: 1rem;
+}
+.formulario__campos1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+/*Imagen Modificar*/
+.imagenChange {
+  display: flex;
+  justify-content: center;
+}
+.imagenChange img {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+input[type="file"]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: var(--Color_Button);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+input[type="file"]::file-selector-button:hover {
+  background: #e4223c;
+}
+/*Tablas Del Trigger*/
+.Custom_Table {
+  border-radius: 10px;
+  overflow: hidden;
+  border-collapse: collapse;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+}
+.Custom_Table  thead tr {
+  text-align: center;
+  color: white;
+  background: linear-gradient(180deg, #EB3F57 0%, #893944 100%);
+  height: 60px;
+}
+.Custom_Table  tbody tr {
+  color: rgb(29, 29, 29);
+}
+.Custom_Table td,.Custom_Table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.Custom_Table td.td_Actions {
+  display: flex;
+  justify-content: space-evenly;
+}
+.Custom_Table tr:nth-child(even) {
+  background-color: #dadada;
+}
+.Custom_Table tr:hover {
+  background-color: #ddd;
+}
+.descripcion-anterior {
+  width: 400px;
+  /* Ajusta el ancho según tus necesidades */
+  word-wrap: break-word;
+}
+/*FINALIZA Bloque Formulario ActProfe_ActTrigger*/
+/*Styles Mobile Tablet*/
+@media (max-width: 768px) {
+  .formulario__campos1{
+    display: block;
+  }
+}

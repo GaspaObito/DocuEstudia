@@ -1,0 +1,56 @@
+@import url("ProfileTemplate.css");
+/*INICIA Bloque InicioSesion Para PROFESOR ADMIN*/
+.bienvenido {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.bienvenido__login {
+  text-align: center;
+  padding: 100px 50px 100px 50px;
+}
+.bonito {
+  padding: 50px 0 50px 50px;
+  background-image: url(https://pbs.twimg.com/media/FzloWRzXgAI24zQ?format=jpg&name=4096x4096);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.contacto {
+  display: flex;
+  align-items: center;
+  padding: 10px 0 10px 0;
+}
+.img {
+  margin-right: 1rem;
+}
+.ShowPass{
+  display: flex;
+  margin: -17px;
+  margin-top: -6px;
+  position: relative;
+}
+/*FINALIZA Bloque InicioSesion Para PROFESOR ADMIN*/
+
+/*INICIA Bloque InicioSesion Para ACUDIENTE*/
+.Form_Acudiente {
+  display: flex;
+  flex-direction: column;
+}
+.Form_Acudiente button,label {
+  margin: 20px;
+}
+/*Contenedor General*/
+.ContainerGeneral p {
+  font-size: 15px;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .ContainerGeneral {
+    padding: 20px;
+    margin: 10rem 0 10rem 0;
+  }
+  .bienvenido {
+    display: contents;
+  }
+}
+/*FINALIZA Bloque InicioSesion Para ACUDIENTE*/

@@ -1,0 +1,316 @@
+:root {
+  --primary: #ec2525;
+  --blanco: #eee;
+  --oscuro: #000000;
+  --bg_linear: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);
+  --Color_Button: linear-gradient(180deg, #ec2525 0%, #af2a3c 100%);
+  --fuente_principal: "Open Sans", sans-serif;
+}
+/*Template para html body */
+html {
+  font-size: 62.5%; /*Valores para utilizar mejor los rem*/
+  box-sizing: border-box;
+  scroll-snap-type: y mandatory;
+}
+*,
+*:before,
+*:after {
+  /*Sirven para que cuando se le añada por ejemplo un heigt y un padding no cambie las el tamaño de la imagen */
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--fuente_principal); /*Aplica el la fuente al todo el documento*/
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+/*Botones Increment Decrease para Navegadores WebKit */
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]
+::-webkit-outer-spin-button {-webkit-appearance: none;
+margin: 0;
+}
+fieldset {
+  border: none;
+}
+/*Header Navbar Styles*/
+.navbar {
+  background: var( --bg_linear);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1rem;
+}
+.navbar-toggler {
+  display: none;
+}
+.navbar-align {
+  display: none;
+}
+.navbar-menu {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+.navbar-menu a,.footer-menu a {
+  color: var(--oscuro);
+  text-decoration: none;
+  font-weight: bold;
+}
+/*Logo Img*/
+.LogoHeader {
+  align-items: center;
+  display: flex;
+}
+.LogoHeader img {
+  max-width: none;
+  width: 60px;
+  height: 60px;
+}
+/*Footer Navbar Styles */
+.navbar-footer {
+  background: var( --bg_linear);
+  padding: 1rem;
+}
+.navbar-footer p a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.navbar-footer p a:hover {
+  color: #c10000
+}
+.footer-menu {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+footer {
+  width: 100%;
+  margin-top: auto; /* Espacio entre el contenido y el footer */
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+footer p {
+  padding: 1em;
+  text-align: center;
+}
+/* Titulo Inicial */
+#TitleStart {
+  text-align: center;
+  color: var(--primary);
+}
+/*Informacion Usuario*/
+#DataUser {
+  font-size: 2.5rem;
+  text-align: center;
+}
+/*Boton General*/
+.boton {
+  padding: 1.2rem 5.5rem 1.5rem 5.2rem;
+  background: var(--Color_Button);
+  box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.11),0px 2px 4px -1px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  color: var(--blanco);
+}
+/* Button Logout */
+.botonAtras {
+  background: var(--Color_Button);
+  box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.11),0px 2px 4px -1px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: var(--blanco);
+  width: 100%;
+  padding-right: 0.5rem;
+  display: table-caption;
+}
+.custom-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+/* Tamaño Margenes Button */
+.margen__boton {
+  padding-left: 0.7rem;
+  padding-top: 0.5rem;
+}
+.alinear-boton {
+  display: flex;
+  justify-content: center;
+}
+/*Input General*/
+.Input_Text {
+  font-size: inherit;
+  appearance: none;
+  padding: 1.5rem;
+  border: none;
+  width: 100%;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),
+    inset 2px 2px 4px rgba(170, 170, 204, 0.25),
+    inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
+  border-radius: 1rem;
+}
+.usuario__campo {
+  margin: 2rem;
+}
+.Input_Text--BgNone {
+  box-shadow: none;
+  background: none;
+}
+.setting {
+  display: flex;
+}
+input,textarea,select.Input_Text {
+  font-family: var(--fuente_principal);
+}
+/*formulario de descripcion*/
+.Add_Anotacion {
+  padding-bottom: 50px;
+  display: grid;
+}
+.Add_Anotacion textarea {
+  height: 120px;
+}
+/*Centrar Texto Con boton Lateral*/
+.nav__miniventana {
+  display: grid;
+  grid-template-columns: 15% 70% 15%;;
+  align-items: center;
+}
+/* Estilo para la opción seleccionada */
+select option:first-child {
+  color: var(--primary);
+  font-weight: bold;
+}
+select option:checked {
+  font-weight: bold;
+}
+/*Styles For Image Container Users*/
+.imagen {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+}
+.imagen img {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 120px 20px 120px 20px;
+}
+/*Containers Generales,Datos Usuario*/
+.ContainerGeneral {
+  margin: 50px auto;
+  padding: 2rem 0 2rem 0;
+  width: 100%;
+  max-height: 165rem;
+  max-width: 140rem;
+  border-radius: 0.5rem;
+  background-color: var(--blanco);
+  box-shadow: 0px 20px 26px rgba(0, 0, 0, 0.05), 0px 8px 9px rgba(0, 0, 0, 0.06);
+}
+.ContainerUser {
+  display: flex;
+}
+.Container1 {
+  overflow: auto;
+  background: #f5f5fa;
+  margin: 3rem 1rem 3rem 1rem;
+  padding: 1.5rem;
+  border: none;
+  height: 45rem;
+  border-radius: 1em;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),inset 2px 2px 4px rgba(170, 170, 204, 0.25),inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
+}
+.DatosUsuario {
+  margin-bottom: 2rem;
+  background: #f5f5fa;
+  padding: 0.5rem;
+  border: none;
+  width: 100%;
+  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),inset 2px 2px 4px rgba(170, 170, 204, 0.25),inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
+  border-radius: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+/*Svg Styles*/
+.navbar-icon{
+  width:40px;
+  height:40px;
+  margin-right: 10px;
+}
+/* Estilos para la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra de desplazamiento */
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color del fondo de la barra de desplazamiento */
+}
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color del agarre de la barra de desplazamiento */
+  border-radius: 4px; /* Radio de la esquina del agarre */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color del agarre de la barra de desplazamiento al pasar el mouse */
+}
+/*Styles Mobile Tablet*/
+@media (max-width: 768px) {
+  /*Header Navbar Styles*/
+  .navbar-toggler {
+    display: block;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .navbar-toggler svg {
+    width: 40px;
+  }
+  .navbar-menu {
+    justify-content: initial;
+    display: none;
+    padding: 0%;
+  }
+  .navbar-menu a {
+    padding-bottom: 10px;
+  }
+  .navbar-menu.show {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-align {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  /*Logo Img*/
+  .LogoHeader {
+    padding: 0%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  /*Footer Navbar Styles */
+  .footer-menu {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+  }
+  .navegacion-principal{
+    margin: 0px 5rem;
+  }
+  .footer-menu a{
+    padding-bottom: 10px;
+  }
+  /*Contenedor Profesor,Observador*/
+  .ContainerUser {
+    display: block;
+  }
+}
