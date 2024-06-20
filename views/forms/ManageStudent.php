@@ -52,7 +52,11 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>¿Vive con el acudiente?</label>
             <div class="setting">
               <select name="ViveAcudiente" class="Input_Text">
-                <option disabled selected>...</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>...</option>
+                <?php } ?>
                 <option>Si</option>
                 <option>No</option>
               </select>
@@ -97,7 +101,11 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>¿Es repitente?</label>
             <div class="setting">
               <select name="Es_Repitente" class="Input_Text">
-                <option disabled selected>...</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($EsRepitente)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>...</option>
+                <?php } ?>
                 <option>Si</option>
                 <option>No</option>
               </select>
@@ -107,7 +115,11 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>¿Cuantas Veces?</label>
             <div class="setting">
               <select name="CuantasVeces" class="Input_Text">
-                <option disabled selected>...</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($CuantasVeces)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>...</option>
+                <?php } ?>
                 <option>Ninguna</option>
                 <option>1</option>
                 <option>2</option>
@@ -121,7 +133,11 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>¿Practica Deporte?</label>
             <div class="setting">
               <select name="PracticaDeporte" class="Input_Text">
-                <option disabled selected>...</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($PracticaDeporte)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>...</option>
+                <?php } ?>
                 <option>Si</option>
                 <option>No</option>
               </select>
@@ -179,10 +195,14 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>Grupo Sangüínea</label>
             <div class="setting">
               <select name="FornTipoSangre" class="Input_Text">
-                <option disabled selected>Tipo de Sangre</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($NomTipoSangre)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>Tipo de Sangre</option>
+                <?php } ?>              
                 <?php foreach ($ejecutar_T as $opciones): ?>
-                  <option value="<?php echo $opciones['Id_Tipo_Sangre'] ?>">
-                    <?php echo $opciones['Grupo_Sanguineo'] ?>
+                  <option value="<?php echo $opciones['IdTipoSanMed'] ?>">
+                    <?php echo $opciones['GrupoSanguineo'] ?>
                   </option>
                 <?php endforeach; ?>
               </select>
@@ -247,14 +267,19 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             <label>Curso Estudiante</label>
             <div class="setting">
               <select name="FornCurso" class="Input_Text">
-                <option disabled selected>Ingreso Curso</option>
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($NomCurso)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>Tipo de Sangre</option>
+                <?php } ?>              
                 <?php foreach ($ejecutar_C as $opciones): ?>
-                  <option value="<?php echo $opciones['Id_Curso'] ?>">
-                    <?php echo $opciones['Nom_Curso'] ?>
+                  <option value="<?php echo $opciones['IdCurso'] ?>">
+                    <?php echo $opciones['NomCurso'] ?>
                   </option>
                 <?php endforeach; ?>
               </select>
             </div>
+            
           </div>
           <div>
             <label>Edad</label>

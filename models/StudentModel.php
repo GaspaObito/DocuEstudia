@@ -130,7 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Ocupación = $StudentData["OcupaMed"];
     $Recomendaciones = $StudentData["RecomMed"];
     $Antecendentes = $StudentData["AnteceMed"];
-    $FornTipoSangre = $StudentData["IdTipoSanMed"];
+    $IdTipoSangre = $StudentData["IdTipoSanMed"];
+    $NomTipoSangre = $StudentData["GrupoSanguineo"];
     /*ESTUDIANTE*/
     $NombreStu = $StudentData["NomEst"];
     $ApellidoStu = $StudentData["ApeEst"];
@@ -140,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $FechaNacimientoStu = $StudentData["FecNacEst"];
     $LugarNacimientoStu = $StudentData["LugNacEst"];
     $ResidenciaStu = $StudentData["ResidenEst"];
+    $NomCurso = $StudentData["NomCurso"];
     $EdadStu = $StudentData["EdadEst"];
   }  else {
     echo 'error';
