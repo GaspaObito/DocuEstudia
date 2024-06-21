@@ -19,8 +19,8 @@ $Tipo_Entidad = '2';//Profesor
 $id = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $id > 0;
 
+//RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
-  //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
   $Id_Profesor = $_POST['id_profesor'];
   $Nombre = $_POST["Nombre"];
   $Apellido = $_POST["Apellido"];
@@ -32,22 +32,24 @@ if (isset($_POST["Enviar2"])) {
   $Area = $_POST["Area"];
   $Correo = $_POST["Correo"];
   $Contrasena = $_POST["Contrasena"];
-  //Recibimos post imagen
+  //Recibimos Imagen POST
   $ultimoId_Imagen = $_POST['id_lastImg'];
   $TipoImagen = $_FILES['Imagen']['type'];
   $NombreImagenOriginal = $_FILES['Imagen']['name'];
   $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
-// Se maneja la logica de las operaciones Delete,Create,Update,Read,Search
+// ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'];
   if ($action === 'delete') {
     deleteTeacher($conexion, $id);
   } elseif ($action === 'create') {
-    createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
+    createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, 
+      $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
+    updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, 
+      $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $id);
     // Asignar las variables desde el array devuelto
@@ -83,7 +85,8 @@ function deleteTeacher($conexion, $id)
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
+function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento,
+  $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
 {
   // Obtener la extensión del archivo original
   $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -99,11 +102,11 @@ function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $No
   $stmt->bind_param('iss', $Tipo_Entidad, $NombreImagen, $BinarioImagen);
   $stmt->execute();
   $stmt->close();
-  // Obtener el último ID insertado 
+  // Last Id Insert 
   $ultimoId_Imagen = mysqli_insert_id($conexion);
   $hashedPass = password_hash($Contrasena, PASSWORD_DEFAULT);
   $sql_detalle = "INSERT INTO profesor (IdImgProf,NomProf,ApeProf,NumDocProf,TelProf,FecNacProf,AsigAcadeProf,AsigProf,AreaProf,EmailProf,ContraProf) VALUES(
-'" . $ultimoId_Imagen . "','" . $Nombre . "','" . $Apellido . "','" . $NumDocumento . "','" . $Telefono . "','" . $Fecha_Nacimiento . "','" . $AsignaturaAca . "','" . $AsignaturaProfe . "','" . $Area . "','" . $Correo . "','" . $hashedPass . "')";
+    '" . $ultimoId_Imagen . "','" . $Nombre . "','" . $Apellido . "','" . $NumDocumento . "','" . $Telefono . "','" . $Fecha_Nacimiento . "','" . $AsignaturaAca . "','" . $AsignaturaProfe . "','" . $Area . "','" . $Correo . "','" . $hashedPass . "')";
   // Validar insercion 
   $resultado = mysqli_query($conexion, $sql_detalle) or die
     ("ERROR EN LA INSERCION");
@@ -113,7 +116,8 @@ function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $No
   return $resultado;
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
+function updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, 
+  $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
 {
   // Validamos si recibio o no imagen
   if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {

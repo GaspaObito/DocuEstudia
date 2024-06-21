@@ -1,12 +1,8 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/templates/AnnotationHeader.php");
-include ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/models/StudentModel.php");
-$consulta_T = "SELECT * FROM tipo_sangre";
-$ejecutar_T = mysqli_query($conexion, $consulta_T) or die(mysqli_error($conexion));
-$consulta_C = "SELECT * FROM curso";
-$ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion));?>
+include ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/models/StudentModel.php");?>
 <main class="ContainerGeneral">
-  <!--Formulario Acuediente-->
+  <!-- ===== Formulario Acuediente ===== -->
   <form method="post" enctype="multipart/form-data">
     <div id="form1" class="formulario">
       <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Acudiente</h1>
@@ -69,7 +65,7 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
         </div>
       </fieldset>
     </div>
-    <!--Formulario historial_escolar-->
+    <!-- ===== Formulario historial_escolar ===== -->
     <div id="form2" class="formulario" style="display: none;">
       <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Hisorial Escolar</h1>
       <fieldset>
@@ -160,7 +156,7 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
         </div>
       </fieldset>
     </div>
-    <!--Formulario Medicos-->
+    <!-- ===== Formulario Medicos ===== -->
     <div id="form3" class="formulario" style="display: none;">
       <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Datos Medicos</h1>
       <fieldset>
@@ -205,7 +201,7 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
                 <?php  } else { ?>
                     <option disabled selected>Tipo de Sangre</option>
                 <?php } ?>              
-                <?php foreach ($ejecutar_T as $opciones): ?>
+                <?php foreach ($totalSangre as $opciones): ?>
                   <option value="<?php echo $opciones['IdTipoSanMed'] ?>">
                     <?php echo $opciones['GrupoSanguineo'] ?>
                   </option>
@@ -220,7 +216,7 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
         </div>
       </fieldset>
     </div>
-    <!--Formulario Estudiante-->
+    <!-- ===== Formulario Estudiante ===== -->
     <div id="form4" class="formulario" style="display: none;">
       <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Estudiante</h1>
       <fieldset>
@@ -277,14 +273,13 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
                 <?php  } else { ?>
                     <option disabled selected>Selecione el Curso</option>
                 <?php } ?>              
-                <?php foreach ($ejecutar_C as $opciones): ?>
+                <?php foreach ($totalCurso as $opciones): ?>
                   <option value="<?php echo $opciones['IdCurso'] ?>">
                     <?php echo $opciones['NomCurso'] ?>
                   </option>
                 <?php endforeach; ?>
               </select>
             </div>
-            
           </div>
           <div>
             <label>Edad</label>
