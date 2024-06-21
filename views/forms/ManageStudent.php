@@ -51,9 +51,10 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>¿Vive con el acudiente?</label>
             <div class="setting">
+              <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua)?>">                
               <select name="ViveAcudiente" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua)?></option>
                 <?php  } else { ?>
                     <option disabled selected>...</option>
                 <?php } ?>
@@ -100,9 +101,10 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>¿Es repitente?</label>
             <div class="setting">
+            <input type="hidden" name="Repitente_Actual" value="<?php echo htmlspecialchars($EsRepitente)?>">
               <select name="Es_Repitente" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($EsRepitente)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($EsRepitente)?></option>
                 <?php  } else { ?>
                     <option disabled selected>...</option>
                 <?php } ?>
@@ -114,9 +116,10 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>¿Cuantas Veces?</label>
             <div class="setting">
+              <input type="hidden" name="RepiteCant_Actual" value="<?php echo htmlspecialchars($CuantasVeces)?>">
               <select name="CuantasVeces" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($CuantasVeces)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($CuantasVeces)?></option>
                 <?php  } else { ?>
                     <option disabled selected>...</option>
                 <?php } ?>
@@ -132,9 +135,10 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>¿Practica Deporte?</label>
             <div class="setting">
+              <input type="hidden" name="PracticDep_Actual" value="<?php echo htmlspecialchars($PracticaDeporte)?>">
               <select name="PracticaDeporte" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($PracticaDeporte)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($PracticaDeporte)?></option>
                 <?php  } else { ?>
                     <option disabled selected>...</option>
                 <?php } ?>
@@ -194,9 +198,10 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>Grupo Sangüínea</label>
             <div class="setting">
+              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSangre)?>">
               <select name="FornTipoSangre" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($NomTipoSangre)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomTipoSangre)?></option>
                 <?php  } else { ?>
                     <option disabled selected>Tipo de Sangre</option>
                 <?php } ?>              
@@ -220,7 +225,6 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
       <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Estudiante</h1>
       <fieldset>
         <div class="formulario__campos1">
-          <input type="hidden" name="id_estudiante" class="Input_Text" value="<?php echo $extraido['Id_Estudiante']; ?>">
           <div>
             <label>Nombre</label>
             <div class="setting">
@@ -266,11 +270,12 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
           <div>
             <label>Curso Estudiante</label>
             <div class="setting">
+              <input type="hidden" name="NomCurso_Actual" value="<?php echo htmlspecialchars($IdCurso)?>">
               <select name="FornCurso" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected disabled>Asignado:<?php echo htmlspecialchars($NomCurso)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomCurso)?></option>
                 <?php  } else { ?>
-                    <option disabled selected>Tipo de Sangre</option>
+                    <option disabled selected>Selecione el Curso</option>
                 <?php } ?>              
                 <?php foreach ($ejecutar_C as $opciones): ?>
                   <option value="<?php echo $opciones['IdCurso'] ?>">
@@ -288,18 +293,42 @@ $ejecutar_C = mysqli_query($conexion, $consulta_C) or die(mysqli_error($conexion
             </div>
           </div>
           <div>
-            <label>Imagen Usuario Nueva</label>
-            <div class="setting">
-              <input type="file" name="Imagen" class="Input_Text"required>
-              <svg class="navbar-icon" style="margin:0">
-                <use xlink:href="../Assets/Svg/Upload.svg#Upload-icon">
+          <label>Imagen Usuario Nueva</label>
+          <div class="setting">
+            <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                <path
+                  d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                </path>
               </svg>
             </div>
           </div>
         </div>
+        <div>
+          <label>Imagen Usuario Anterior</label>
+          <div class="setting">
+            <input type="hidden" name="Nom_Imagen" value="<?php echo htmlspecialchars($NombreImagen); ?>">
+            <div class="imagenChange Input_Text">
+              <img
+                src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo htmlspecialchars($NombreImagen); ?>">
+            </div>
+            <div>
+              <svg class="navbar-icon" style="margin:0;">
+                <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Picture.svg#Picture-icon">
+              </svg>
+            </div>
+          </div>
+        </div>
+        </div>
         <div class="alinear-boton" style="justify-content: space-evenly;">
           <button type="button" class="boton" onclick="mostrarFormulario('form3')">Anterior</button>
           <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
+          <input type="hidden" name="IdGuardian" value="<?php echo htmlspecialchars($IdDatAcudi); ?>">
+          <input type="hidden" name="IdEscolar" value="<?php echo htmlspecialchars($IdHistEsc); ?>">
+          <input type="hidden" name="IdMedica" value="<?php echo htmlspecialchars($IdMed); ?>">
+          <input type="hidden" name="IdObservador" value="<?php echo htmlspecialchars($IdEst); ?>">
+          <input type="hidden" name="IdImgEst" value="<?php echo htmlspecialchars($IdImgEst); ?>">
           <button type="submit" class="boton" name="SendDataStudent">Enviar</button>
         </div>
       </fieldset>

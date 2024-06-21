@@ -1,11 +1,9 @@
 <!-- ================ CRUD PARA TEACHER ================ -->
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/");
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
 // Conexion Base de Datos
 include ("$RootPath/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$Id_Profesor = '';
-$ultimoId_Imagen = '';
 $Nombre = '';
 $Apellido = '';
 $NumDocumento = '';
@@ -24,7 +22,6 @@ $isUpdate = $id > 0;
 if (isset($_POST["Enviar2"])) {
   //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
   $Id_Profesor = $_POST['id_profesor'];
-  $ultimoId_Imagen = $_POST['id_lastImg'];
   $Nombre = $_POST["Nombre"];
   $Apellido = $_POST["Apellido"];
   $NumDocumento = $_POST["NumDocumento"];
@@ -36,9 +33,9 @@ if (isset($_POST["Enviar2"])) {
   $Correo = $_POST["Correo"];
   $Contrasena = $_POST["Contrasena"];
   //Recibimos post imagen
+  $ultimoId_Imagen = $_POST['id_lastImg'];
   $TipoImagen = $_FILES['Imagen']['type'];
   $NombreImagenOriginal = $_FILES['Imagen']['name'];
-  $TamañoImagen = $_FILES['Imagen']['size'];
   $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
 // Se maneja la logica de las operaciones Delete,Create,Update,Read,Search
@@ -47,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($action === 'delete') {
     deleteTeacher($conexion, $id);
   } elseif ($action === 'create') {
-    createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $TamañoImagen, $Imagen_temporal);
+    createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $TamañoImagen, $Imagen_temporal);
+    updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal);
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $id);
     // Asignar las variables desde el array devuelto
@@ -86,7 +83,7 @@ function deleteTeacher($conexion, $id)
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $TamañoImagen, $Imagen_temporal)
+function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
 {
   // Obtener la extensión del archivo original
   $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -116,7 +113,7 @@ function createTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $No
   return $resultado;
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $TamañoImagen, $Imagen_temporal)
+function updateTeacher($RootPath, $conexion, $Id_Profesor, $ultimoId_Imagen, $Nombre, $Apellido, $NumDocumento, $Telefono, $Fecha_Nacimiento, $AsignaturaAca, $AsignaturaProfe, $Area, $Correo, $Contrasena, $Tipo_Entidad, $TipoImagen, $NombreImagenOriginal, $Imagen_temporal)
 {
   // Validamos si recibio o no imagen
   if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
