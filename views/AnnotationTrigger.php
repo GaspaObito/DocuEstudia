@@ -1,4 +1,6 @@
-<?php include ("../Template/CabeceraAnot.php"); ?>
+<?php
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");?>
 <main class="ContainerGeneral" style="max-height: 180rem;">
   <div class="nav__miniventana">
     <a></a>
@@ -57,4 +59,4 @@
     </table>
   </div>
 </main>
-<?php include ("../Template/FooterProfe2.php");
+<?php include ("$RootPath/templates/HomeFooter.php"); ?>

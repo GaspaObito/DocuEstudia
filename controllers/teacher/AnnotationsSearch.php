@@ -1,5 +1,9 @@
-<?php include ("../../templates/AnnotationHeader.php");
-include '../../models/StudentModel.php'; ?>
+<?php 
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");
+include ("$RootPath/config/ProtectPages.php");
+include ("$RootPath/models/DatabaseConnection.php");
+include ("$RootPath/models/StudentModel.php"); ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
     <?php
@@ -52,7 +56,7 @@ include '../../models/StudentModel.php'; ?>
         </fieldset>
       </form>
       <div class="alinear-boton">
-        <a href="../Config/TriggerAnotacion.php">
+        <a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">
           <button class="boton" type="submit" name='buscarDatos'>VER HISTORIAL SERVIDOR</button>
         </a>
       </div>
@@ -114,4 +118,4 @@ include '../../models/StudentModel.php'; ?>
       </div>
     </div>
 </main>
-<?php include ("../../templates/TeacherFooter.php"); ?>
+<?php include ("$RootPath/templates/HomeFooter.php"); ?>

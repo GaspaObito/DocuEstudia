@@ -1,4 +1,6 @@
-<?php include ("../../templates/LoginHeader.php");?>
+<?php 
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");?>
 <main>
   <div class="ContainerGeneral">
     <h1 id="TitleStart">BIENVENIDO AL OBSERVADOR</h1>
@@ -17,4 +19,4 @@
     </form>
   </div>
 </main>
-<?php include ("../../templates/TeacherFooter.php"); ?>
+<?php include ("$RootPath/templates/HomeFooter.php"); ?>

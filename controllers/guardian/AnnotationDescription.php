@@ -1,4 +1,7 @@
-<?php include ("../Template/CabeceraLogin.php"); ?>
+<?php
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");
+include ("$RootPath/config/ProtectPages.php");?>
 <main class="ContainerGeneral contenedor sombra">
   <div>
     <?php

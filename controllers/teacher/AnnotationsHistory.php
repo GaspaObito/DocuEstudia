@@ -1,5 +1,8 @@
-<?php include ("../../templates/AnnotationHeader.php");
-include '../../models/DatabaseConnection.php'; ?>
+<?php 
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");
+include ("$RootPath/config/ProtectPages.php");
+include ("$RootPath/models/DatabaseConnection.php"); ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
     <div class="usuario__especifico">
@@ -121,4 +124,4 @@ include '../../models/DatabaseConnection.php'; ?>
     </div>
   </div>
 </main>
-<?php include ("../../templates/TeacherFooter.php"); ?>
+<?php include ("$RootPath/templates/HomeFooter.php"); ?>

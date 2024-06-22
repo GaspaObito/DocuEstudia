@@ -1,5 +1,8 @@
-<?php include ("../../templates/AnnotationHeader.php");
-include '../../models/TeacherModel.php'; ?>
+<?php 
+$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
+include ("$RootPath/templates/HomeHeader.php");
+include ("$RootPath/models/TeacherModel.php"); 
+include ("$RootPath/config/ProtectPages.php");?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">ACTUALIZAR PROFESOR</h1>
@@ -68,4 +71,4 @@ include '../../models/TeacherModel.php'; ?>
     </a>
   </div>
 </main>
-<?php include ("../../templates/TeacherFooter.php"); ?>
+<?php include ("$RootPath/templates/HomeFooter.php"); ?>
