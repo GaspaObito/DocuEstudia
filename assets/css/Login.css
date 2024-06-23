@@ -1,4 +1,3 @@
-@import url("ProfileTemplate.css");
 /*INICIA Bloque InicioSesion Para PROFESOR ADMIN*/
 .bienvenido {
   display: grid;
@@ -36,7 +35,7 @@
   display: flex;
   flex-direction: column;
 }
-.Form_Acudiente button,label {
+.Form_Acudiente button {
   margin: 20px;
 }
 /*Contenedor General*/

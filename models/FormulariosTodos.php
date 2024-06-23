@@ -3,7 +3,7 @@
 include ("Conexion.php");
 session_start();
 /* R_ANOTACION */
-if (isset($_POST["Enviar5"])) {
+if (isset($_POST["SendAnnotation"])) {
   $nombre = $_POST["Nom_Prof"];
   $idEstudiante = $_SESSION['Id_Session'];
   $tipoFalta = $_POST["tipoFalta"];

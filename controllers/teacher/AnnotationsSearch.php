@@ -97,7 +97,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
                     </button>
                   </form>
                   <form action="<?php echo BASE_URL; ?>/controllers/teacher/Annotations.php" method="post">
-                    <input type="hidden" name="NumeroInsertar" value="<?php echo $extraido['IdEst'] ?>">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdEst'] ?>">
                     <input type="hidden" name="action" value="read">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
