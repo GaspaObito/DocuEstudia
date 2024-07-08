@@ -356,10 +356,10 @@ function searchStudent($conexion)
   $query = "SELECT COUNT(*) AS total FROM observador";
   // Verifica si se envió el formulario de búsqueda
   if (!empty($_GET['DNI'])) {
-    $Numero_Documento = $_GET['DNI'];
-    $query = "SELECT COUNT(*) AS total FROM observador WHERE Numero_Documento=$Numero_Documento";
+    $NumDocEst = $_GET['DNI'];
+    $query = "SELECT COUNT(*) AS total FROM observador WHERE NumDocEst=$NumDocEst";
     // Modifica la consulta para filtrar por número de documento
-    $consultaSQL .= " WHERE o.Numero_Documento='$Numero_Documento'";
+    $consultaSQL .= " WHERE o.NumDocEst='$NumDocEst'";
   }
   // Realiza la consulta
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");

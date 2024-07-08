@@ -23,7 +23,7 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
         </div>
       </div>
       <?php
-      $Id_Anota = $_POST['NumeroModificar'];
+      $Id_Anota = $_POST['NumIdAnnotation'];
       $consultar2 = mysqli_query($conexion, "select * from anotacion WHERE IdAnot='$Id_Anota'") or die("ERROR AL TRAER LOS DATOS");
       ?>
       <form action="../../models/FormulariosTodos.php" method="post" class="formulario">

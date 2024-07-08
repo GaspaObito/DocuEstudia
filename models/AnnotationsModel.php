@@ -6,9 +6,9 @@ include ("$RootPath/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
 $Nombre = '';
 $Apellido = '';
-// Recolecion ID Profesor 
-$id = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $id > 0;
+// Recolecion ID Annotation 
+$idAnot = isset($_POST['NumIdAnnotation']) ? intval($_POST['NumIdAnnotation']) : 0;
+$isUpdate = $idAnot > 0;
 
 //RECIBIMOS DATOS CREAR
 if (isset($_POST["SendAnnotation"])) {
@@ -22,7 +22,7 @@ if (isset($_POST["SendAnnotation"])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'];
   if ($action === 'delete') {
-    deleteTeacher($conexion, $id);
+    deleteTeacher($conexion, $idAnot);
   } elseif ($action === 'create') {
     createTeacher($conexion,$nameTeacher,$idEstudiante,$tipoFalta,$descripcion);
     // createProfesor($conexion, $id);
@@ -42,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $totalFilas = $resultados['totalFilas'];
 }
 // ========== ELIMINAR DELETE FUNCTION ==========
-function deleteTeacher($conexion, $id)
+function deleteTeacher($conexion, $idAnot)
 {
-$NumeroEliminar = $_GET['NumeroEliminar'];
-mysqli_query($conexion, "delete from anotacion where Id_Anotacion='$NumeroEliminar'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+mysqli_query($conexion, "delete from anotacion where IdAnot='$idAnot'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
 mysqli_close($conexion);
-echo "<script>location.href='../Profesor/historial_anotaciones.php'</script>";
+echo "<script>alert('LA ANOTACION SE ELIMINO CORRECTAMENTE')</script>
+  <script>location.href='/proyectos/DocuEstudia/controllers/teacher/AnnotationsHistory.php'</script>";
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createTeacher($conexion,$nameTeacher,$idEstudiante,$tipoFalta,$descripcion)
@@ -57,8 +57,8 @@ $sql_detalle = "INSERT INTO anotacion(NomProfCread,IdEst,TipoFalta,DescFalta,Fec
 /* Validar insercion */
 mysqli_query($conexion, $sql_detalle) or die ("ERROR EN LA INSERCION");
 mysqli_close($conexion);
-echo "<script>alert('LA ANOTACION SE INSERTO CORRECTAMENTE')</script>";
-echo "<script>location.href = '../controllers/teacher/Annotations.php'</script>";
+echo "<script>alert('LA ANOTACION SE INSERTO CORRECTAMENTE')</script>
+  <script>location.href = '../controllers/teacher/Annotations.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateTeacher($conexion, $id)

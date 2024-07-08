@@ -49,8 +49,9 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
                 <td><?php echo $extraido['FecCreacion'] ?></td>
                 <td><?php echo $extraido['FecModif'] ?></td>
                 <td class="td_Actions">
-                  <form action="historial_anotaciones.php" method="post">
-                    <input type="hidden" name="NumeroEliminar" value="<?php echo $extraido['IdAnot'] ?>">
+                  <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
+                    <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
+                    <input type="hidden" name="action" value="delete">
                     <button name="EliminarDato" class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
@@ -58,8 +59,8 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
                     </button>
                   </form>
                   <form action="AnnotationsDescription.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdAnot'] ?>">
-                    <input type="hidden" name="NumeroInsertar" value="<?php echo $Id_Est ?>">
+                    <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
+                    <input type="hidden" name="action" value="read">
                     <button name="InsertarAnotacion" class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow.svg#Arrow-icon">

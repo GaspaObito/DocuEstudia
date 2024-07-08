@@ -36,9 +36,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
           <input readonly class="Input_Text" type="text" value="<?php echo $extraido['EmailProf'] ?>">
         </div>
       </div>
-      <?php $_SESSION['NombreProfe'] = $extraido['NombreCompleto'];
-    }
-    ?>
+    <?php } ?>
     <div class="anotaciones">
       <h1 id="TitleStart">ANOTACIONES</h1>
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">

@@ -1,15 +1,13 @@
 <div class="usuario__especifico">
   <?php
   if (isset($_POST['NumeroModificar'])) {
-    $Id_Est = $_POST['NumeroModificar'];
-    $_SESSION['Id_Session'] = $Id_Est;
+    $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
   }
   $Id_Est = $_SESSION['Id_Session'];
   /* Utilizar Join para Ingresar el otro Campos de Curso */
   $consultar = mysqli_query($conexion, "SELECT CONCAT(o.NomEst, ' ', o.ApeEst) AS NombreCompleto, o.*, c.NomCurso, i.NomImg
       FROM observador o LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg LEFT JOIN curso c ON o.IdCurso = c.IdCurso WHERE o.IdEst='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
-  while ($extraido = mysqli_fetch_array($consultar)) {
-    $IdGeneral = $extraido['IdEst']; ?>
+  while ($extraido = mysqli_fetch_array($consultar)) {?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">
       <img width="100" src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo $extraido['NomImg'] ?>">
@@ -18,7 +16,6 @@
     <div class="usuario__campo">
       <label>Nombre:</label>
       <div>
-        <input type="hidden" name="Id_Est" value="' . $extraido['IdEst'] . '">
         <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NombreCompleto'] ?>">
       </div>
     </div>

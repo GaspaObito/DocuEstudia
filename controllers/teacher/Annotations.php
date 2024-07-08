@@ -25,9 +25,8 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
       <div class="Container1">
         <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post" class="formulario">
           <fieldset>
-            <?php
-            echo ' <input type="hidden" name="Id_Est" value="' . $_SESSION['Id_Session'] . '">';
-            echo ' <input type="hidden" name="Nom_Prof" value="' . $_SESSION['NombreProfe'] . '">'; ?>
+            <input type="hidden" name="Id_Est" value="<?php echo $Id_Est; ?>">
+            <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
             <div>
               <div class="Add_Anotacion">
                 <label>TIPO DE FALTA</label>
@@ -52,7 +51,7 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
       </div>
       <div class="alinear-boton">
         <form action="AnnotationsHistory.php" method="post">
-          <?php echo '<input type="hidden" name="Id_Est" value="' . $IdGeneral . '">'; ?>
+           <input type="hidden" name="Id_Est" value="<?php echo $Id_Est; ?>">
           <button name="VerHistorial" type="submit" class="boton">VER HISTORIAL</button>
         </form>
       </div>
