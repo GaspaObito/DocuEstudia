@@ -171,8 +171,8 @@ function deleteStudent($conexion, $id)
 {
   mysqli_query($conexion, "delete from observador where IdEst='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   // ---StartCurso
-  $sql_curso = "UPDATE curso c SET Numero_Alumnos = (SELECT COUNT(*) FROM observador o 
-  WHERE o.Id_Curso = c.Id_Curso)";
+  $sql_curso = "UPDATE curso c SET NumAlumnos = (SELECT COUNT(*) FROM observador o 
+  WHERE o.IdCurso = c.IdCurso)";
   mysqli_query($conexion, $sql_curso) or die ("ERROR EN LA INSERCION" . $id);
   mysqli_close($conexion);
   // ---EndCurso

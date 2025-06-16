@@ -1,6 +1,8 @@
 <?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");?>
+include ("$RootPath/templates/HomeHeader.php");
+include ("$RootPath/models/DatabaseConnection.php");?>
+
 <main class="ContainerGeneral" style="max-height: 180rem;">
   <div class="nav__miniventana">
     <a></a>
@@ -18,10 +20,9 @@ include ("$RootPath/templates/HomeHeader.php");?>
     </div>
   </div>
   <?php
-  include 'Conexion.php';
-  $consultar = mysqli_query($conexion, "SELECT Numero_Documento, h.*, o.Numero_Documento
+  $consultar = mysqli_query($conexion, "SELECT NumDocEst, h.*, o.NumDocEst
         FROM historial_operaciones h
-        LEFT JOIN observador o ON h.Id_Estudiante = o.Id_Estudiante") or die("ERROR AL TRAER LOS DATOS");
+        LEFT JOIN observador o ON h.IdEstOpera = o.IdEst") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM historial_operaciones";
   $resultado = mysqli_query($conexion, $query);
   $datos = mysqli_fetch_assoc($resultado);
@@ -46,13 +47,13 @@ include ("$RootPath/templates/HomeHeader.php");?>
       <tbody>
         <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
           <tr>
-            <td><?php echo $extraido['Nombre_Profesor']; ?></td>
-            <td><?php echo $extraido['Id_Anotacion']; ?></td>
-            <td><?php echo $extraido['Numero_Documento']; ?></td>
-            <td><?php echo $extraido['TipoFalta_Anterior']; ?></td>
-            <td><?php echo $extraido['Fecha_Modificacion']; ?></td>
-            <td><?php echo $extraido['Tipo_cambio']; ?></td>
-            <td class="descripcion-anterior"><?php echo $extraido['Descripcion_Anterior']; ?></td>
+            <td><?php echo $extraido['NomProfOpera']; ?></td>
+            <td><?php echo $extraido['IdAnotaOpera']; ?></td>
+            <td><?php echo $extraido['NumDocEst']; ?></td>
+            <td><?php echo $extraido['TipoFalAntOpera']; ?></td>
+            <td><?php echo $extraido['FecModifOpera']; ?></td>
+            <td><?php echo $extraido['TipoCambOpera']; ?></td>
+            <td class="descripcion-anterior"><?php echo $extraido['DescAntOpera']; ?></td>
           </tr>
         <?php } ?>
       </tbody>

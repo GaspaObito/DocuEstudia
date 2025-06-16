@@ -1,6 +1,6 @@
 <?php
 /* PAGINA WEB */
-include ("Conexion.php");
+include ("DatabaseConnection.php");
 session_start();
 /* R_ANOTACION */
 if (isset($_POST["SendAnnotation"])) {
@@ -27,13 +27,13 @@ if (isset($_POST["Enviar6"])) {
     $tipoFalta = $_POST["tipoFaltaActual"];
   }
   $descripcion = $_POST["descripcion"];
-  $sql_detalle = "UPDATE anotacion SET Nombre_Profesor_Modif='" . $nombre . "',Tipo_Falta='" . $tipoFalta . "', Descripcion_Falta='" . $descripcion . "'
-    WHERE Id_Anotacion=" . $Id_Anota;
+  $sql_detalle = "UPDATE anotacion SET NomProfModif='" . $nombre . "',TipoFalta='" . $tipoFalta . "', DescFalta='" . $descripcion . "'
+    WHERE IdEst=" . $Id_Anota;
   /* Validar insercion */
   $resultado = mysqli_query($conexion, $sql_detalle) or die
     ("ERROR EN LA INSERCION" . $Id_Persona);
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>";
-  echo "<script>location.href = '../Profesor/historial_anotaciones.php'</script>";
+  echo "<script>location.href = '/proyectos/DocuEstudia/controllers/teacher/AnnotationsHistory.php  '</script>";
 }
 ?>
