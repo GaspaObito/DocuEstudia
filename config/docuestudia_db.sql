@@ -25,7 +25,6 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-<<<<<<< HEAD
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarProfesor` (IN `p_IdProf` INT, IN `p_IdImgProf` INT, IN `p_NomProf` VARCHAR(30), IN `p_ApeProf` VARCHAR(30), IN `p_NumDocProf` INT(11), IN `p_TelProf` VARCHAR(11), IN `p_FecNacProf` DATE, IN `p_AsigAcadeProf` VARCHAR(20), IN `p_AsigProf` VARCHAR(30), IN `p_AreaProf` VARCHAR(30), IN `p_EmailProf` VARCHAR(50), IN `p_ContraProf` VARCHAR(255))   BEGIN
     UPDATE profesor
     SET
@@ -41,23 +40,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarProfesor` (IN `p_IdProf` 
         EmailProf = p_EmailProf,
         ContraProf = p_ContraProf
     WHERE IdProf = p_IdProf;
-=======
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ActualizarProfesor` (IN `p_IdProf` INT, IN `p_IdImgProf` INT, IN `p_NomProf` VARCHAR(30), IN `p_ApeProf` VARCHAR(30), IN `p_NumDocProf` INT(11), IN `p_TelProf` VARCHAR(11), IN `p_FecNacProf` DATE, IN `p_AsigAcadeProf` VARCHAR(20), IN `p_AsigProf` VARCHAR(30), IN `p_AreaProf` VARCHAR(30), IN `p_EmailProf` VARCHAR(50), IN `p_ContraProf` VARCHAR(255))   BEGIN
-    UPDATE profesor
-    SET
-    	IdImgProf = p_IdImgProf,
-        NomProf= p_NomProf,
-        ApeProf = p_ApeProf,
-        NumDocProf = p_NumDocProf,
-        TelProf = p_TelProf,
-        FecNacProf = p_FecNacProf,
-        AsigAcadeProf = p_AsigAcadeProf,
-        AsigProf = p_AsigProf,
-        AreaProf = p_AreaProf,
-        EmailProf = p_EmailProf,
-        ContraProf = p_ContraProf
-    WHERE IdProf = p_IdProf;
->>>>>>> 80516e9a88a3c6693e9163c0839ed07275a7e2cf
 END$$
 
 DELIMITER ;
@@ -104,41 +86,23 @@ INSERT INTO `anotacion` (`IdAnot`, `NomProfCread`, `IdEst`, `TipoFalta`, `DescFa
 -- Disparadores `anotacion`
 --
 DELIMITER $$
-<<<<<<< HEAD
 CREATE TRIGGER `Despues_Eliminar_Anotacion` AFTER DELETE ON `anotacion` FOR EACH ROW BEGIN
   INSERT INTO historial_operaciones (NomProfOpera,IdAnotaOpera,IdEstOpera,TipoFalAntOpera, DescAntOpera, FecModifOpera,TipoCambOpera)
   VALUES (OLD.NomProfCread,OLD.IdAnot,  OLD.IdEst, OLD.TipoFalta,OLD.DescFalta, NOW(),"Insercion");
-=======
-CREATE TRIGGER `Despues_Eliminar_Anotacion` AFTER DELETE ON `anotacion` FOR EACH ROW BEGIN
-  INSERT INTO historial_operaciones (NomProfOpera,IdAnotaOpera,IdEstOpera,TipoFalAntOpera, DescAntOpera, FecModifOpera,TipoCambOpera)
-  VALUES (OLD.NomProfCread,OLD.IdAnot,  OLD.IdEst, OLD.TipoFalta,OLD.DescFalta, NOW(),"Insercion");
->>>>>>> 80516e9a88a3c6693e9163c0839ed07275a7e2cf
 END
 $$
 DELIMITER ;
 DELIMITER $$
-<<<<<<< HEAD
 CREATE TRIGGER `Despues_Insertar_Anotacion` AFTER INSERT ON `anotacion` FOR EACH ROW BEGIN
   INSERT INTO historial_operaciones (NomProfOpera,IdAnotaOpera,IdEstOpera,TipoFalAntOpera, DescAntOpera, FecModifOpera,TipoCambOpera)
   VALUES (NEW.NomProfCread,NEW.IdAnot,  NEW.IdEst, NEW.TipoFalta,NEW.DescFalta, NOW(),"Insercion");
-=======
-CREATE TRIGGER `Despues_Insertar_Anotacion` AFTER INSERT ON `anotacion` FOR EACH ROW BEGIN
-  INSERT INTO historial_operaciones (NomProfOpera,IdAnotaOpera,IdEstOpera,TipoFalAntOpera, DescAntOpera, FecModifOpera,TipoCambOpera)
-  VALUES (NEW.NomProfCread,NEW.IdAnot,  NEW.IdEst, NEW.TipoFalta,NEW.DescFalta, NOW(),"Insercion");
->>>>>>> 80516e9a88a3c6693e9163c0839ed07275a7e2cf
 END
 $$
 DELIMITER ;
 DELIMITER $$
-<<<<<<< HEAD
 CREATE TRIGGER `Despues_Modificar_Inventario` AFTER UPDATE ON `anotacion` FOR EACH ROW BEGIN
   INSERT INTO historial_operaciones (NomProfOpera,IdAnotaOpera,IdEstOpera,TipoFalAntOpera, DescAntOpera, FecModifOpera,TipoCambOpera)
   VALUES (OLD.NomProfCread,OLD.IdAnot,  OLD.IdEst, OLD.TipoFalta,OLD.DescFalta, NOW(),"Modificacion");
-=======
-CREATE TRIGGER `Despues_Modificar_Inventario` AFTER UPDATE ON `anotacion` FOR EACH ROW BEGIN
-   INSERT INTO historial_operaciones (Id_Anotacion, Nombre_Profesor,Id_Estudiante, TipoFalta_Anterior, Descripcion_Anterior, Fecha_Modificacion,Tipo_cambio)
-  VALUES (OLD.Id_Anotacion, OLD.Nombre_Profesor, OLD.Id_Estudiante, OLD.Tipo_Falta,OLD.Descripcion_Falta, NOW(),"Modificacion");
->>>>>>> 80516e9a88a3c6693e9163c0839ed07275a7e2cf
 END
 $$
 DELIMITER ;

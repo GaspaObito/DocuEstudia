@@ -24,7 +24,7 @@
         </p>
     </div>
     <div class="Image-Position">
-        <img class="Image-Style" src="https://cdn-es.checklistfacil.com/checklistfacil-Que-necesita-saber-para-implementar-la-gestion-de-resultados.jpg" alt="Imagen" class="right-image">
+        <img class="Image-Style" src="assets/ui/analisis.jpg" alt="Imagen" class="right-image">
     </div>
 </div>
 <div class="BlockText">
@@ -38,7 +38,7 @@
         </p>
     </div>
     <div class="Image-Position">
-        <img class="Image-Style" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjHcpBRDAMofQI3wKpDMWTKQjgRK-JX9GIsdfOzSjy5n_0jdfXktfql56dUnSJ88d4TCcRwx_Dc2XAoCg_q0Tc6qEa6NdormmZcuThmQiwqXJlLSLzoJuxZOyAZfVuriubhgKY5df30f6M/s1600/La-Busqueda-de-Informacion.png" alt="Imagen" class="right-image">
+        <img class="Image-Style" src="assets/ui/busqueda.png" alt="Imagen" class="right-image">
     </div>
 </div>
 <div class="BlockText">
@@ -51,7 +51,7 @@
         </p>
     </div>
     <div class="Image-Position">
-        <img class="Image-Style" src="https://pbs.twimg.com/media/F0CCU2D6XwAAJMik?format=jpg&name=large" alt="Imagen" class="right-image">
+        <img class="Image-Style" src="assets/ui/retroalimentacion.jpg" alt="Imagen" class="right-image">
     </div>
 </div>
 <?php include("templates/HomeFooter.php");?>

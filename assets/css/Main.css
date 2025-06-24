@@ -6,7 +6,7 @@
   text-align: center;
 }
 #Fondo {
-  background-image: url("https://pbs.twimg.com/media/Fw42nfJX0AInNp6?format=jpg&name=4096x4096");
+  background-image: url(../ui/fondo1.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
