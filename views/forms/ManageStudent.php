@@ -203,7 +203,8 @@ include ($RootPath . "/models/StudentModel.php");?>
                 <?php  } else { ?>
                     <option disabled selected>Tipo de Sangre</option>
                 <?php } ?>              
-                <?php foreach ($totalSangre as $opciones): ?>
+                <?php 
+                foreach ($totalSangre as $opciones): ?>
                   <option value="<?php echo $opciones['IdTipoSanMed'] ?>">
                     <?php echo $opciones['GrupoSanguineo'] ?>
                   </option>

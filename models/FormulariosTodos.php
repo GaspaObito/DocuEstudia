@@ -2,21 +2,6 @@
 /* PAGINA WEB */
 include ("DatabaseConnection.php");
 session_start();
-/* R_ANOTACION */
-if (isset($_POST["SendAnnotation"])) {
-  $nombre = $_POST["Nom_Prof"];
-  $idEstudiante = $_SESSION['Id_Session'];
-  $tipoFalta = $_POST["tipoFalta"];
-  $descripcion = $_POST["descripcion"];
-  $sql_detalle = "INSERT INTO anotacion(Nombre_Profesor,Id_Estudiante,Tipo_Falta,Descripcion_Falta,Fecha_Creacion) VALUES(
-        '" . addslashes($nombre) . "','" . addslashes($idEstudiante) . "','" . addslashes($tipoFalta) . "','" . addslashes($descripcion) . "',NOW())";
-  /* Validar insercion */
-  $resultado = mysqli_query($conexion, $sql_detalle) or die
-    ("ERROR EN LA INSERCION" . $Id_Persona);
-  mysqli_close($conexion);
-  echo "<script>alert('LA ANOTACION SE INSERTO CORRECTAMENTE')</script>";
-  echo "<script>location.href = '../Profesor/anotaciones.php'</script>";
-}
 /* R_DESCRIP_ANOTACION */
 if (isset($_POST["Enviar6"])) {
   $nombre = $_SESSION['NombreProfe'];

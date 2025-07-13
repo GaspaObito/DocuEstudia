@@ -39,7 +39,7 @@ if (isset($_POST["Enviar2"])) {
   $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
   $action = $_POST['action'];
   if ($action === 'delete') {
     deleteTeacher($conexion, $id);
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ========== ELIMINAR DELETE FUNCTION ==========
 function deleteTeacher($conexion, $id)
 {
-  mysqli_query($conexion, "delete from profesor where Id_Prof='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  mysqli_query($conexion, "delete from profesor where IdProf='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
   echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/TeacherSearchAdmin.php'</script>";

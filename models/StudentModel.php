@@ -42,6 +42,11 @@ $TipoEntidad = '1';//Estudiante
 // Recolecion ID Estudiante 
 $id = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $id > 0;
+// Consulta para Tipo de Sangre y Curso
+$totalSangre = "SELECT * FROM tipo_sangre";
+$totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
+$totalCurso = "SELECT * FROM curso";
+$totalCurso = mysqli_query($conexion, $totalCurso) or die(mysqli_error($conexion));
 
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
@@ -100,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $Eps,$Sanitaria,$Ocupación,$Recomendaciones,$Antecendentes,$FornTipoSangre,
       $NombreStu,$ApellidoStu,$NumeroIdentifStu,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$LugarNacimientoStu,$ResidenciaStu,$EdadStu,
       $TipoEntidad,$NombreImagenOriginal,$Imagen_temporal);
+
   } elseif ($action === 'update') {
     updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
       $IdHistEsc,$ColegioAnterior,$Direccion,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
@@ -151,11 +157,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $LugarNacimientoStu = $StudentData["LugNacEst"];
     $ResidenciaStu = $StudentData["ResidenEst"];
     $EdadStu = $StudentData["EdadEst"];
-    // Consulta para Tipo de Sangre y Curso
-    $totalSangre = "SELECT * FROM tipo_sangre";
-    $totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
-    $totalCurso = "SELECT * FROM curso";
-    $totalCurso = mysqli_query($conexion, $totalCurso) or die(mysqli_error($conexion));
   }  else {
     echo 'error';
   }

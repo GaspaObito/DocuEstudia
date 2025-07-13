@@ -111,6 +111,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
       </div>
       <div class="alinear-boton">
         <a href="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php">
+          <input type="hidden" name="action" value="create">
           <button class="boton" type="submit">AÑADIR ESTUDIANTE</button>
         </a>
       </div>
