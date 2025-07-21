@@ -26,15 +26,17 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
       $Id_Anota = $_POST['NumIdAnnotation'];
       $consultar2 = mysqli_query($conexion, "select * from anotacion WHERE IdAnot='$Id_Anota'") or die("ERROR AL TRAER LOS DATOS");
       ?>
-      <form action="../../models/FormulariosTodos.php" method="post" class="formulario">
+      <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post" class="formulario">
+        <input type="hidden" name="NumIdAnnotation" value="<?php echo $Id_Anota; ?>">
         <fieldset>
+            <input type="hidden" name="Id_Est" value="<?php echo $Id_Est; ?>">
+            <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
           <?php while ($extraido = mysqli_fetch_array($consultar2)) { ?>
             <div>
               <div class="Add_Anotacion">
                 <label>TIPO DE FALTA</label>
-                <input type="hidden" name="NumeroModificar" value="<?php echo $Id_Anota; ?>">
                 <input type="hidden" name="tipoFaltaActual" value="<?php echo $extraido['TipoFalta']; ?>">
-                <select name="TipoFalta" class="Input_Text" required>
+                <select name="tipoFalta" class="Input_Text" required>
                   <option value="mantener" selected>Asignado: <?php echo $extraido['TipoFalta']; ?></option>
                   <option>Leve</option>
                   <option>Grave</option>
@@ -57,9 +59,10 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
             </div>
           <?php } ?>
         </fieldset>
-        <div class="alinear-boton">
-          <input class="boton" type="submit" name="Enviar6" value="ENVIAR ANOTACIÓN">
-        </div>
+           <div class="alinear-boton">
+              <input type="hidden" name="action" value="update">
+              <button class="boton" type="submit" name="SendAnnotation">ENVIAR ANOTACION</button>
+           </div>
       </form>
     </div>
   </div>

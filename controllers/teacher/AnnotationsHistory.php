@@ -52,7 +52,7 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
                   <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
                     <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                     <input type="hidden" name="action" value="delete">
-                    <button name="EliminarDato" class="custom-button" type="submit">
+                    <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
                       </svg>
@@ -61,7 +61,7 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
                   <form action="AnnotationsDescription.php" method="post">
                     <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                     <input type="hidden" name="action" value="read">
-                    <button name="InsertarAnotacion" class="custom-button" type="submit">
+                    <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow.svg#Arrow-icon">
                       </svg>
@@ -73,22 +73,6 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
           </tbody>
         </table>
       </div>
-      <?php
-      if (isset($_POST["EliminarDato"])) {
-        $NumeroEliminar = $_POST['NumeroEliminar'];
-        echo '<script>
-                var numeroEliminar = "' . $NumeroEliminar . '";
-                if (confirm("¿Estás seguro de que deseas eliminar los datos?")) {
-                    // Redirigir al servidor para eliminar los datos
-                    location.href = "../Config/Ft_Eliminar_Anota.php?NumeroEliminar=" + numeroEliminar;
-                } else {
-                    // Cancelar la eliminación, redirigir a otra página o realizar acciones adicionales
-                    alert("Eliminación cancelada");
-                    location.href = "historial_anotaciones.php";
-                }
-              </script>';
-      }
-      ?>
     </div>
   </div>
 </main>

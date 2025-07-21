@@ -22,7 +22,7 @@ include ("$RootPath/models/DatabaseConnection.php");?>
   <?php
   $consultar = mysqli_query($conexion, "SELECT NumDocEst, h.*, o.NumDocEst
         FROM historial_operaciones h
-        LEFT JOIN observador o ON h.IdEstOpera = o.IdEst") or die("ERROR AL TRAER LOS DATOS");
+        LEFT JOIN observador o ON h.IdEstOpera = o.IdEst ORDER BY FecModifOpera DESC") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM historial_operaciones";
   $resultado = mysqli_query($conexion, $query);
   $datos = mysqli_fetch_assoc($resultado);
