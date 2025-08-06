@@ -35,7 +35,7 @@ include ("$RootPath/config/ProtectPages.php");?>
         <tbody>
           <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
             <tr>
-              <td><?php echo $extraido['NumDocProf']; ?></td>
+              <td><?php echo $extraido['NumDcto']; ?></td>
               <td><?php echo $extraido['NombreCompleto']; ?></td>
               <td><?php echo $extraido['AsigProf']; ?></td>
               <td><?php echo $extraido['NomCurso']; ?></td>

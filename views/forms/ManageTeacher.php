@@ -17,6 +17,10 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
           <input type="text" name="Apellido" class="Input_Text" value="<?php echo htmlspecialchars($Apellido); ?>" placeholder="Apellido del Profesor" required>
         </div>
         <div>
+          <label>Tipo de Documento</label>
+          <input type="text" name="TipoDcto" class="Input_Text" value="<?php echo htmlspecialchars($TipoDcto); ?>" placeholder="Seleccione tipo Documento" required>
+        </div>
+        <div>
           <label>Numero de Documento</label>
           <input type="number" name="NumDocumento" class="Input_Text" value="<?php echo htmlspecialchars($NumDocumento); ?>" placeholder="Digite Numero de documento" required>
         </div>
@@ -27,6 +31,10 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
         <div>
           <label>Fecha Nacimiento</label>
           <input type="date" name="Fecha_Nacimiento" class="Input_Text" value="<?php echo htmlspecialchars($Fecha_Nacimiento); ?>" placeholder="Fecha de Nacimiento del Profesor" required>
+        </div>
+        <div>
+          <label>Direccion</label>
+          <input type="text" name="Direccion" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Localidad Hogar" required>
         </div>
         <div>
           <label>Asignación Academica</label>
@@ -42,11 +50,11 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
         </div>
         <div>
           <label>Email</label>
-          <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Correo); ?>" placeholder="Correo del Profesor" maxlength="50">
+          <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Profesor" maxlength="50">
         </div>
         <div>
           <label>Contraseña</label>
-          <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Contrasena); ?>" placeholder="Contraseña del Profesor" maxlength="255">
+          <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Profesor" maxlength="255">
         </div>
         <div>
           <label>Imagen Usuario Nueva</label>

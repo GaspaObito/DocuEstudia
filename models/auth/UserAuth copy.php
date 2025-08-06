@@ -5,17 +5,17 @@ session_start();
 if (isset($_POST["button_Auth"])) {
   $Correo = $_POST['Correo'];
   $Contrasena = $_POST['Contrasena'];
-  $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE Email=?");
+  $sentencia = $conexion->prepare("SELECT * FROM profesor WHERE EmailProf=?");
   $sentencia->bind_param('s', $Correo);
   $sentencia->execute();
   $resultado = $sentencia->get_result();
   if ($fila = $resultado->fetch_assoc()) {
-    if ($fila['Email'] == 'Admin@Admin.com') { //&& password_verify($Contrasena, $fila['Password'])
-      $_SESSION['Id_Profe'] = $fila['IdUser'];
-      $_SESSION['Id_Admin'] = $fila['IdUser'];//ELIMINAR ESTA LINEA HASTA QUE ESTEN PERMISOS
+    if ($fila['EmailProf'] == 'Admin@Admin.com' && password_verify($Contrasena, $fila['ContraProf'])) {
+      $_SESSION['Id_Profe'] = $fila['IdProf'];
+      $_SESSION['Id_Admin'] = $fila['IdProf'];
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
       echo "<script>location.href='../../controllers/admin/TeacherSearchAdmin.php'</script>";
-    } elseif (password_verify($Contrasena, $fila['Password'])) {
+    } elseif (password_verify($Contrasena, $fila['ContraProf'])) {
       $_SESSION['Id_Profe'] = $fila['IdProf'];
       echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
       echo "<script>location.href='../../controllers/teacher/AnnotationsSearch.php'</script>";

@@ -8,8 +8,8 @@ include ("$RootPath/models/StudentModel.php"); ?>
   <div class="ContainerUser">
     <?php
     $Id_Profe = $_SESSION['Id_Profe'];
-    $consultar2 = mysqli_query($conexion, "SELECT CONCAT(NomProf, ' ', ApeProf) AS NombreCompleto, p.*, i.NomImg 
-        FROM profesor p LEFT JOIN imagenes i ON p.IdImgProf = i.IdImg WHERE IdProf='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");
+    $consultar2 = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.AsigProf
+        FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser WHERE u.IdUser='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");
     while ($extraido = mysqli_fetch_array($consultar2)) {
       $_SESSION['NombreProfe'] = $extraido['NombreCompleto']; ?>
       <div class="usuario__especifico">
@@ -25,7 +25,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
         </div>
         <div class="usuario__campo">
           <label>DNI:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDocProf'] ?>">
+          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDcto'] ?>">
         </div>
         <div class="usuario__campo">
           <label>Asignatura:</label>
@@ -33,7 +33,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
         </div>
         <div class="usuario__campo">
           <label>Email:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['EmailProf'] ?>">
+          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['Email'] ?>">
         </div>
       </div>
     <?php } ?>
