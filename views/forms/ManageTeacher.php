@@ -38,15 +38,15 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
         </div>
         <div>
           <label>Asignación Academica</label>
-          <input type="text" name="AsignaturaAca" class="Input_Text" value="<?php echo htmlspecialchars($AsignaturaAca); ?>" placeholder="Asignatura Academica del Profesor" maxlength="20" required>
+          <input type="text" name="AsigAcadeProf" class="Input_Text" value="<?php echo htmlspecialchars($AsigAcadeProf); ?>" placeholder="Asignatura Academica del Profesor" maxlength="20" required>
         </div>
         <div>
           <label>Asignatura</label>
-          <input type="text" name="AsignaturaProfe" class="Input_Text" value="<?php echo htmlspecialchars($AsignaturaProfe); ?>" placeholder="Asignatura del Profesor" maxlength="30" required>
+          <input type="text" name="AsignaturaProfe" class="Input_Text" value="<?php echo htmlspecialchars($AsigProf); ?>" placeholder="Asignatura del Profesor" maxlength="30" required>
         </div>
         <div>
           <label>Area</label>
-          <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($Area); ?>" placeholder="Area del Profesor" maxlength="30">
+          <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($AreaProf); ?>" placeholder="Area del Profesor" maxlength="30">
         </div>
         <div>
           <label>Email</label>
@@ -85,7 +85,7 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
           </div>
         </div>
         <input type="hidden" name="id_lastImg" value="<?php echo htmlspecialchars($ultimoId_Imagen); ?>">
-        <input type="hidden" name="id_profesor" value="<?php echo htmlspecialchars($Id_Profesor); ?>">
+        <input type="hidden" name="id_profesor" value="<?php echo htmlspecialchars($IdUser); ?>">
       </div>
       <div class="alinear-boton">
         <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
