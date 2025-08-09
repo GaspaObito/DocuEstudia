@@ -72,7 +72,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
           <tbody>
             <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
               <tr>
-                <td><?php echo $extraido['NumDocEst'] ?></td>
+                <td><?php echo $extraido['NumDcto'] ?></td>
                 <td><?php echo $extraido['NombreCompleto'] ?></td>
                 <td><?php echo $extraido['NomCurso'] ?></td>
                 <td class="td_Actions">

@@ -5,8 +5,10 @@
   }
   $Id_Est = $_SESSION['Id_Session'];
   /* Utilizar Join para Ingresar el otro Campos de Curso */
-  $consultar = mysqli_query($conexion, "SELECT CONCAT(o.NomEst, ' ', o.ApeEst) AS NombreCompleto, o.*, c.NomCurso, i.NomImg
-      FROM observador o LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg LEFT JOIN curso c ON o.IdCurso = c.IdCurso WHERE o.IdEst='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
+  $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*, c.NomCurso, i.NomImg
+      FROM observador o LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg 
+      LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdEst='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
   while ($extraido = mysqli_fetch_array($consultar)) {?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">
@@ -22,7 +24,7 @@
     <div class="usuario__campo">
       <label>DNI:</label>
       <div>
-        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDocEst'] ?>">
+        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDcto'] ?>">
       </div>
     </div>
     <div class="usuario__campo">
@@ -47,9 +49,9 @@
   }
   /*DATOS MÉDICOS DEL ESTUDIANTE*/
   $NumeroInsertar = $_SESSION['Id_Session'];
-  $consultar = mysqli_query($conexion, "SELECT CONCAT(o.NomEst, ' ', o.ApeEst) AS NombreCompleto, o.*, c.NomCurso
-                                      FROM observador o
-                                      LEFT JOIN curso c ON o.IdCurso = c.IdCurso WHERE o.IdEst='$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS");
+  $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*, c.NomCurso FROM observador o
+                                      LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+                                      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdEst='$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS");
   ?>
   <div class="miniVentana" id="miniVentana">
     <div id="formularioContainer">
@@ -72,15 +74,15 @@
           <div class="grid__miniventana">
             <div class="formulario__miniventana">
               <label>Nombre</label>
-              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['NomEst'] ?>">
+              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['Nombre'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>Apellido</label>
-              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['ApeEst'] ?>">
+              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['Apellido'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>Teléfono</label>
-              <input readonly class="input_miniventana" type="number" value="<?php echo $extraido['TelEst'] ?>">
+              <input readonly class="input_miniventana" type="number" value="<?php echo $extraido['Telefono'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>Fecha Nacimiento</label>
@@ -96,7 +98,7 @@
             </div>
             <div class="formulario__miniventana">
               <label>Número Identificación</label>
-              <input readonly class="input_miniventana" type="number" value="<?php echo $extraido['NumDocEst'] ?>">
+              <input readonly class="input_miniventana" type="number" value="<?php echo $extraido['NumDcto'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>EdadEst</label>
@@ -289,10 +291,6 @@
             <div class="formulario__miniventana">
               <label>Colegio del Anterior</label>
               <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['AnteriorEsc'] ?>">
-            </div>
-            <div class="formulario__miniventana">
-              <label>Direccion</label>
-              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['DireccionEsc'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>Curso</label>

@@ -37,7 +37,7 @@ if (isset($_POST["LoginStudent"])) {
     echo "<script>location.href='../../Login_Users/acudiente.php'</script>";
   } else {
     $Documento = $_POST["Identificacionn"];
-    $query = "SELECT * FROM observador WHERE NumDocEst = '$Documento'";
+    $query = "SELECT * FROM observador WHERE NumDcto = '$Documento'";
     $resultado = mysqli_query($conexion, $query);
     if (mysqli_num_rows($resultado) > 0) {
       echo "<script>alert('USUARIO CORRECTO')</script>";

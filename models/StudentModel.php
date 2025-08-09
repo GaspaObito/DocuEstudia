@@ -33,11 +33,9 @@ $NombreStu = '';
 $ApellidoStu = '';
 $TelefonoStu = '';
 $FechaNacimientoStu = '';
-$ResidenciaStu = '';
-$LugarNacimientoStu = '';
-$NumeroIdentifStu = '';
+$Direccion = '';
+$NumDcto = '';
 $IdCurso = '';
-$EdadStu = '';
 $TipoEntidad = '1';//Estudiante
 // Recolecion ID Estudiante 
 $id = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
@@ -81,13 +79,11 @@ if (isset($_POST["SendDataStudent"])) {
   $IdEst = $_POST['IdObservador'];
   $NombreStu = $_POST["Nombre_Est"];
   $ApellidoStu = $_POST["Apellido_Est"];
-  $NumeroIdentifStu = $_POST["NumeroIdentif_Est"];
+  $NumDcto = $_POST["NumeroIdentif_Est"];
   $IdCurso = $_POST["FornCurso"];
   $TelefonoStu = $_POST["Telefono_Est"];
   $FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];
-  $LugarNacimientoStu = $_POST["Lugar_Nacimiento_Est"];
-  $ResidenciaStu = $_POST["Residencia_Est"];
-  $EdadStu = $_POST["Edad_Est"];
+  $Direccion = $_POST["Residencia_Est"];
   //Recibimos Imagen POST
   $IdImgEst = $_POST['IdImgEst'];
   $TipoImagen = $_FILES['Imagen']['type'];
@@ -101,16 +97,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     deleteStudent($conexion, $id);
   } elseif ($action === 'create') {
     createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
-      $ColegioAnterior,$Direccion,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
+      $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
       $Eps,$Sanitaria,$Ocupación,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-      $NombreStu,$ApellidoStu,$NumeroIdentifStu,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$LugarNacimientoStu,$ResidenciaStu,$EdadStu,
+      $NombreStu,$ApellidoStu,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,
       $TipoEntidad,$NombreImagenOriginal,$Imagen_temporal);
 
   } elseif ($action === 'update') {
     updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
-      $IdHistEsc,$ColegioAnterior,$Direccion,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
+      $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
       $IdMed,$Eps,$Sanitaria,$Ocupación,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-      $IdEst,$NombreStu,$ApellidoStu,$NumeroIdentifStu,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$LugarNacimientoStu,$ResidenciaStu,$EdadStu,
+      $IdEst,$NombreStu,$ApellidoStu,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,
       $IdImgEst,$TipoEntidad,$NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'read') {
     $StudentData = readStudent($conexion, $id);
@@ -127,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Historial_escolar
     $IdHistEsc = $StudentData['IdHistEsc'];
     $ColegioAnterior = $StudentData["AnteriorEsc"];
-    $Direccion = $StudentData["DireccionEsc"];
     $UltCursoCursado = $StudentData["CursoEsc"];
     $Jornada = $StudentData["JornadaEsc"];
     $EsRepitente = $StudentData["RepitenteEsc"];
@@ -147,16 +142,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $IdEst = $StudentData['IdEst'];
     $IdImgEst = $StudentData['IdImgEst'];
     $NombreImagen = $StudentData['NomImg'];
-    $NombreStu = $StudentData["NomEst"];
-    $ApellidoStu = $StudentData["ApeEst"];
-    $NumeroIdentifStu = $StudentData["NumDocEst"];
+    $NombreStu = $StudentData["Nombre"];
+    $ApellidoStu = $StudentData["Apellido"];
+    $NumDcto = $StudentData["NumDcto"];
     $IdCurso = $StudentData["IdCurso"];
     $NomCurso = $StudentData["NomCurso"];
-    $TelefonoStu = $StudentData["TelEst"];
-    $FechaNacimientoStu = $StudentData["FecNacEst"];
-    $LugarNacimientoStu = $StudentData["LugNacEst"];
-    $ResidenciaStu = $StudentData["ResidenEst"];
-    $EdadStu = $StudentData["EdadEst"];
+    $TelefonoStu = $StudentData["Telefono"];
+    $FechaNacimientoStu = $StudentData["FechNacimiento"];
+    $Direccion = $StudentData["Direccion"];
   }  else {
     echo 'error';
   }
@@ -170,7 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ========== ELIMINAR DELETE FUNCTION ==========
 function deleteStudent($conexion, $id)
 {
-  mysqli_query($conexion, "delete from observador where IdEst='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  mysqli_query($conexion, "delete from observador where IdUser='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   // ---StartCurso
   $sql_curso = "UPDATE curso c SET NumAlumnos = (SELECT COUNT(*) FROM observador o 
   WHERE o.IdCurso = c.IdCurso)";
@@ -183,9 +176,9 @@ function deleteStudent($conexion, $id)
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
-  $ColegioAnterior,$Direccion,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
+  $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $Eps,$Sanitaria,$Ocupación,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $NombreStu,$ApellidoStu,$NumeroIdentifStu,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$LugarNacimientoStu,$ResidenciaStu,$EdadStu,
+  $NombreStu,$ApellidoStu,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,
   $TipoEntidad,$NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -196,7 +189,7 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $ultimoId_DatosFamiliar = mysqli_insert_id($conexion);
   // ---EndGuardian
   // ---StartHistorial_escolar
-  $sql_detalle = "INSERT INTO historial_escolar(AnteriorEsc,DireccionEsc,CursoEsc,JornadaEsc,RepitenteEsc,CantRepiEsc,PracDeportEsc,NomDeportEsc) VALUES(
+  $sql_detalle = "INSERT INTO historial_escolar(AnteriorEsc,CursoEsc,JornadaEsc,RepitenteEsc,CantRepiEsc,PracDeportEsc,NomDeportEsc) VALUES(
     '" . $ColegioAnterior . "','" . $Direccion . "','" . $UltCursoCursado . "','" . $Jornada . "','" . $EsRepitente . "','" . $CuantasVeces . "','" . $PracticaDeporte . "','" . $NombreDeporte . "')";
   mysqli_query($conexion, $sql_detalle) or die ("ERROR EN LA INSERCION");
   //  Last Id Insert
@@ -213,7 +206,7 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   // Obtener la extensión del archivo original
   $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
   // Crear el nuevo nombre del archivo usando el número de documento
-  $NombreImagen = "Estudiante_" . $NumeroIdentifStu . "." . $extension;
+  $NombreImagen = "Estudiante_" . $NumDcto . "." . $extension;
   // Leer el contenido binario de la imagen
   $BinarioImagen = file_get_contents($Imagen_temporal);
   // Mover la imagen a la carpeta de destino
@@ -224,11 +217,11 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $stmt->bind_param('iss', $TipoEntidad, $NombreImagen, $BinarioImagen);
   $stmt->execute();
   $stmt->close();
-  // Last Id Insert 
+  // Last Id Insert  MODIFICARQUERY
   $ultimoId_Imagen = mysqli_insert_id($conexion);
-  $sql_detalle = "INSERT INTO observador(NomEst,IdImgEst,ApeEst,NumDocEst,IdDatAcudi ,IdHistEsc ,IdMed,IdCurso,TelEst,FecNacEst,LugNacEst,ResidenEst,EdadEst) VALUES(
-    '" . $NombreStu . "','" . $ultimoId_Imagen . "','" . $ApellidoStu . "','" . $NumeroIdentifStu . "','" . $ultimoId_DatosFamiliar . "','" . $ultimoId_HistorialEscolar . "',
-    '" . $ultimoId_InfoMedica . "','" . $IdCurso . "','" . $TelefonoStu . "','" . $FechaNacimientoStu . "','" . $LugarNacimientoStu . "','" . $ResidenciaStu . "','" . $EdadStu . "')";
+  $sql_detalle = "INSERT INTO observador(Nombre,IdImgEst,Apellido,NumDcto,IdDatAcudi ,IdHistEsc ,IdMed,IdCurso,Telefono,FecNacEst,LugNacEst,ResidenEst,EdadEst) VALUES(
+    '" . $NombreStu . "','" . $ultimoId_Imagen . "','" . $ApellidoStu . "','" . $NumDcto . "','" . $ultimoId_DatosFamiliar . "','" . $ultimoId_HistorialEscolar . "',
+    '" . $ultimoId_InfoMedica . "','" . $IdCurso . "','" . $TelefonoStu . "','" . $FechaNacimientoStu . "','" . $Direccion . "')";
   // Insertar datos en la tabla 
   mysqli_query($conexion, $sql_detalle) or die ("ERROR EN LA INSERCION");
   // ---EndStudent
@@ -242,9 +235,9 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
-  $IdHistEsc,$ColegioAnterior,$Direccion,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
+  $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $IdMed,$Eps,$Sanitaria,$Ocupación,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $IdEst,$NombreStu,$ApellidoStu,$NumeroIdentifStu,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$LugarNacimientoStu,$ResidenciaStu,$EdadStu,
+  $IdEst,$NombreStu,$ApellidoStu,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,
   $IdImgEst,$TipoEntidad,$NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -266,7 +259,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   if ($PracticaDeporte === "mantener") {
     $PracticaDeporte = $_POST["PracticDep_Actual"];
   }
-  $sql_Actualizar = "UPDATE historial_escolar SET AnteriorEsc='" . $ColegioAnterior . "',DireccionEsc='" . $Direccion . "',CursoEsc='" . $UltCursoCursado . "'
+  $sql_Actualizar = "UPDATE historial_escolar SET AnteriorEsc='" . $ColegioAnterior . "',CursoEsc='" . $UltCursoCursado . "'
     ,JornadaEsc='" . $Jornada . "',RepitenteEsc='" . $EsRepitente . "',CantRepiEsc='" . $CuantasVeces . "',PracDeportEsc='" . $PracticaDeporte . "'
     ,NomDeportEsc='" . $NombreDeporte . "' WHERE IdHistEsc =" . $IdHistEsc;
   mysqli_query($conexion, $sql_Actualizar) or die ("ERROR EN LA INSERCION");
@@ -293,7 +286,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
     // Obtener la extensión del archivo original
     $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
     // Crear el nuevo nombre del archivo usando el número de documento
-    $NombreImagen = "Estudiante_" . $NumeroIdentifStu . "." . $extension;
+    $NombreImagen = "Estudiante_" . $NumDcto . "." . $extension;
     // Leer el contenido binario de la imagen
     $BinarioImagen = file_get_contents($Imagen_temporal);
     // Mover la imagen a la carpeta de destino
@@ -315,12 +308,12 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   if ($IdCurso === "mantener") {
     $IdCurso = $_POST["NomCurso_Actual"];
   }
-  // ---StartStudent
-  $sql_Actualizar = "UPDATE observador SET IdImgEst =?, NomEst=?, ApeEst=?, NumDocEst=?, IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdCurso =?, 
-    TelEst=?, FecNacEst=?, LugNacEst=?, ResidenEst=?, EdadEst=? WHERE IdEst =?";
+  // ---StartStudent MODIFICARQUERY
+  $sql_Actualizar = "UPDATE observador SET IdImgEst =?, Nombre=?, Apellido=?, NumDcto=?, IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdCurso =?, 
+    Telefono=?, FecNacEst=?, LugNacEst=?, ResidenEst=?, EdadEst=? WHERE IdEst =?";
   $stmt = $conexion->prepare($sql_Actualizar);
-  $stmt->bind_param('issiiiiisssssi', $IdImgEst, $NombreStu, $ApellidoStu, $NumeroIdentifStu, $IdDatAcudi, $IdHistEsc, $IdMed, $IdCurso, 
-    $TelefonoStu, $FechaNacimientoStu, $LugarNacimientoStu, $ResidenciaStu, $EdadStu, $IdEst);
+  $stmt->bind_param('issiiiiisssi', $IdImgEst, $NombreStu, $ApellidoStu, $NumDcto, $IdDatAcudi, $IdHistEsc, $IdMed, $IdCurso, 
+    $TelefonoStu, $FechaNacimientoStu, $Direccion, $IdEst);
   $stmt->execute();
   $stmt->close();
   // ---EndStudent
@@ -332,13 +325,17 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>";
   echo "<script>location.href = '/proyectos/DocuEstudia/controllers/teacher/AnnotationsSearch.php'</script>";
 }
-// ========== LEER READ FUNCTION ==========
+// ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
 function readStudent($conexion, $id)
 {
   $stmt = $conexion->prepare("SELECT *, t.GrupoSanguineo,c.NomCurso,p.NomImg FROM observador o 
-  JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc 
-  JOIN info_medica i ON o.IdMed  = i.IdMed JOIN tipo_sangre t ON i.IdTipoSanMed = t.IdTipoSanMed
-  JOIN curso c ON o.IdCurso = c.IdCurso JOIN imagenes p ON o.IdImgEst = p.IdImg WHERE IdEst = ?");
+  JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi 
+  JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc 
+  JOIN info_medica i ON o.IdMed  = i.IdMed 
+  JOIN tipo_sangre t ON i.IdTipoSanMed = t.IdTipoSanMed
+  JOIN curso c ON o.IdCurso = c.IdCurso 
+  JOIN imagenes p ON o.IdImgEst = p.IdImg 
+  JOIN usuarios s ON s.IdUser = o.IdUser WHERE IdEst = ?");
   $stmt->bind_param('i', $id);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -348,19 +345,20 @@ function readStudent($conexion, $id)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION ==========
+// ========== SHOW DATA ALL STUDENTS FUNCTION ==========
 function searchStudent($conexion)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = ("SELECT CONCAT(o.NomEst, ' ', o.ApeEst) AS NombreCompleto, o.*, c.NomCurso FROM observador o 
-  LEFT JOIN curso c ON o.IdCurso = c.IdCurso") or die("ERROR AL TRAER LOS DATOS");
+  $consultaSQL = ("SELECT u.IdUser,o.IdEst,NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, c.NomCurso FROM observador o
+  LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+  LEFT JOIN usuarios u ON u.IdUser = o.IdUser") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM observador";
   // Verifica si se envió el formulario de búsqueda
   if (!empty($_GET['DNI'])) {
-    $NumDocEst = $_GET['DNI'];
-    $query = "SELECT COUNT(*) AS total FROM observador WHERE NumDocEst=$NumDocEst";
+    $NumDcto = $_GET['DNI'];
+    $query = "SELECT COUNT(*) AS total FROM observador WHERE NumDcto=$NumDcto";
     // Modifica la consulta para filtrar por número de documento
-    $consultaSQL .= " WHERE o.NumDocEst='$NumDocEst'";
+    $consultaSQL .= " WHERE o.NumDcto='$NumDcto'";
   }
   // Realiza la consulta
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");

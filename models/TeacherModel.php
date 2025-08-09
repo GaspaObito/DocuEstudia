@@ -80,9 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $totalFilas = $resultados['totalFilas'];
 }
 // ========== ELIMINAR DELETE FUNCTION ==========
-function deleteTeacher($conexion, $id)
+function deleteTeacher($conexion, $IdUser)
 {
-  mysqli_query($conexion, "delete from profesor where IdProf='$id'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
   echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/TeacherSearchAdmin.php'</script>";

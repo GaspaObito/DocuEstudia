@@ -79,12 +79,6 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Direccion del Colegio</label>
-            <div class="setting">
-              <input type="text" name="Direccion" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Direccion Colegio" required>
-            </div>
-          </div>
-          <div>
             <label>Ultimo Curso</label>
             <div class="setting">
               <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo Curso Cursado" required>
@@ -237,6 +231,18 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
+            <label>Tipo de Documento</label>
+            <div class="setting">
+              <input type="number" name="Telefono_Est" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoStu); ?>" placeholder="Teléfono del Estudiante" required>
+            </div>
+          </div>
+          <div>
+            <label>Número Identificación</label>
+            <div class="setting">
+              <input type="number" name="NumeroIdentif_Est" class="Input_Text" value="<?php echo htmlspecialchars($NumDcto); ?>" placeholder="NºI del Estudiante" required>
+            </div>
+          </div>
+          <div>
             <label>Teléfono</label>
             <div class="setting">
               <input type="number" name="Telefono_Est" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoStu); ?>" placeholder="Teléfono del Estudiante" required>
@@ -249,21 +255,9 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Residencia</label>
+            <label>Direccion</label>
             <div class="setting">
-              <input type="text" name="Residencia_Est" class="Input_Text" value="<?php echo htmlspecialchars($ResidenciaStu); ?>" placeholder="Dirección del Estudiante" required>
-            </div>
-          </div>
-          <div>
-            <label>Lugar Nacimiento</label>
-            <div class="setting">
-              <input type="text" name="Lugar_Nacimiento_Est" class="Input_Text" value="<?php echo htmlspecialchars($LugarNacimientoStu); ?>" placeholder="Lugar de Nacimiento del Estudiante" required>
-            </div>
-          </div>
-          <div>
-            <label>Número Identificación</label>
-            <div class="setting">
-              <input type="number" name="NumeroIdentif_Est" class="Input_Text" value="<?php echo htmlspecialchars($NumeroIdentifStu); ?>" placeholder="NºI del Estudiante" required>
+              <input type="text" name="Residencia_Est" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Dirección del Estudiante" required>
             </div>
           </div>
           <div>
@@ -282,12 +276,6 @@ include ($RootPath . "/models/StudentModel.php");?>
                   </option>
                 <?php endforeach; ?>
               </select>
-            </div>
-          </div>
-          <div>
-            <label>Edad</label>
-            <div class="setting">
-              <input type="number" name="Edad_Est" class="Input_Text" value="<?php echo htmlspecialchars($EdadStu); ?>" placeholder="Edad del Estudiante" required>
             </div>
           </div>
           <div>

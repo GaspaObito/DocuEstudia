@@ -20,7 +20,7 @@ include ("$RootPath/models/DatabaseConnection.php");?>
     </div>
   </div>
   <?php
-  $consultar = mysqli_query($conexion, "SELECT NumDocEst, h.*, o.NumDocEst
+  $consultar = mysqli_query($conexion, "SELECT NumDcto, h.*, o.NumDcto
         FROM historial_operaciones h
         LEFT JOIN observador o ON h.IdEstOpera = o.IdEst ORDER BY FecModifOpera DESC") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM historial_operaciones";
@@ -49,7 +49,7 @@ include ("$RootPath/models/DatabaseConnection.php");?>
           <tr>
             <td><?php echo $extraido['NomProfOpera']; ?></td>
             <td><?php echo $extraido['IdAnotaOpera']; ?></td>
-            <td><?php echo $extraido['NumDocEst']; ?></td>
+            <td><?php echo $extraido['NumDcto']; ?></td>
             <td><?php echo $extraido['TipoFalAntOpera']; ?></td>
             <td><?php echo $extraido['FecModifOpera']; ?></td>
             <td><?php echo $extraido['TipoCambOpera']; ?></td>
