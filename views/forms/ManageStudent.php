@@ -37,7 +37,7 @@ include ($RootPath . "/models/StudentModel.php");?>
           <div>
             <label>Email</label>
             <div class="setting">
-              <input type="text" name="email" class="Input_Text" value="<?php echo htmlspecialchars($EmailGua); ?>" placeholder="Email del acudiente" required>
+              <input type="text" name="emailgua" class="Input_Text" value="<?php echo htmlspecialchars($EmailGua); ?>" placeholder="Email del acudiente" required>
             </div>
           </div>
           <div>
@@ -278,6 +278,14 @@ include ($RootPath . "/models/StudentModel.php");?>
               </select>
             </div>
           </div>
+          <div>
+            <label>Email</label>
+            <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Estudiante" maxlength="50">
+           </div>
+          <div>
+            <label>Contraseña</label>
+            <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Estudiante" maxlength="255">
+          </div>         
           <div>
           <label>Imagen Usuario Nueva</label>
           <div class="setting">

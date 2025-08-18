@@ -10,13 +10,13 @@ if (isset($_POST["button_Auth"])) {
   $sentencia->execute();
   $resultado = $sentencia->get_result();
   if ($fila = $resultado->fetch_assoc()) {
-    if ($fila['Email'] == 'Admin@Admin.com') { //&& password_verify($Contrasena, $fila['Password'])
+    if ($fila['IdRol'] == '3' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       $_SESSION['Id_Admin'] = $fila['IdUser'];//ELIMINAR ESTA LINEA HASTA QUE ESTEN PERMISOS
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
       echo "<script>location.href='../../controllers/admin/TeacherSearchAdmin.php'</script>";
-    } elseif (password_verify($Contrasena, $fila['Password'])) {
-      $_SESSION['Id_Profe'] = $fila['IdProf'];
+    } elseif ($fila['IdRol'] == '2'&& password_verify($Contrasena, $fila['Password'])) {
+      $_SESSION['Id_Profe'] = $fila['IdUser'];
       echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
       echo "<script>location.href='../../controllers/teacher/AnnotationsSearch.php'</script>";
     } else {
