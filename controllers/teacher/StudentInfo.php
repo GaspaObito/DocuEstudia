@@ -8,7 +8,7 @@
   $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*, c.NomCurso, i.NomImg
       FROM observador o LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg 
       LEFT JOIN curso c ON o.IdCurso = c.IdCurso
-      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdEst='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
+      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
   while ($extraido = mysqli_fetch_array($consultar)) {?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">
@@ -51,7 +51,7 @@
   $NumeroInsertar = $_SESSION['Id_Session'];
   $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*, c.NomCurso FROM observador o
                                       LEFT JOIN curso c ON o.IdCurso = c.IdCurso
-                                      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdEst='$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS");
+                                      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS");
   ?>
   <div class="miniVentana" id="miniVentana">
     <div id="formularioContainer">
@@ -124,7 +124,7 @@
                                       FROM observador o
                                       LEFT JOIN info_medica i ON o.IdMed = i.IdMed
                                       LEFT JOIN tipo_sangre t ON i.IdTipoSanMed = t.IdTipoSanMed
-                                      WHERE o.IdEst = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
+                                      WHERE o.IdObs = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
       <form id="formulario2" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -193,7 +193,7 @@
           $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.NomAcudi
                    FROM observador o
                    LEFT JOIN datos_familiar i ON o.IdDatAcudi = i.IdDatAcudi        
-                   WHERE o.IdEst = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
+                   WHERE o.IdObs = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
       <form id="formulario3" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -270,7 +270,7 @@
           $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.AnteriorEsc
                 FROM observador o
                 LEFT JOIN historial_escolar i ON o.IdHistEsc = i.IdHistEsc        
-                WHERE o.IdEst = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
+                WHERE o.IdObs = '$NumeroInsertar'") or die("ERROR AL TRAER LOS DATOS"); ?>
       <form id="formulario4" style="display: none;">
         <div class="nav__miniventana">
           <a></a>

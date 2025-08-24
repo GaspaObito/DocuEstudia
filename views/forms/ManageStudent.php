@@ -172,7 +172,7 @@ include ($RootPath . "/models/StudentModel.php");?>
           <div>
             <label>Ocupación</label>
             <div class="setting">
-              <input type="text" name="Ocupación" class="Input_Text" value="<?php echo htmlspecialchars($Ocupación); ?>" placeholder="Ocupación del acudiente" required>
+              <input type="text" name="Ocupacion" class="Input_Text" value="<?php echo htmlspecialchars($Ocupacion); ?>" placeholder="Ocupación del acudiente" required>
             </div>
           </div>
           <div>
@@ -233,7 +233,17 @@ include ($RootPath . "/models/StudentModel.php");?>
           <div>
             <label>Tipo de Documento</label>
             <div class="setting">
-              <input type="number" name="Telefono_Est" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoStu); ?>" placeholder="Teléfono del Estudiante" required>
+              <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto)?>">
+              <select name="TipoDcto" class="Input_Text">
+                <?php if ($isUpdate) { ?>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoDcto)?></option>
+                <?php  } else { ?>
+                    <option disabled selected>...</option>
+                <?php } ?>
+                <option>CC</option>
+                <option>TI</option>
+                <option>CE</option>
+              </select>  
             </div>
           </div>
           <div>
@@ -321,7 +331,8 @@ include ($RootPath . "/models/StudentModel.php");?>
           <input type="hidden" name="IdGuardian" value="<?php echo htmlspecialchars($IdDatAcudi); ?>">
           <input type="hidden" name="IdEscolar" value="<?php echo htmlspecialchars($IdHistEsc); ?>">
           <input type="hidden" name="IdMedica" value="<?php echo htmlspecialchars($IdMed); ?>">
-          <input type="hidden" name="IdObservador" value="<?php echo htmlspecialchars($IdEst); ?>">
+          <input type="hidden" name="IdObservador" value="<?php echo htmlspecialchars($IdObs); ?>">
+          <input type="hidden" name="IdUser" value="<?php echo htmlspecialchars($IdUser); ?>">
           <input type="hidden" name="IdImgEst" value="<?php echo htmlspecialchars($IdImgEst); ?>">
           <button type="submit" class="boton" name="SendDataStudent">Enviar</button>
         </div>

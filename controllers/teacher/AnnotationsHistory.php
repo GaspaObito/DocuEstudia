@@ -23,8 +23,8 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
         </div>
       </div>
       <?php
-      $consultar2 = mysqli_query($conexion, "select * from anotacion WHERE IdEst='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
-      $query = "SELECT COUNT(*) AS total FROM anotacion WHERE IdEst='$Id_Est'";
+      $consultar2 = mysqli_query($conexion, "select * from anotacion WHERE IdObs='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
+      $query = "SELECT COUNT(*) AS total FROM anotacion WHERE IdObs='$Id_Est'";
       $resultado = mysqli_query($conexion, $query);
       $datos = mysqli_fetch_assoc($resultado);
       $totalFilas = $datos['total'];

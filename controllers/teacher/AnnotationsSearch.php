@@ -77,7 +77,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
                 <td><?php echo $extraido['NomCurso'] ?></td>
                 <td class="td_Actions">
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdEst'] ?>">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action" value="delete">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
@@ -86,7 +86,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
                     </button>
                   </form>
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdEst'] ?>">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action" value="read">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
@@ -95,7 +95,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
                     </button>
                   </form>
                   <form action="<?php echo BASE_URL; ?>/controllers/teacher/Annotations.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdEst'] ?>">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action" value="read">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">

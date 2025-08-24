@@ -4,41 +4,15 @@ $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
 // Conexion Base de Datos
 include ("$RootPath/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$Nombre = '';
-$Apellido = '';
-$TipoDcto = '';
-$NumDocumento = '';
-$Telefono = '';
-$Fecha_Nacimiento = '';
-$Direccion = '';
-$AsigAcadeProf = '';
-$AsigProf = '';
-$AreaProf = '';
-$Email = '';
-$Password = '';
-$IdRol = 3;//Administrador
+$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 3;//Administrador
 // Recolecion ID Profesor 
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
-  $IdUser = $_POST['id_profesor'];
-  $Nombre = $_POST["Nombre"];
-  $Apellido = $_POST["Apellido"];
-  $TipoDcto = $_POST["TipoDcto"];
-  $NumDocumento = $_POST["NumDocumento"];
-  $Telefono = $_POST["Telefono"];
-  $Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];
-  $Direccion = $_POST["Direccion"];
-  $AsigAcadeProf = $_POST["AsigAcadeProf"];
-  $AsigProf = $_POST["AsignaturaProfe"];
-  $AreaProf = $_POST["Area"];
-  $Email = $_POST["Correo"];
-  $Password = $_POST["Contrasena"];
+  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
   //Recibimos Imagen POST
-  $ultimoId_Imagen = $_POST['id_lastImg'];
-  $NombreImagenOriginal = $_FILES['Imagen']['name'];
-  $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
+  $ultimoId_Imagen = $_POST['id_lastImg'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
@@ -55,21 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $IdUser);
     // Asignar las variables desde el array devuelto
-    $IdUser = $profesorData['IdUser'];
-    $ultimoId_Imagen = $profesorData['IdImg'];
-    $Nombre = $profesorData['Nombre'];
-    $Apellido = $profesorData['Apellido'];
-    $TipoDcto = $profesorData["TipoDcto"];
-    $NumDocumento = $profesorData['NumDcto'];
-    $Telefono = $profesorData['Telefono'];
-    $Fecha_Nacimiento = $profesorData['FechNacimiento'];
-    $Direccion = $profesorData['Direccion'];
-    $AsigAcadeProf = $profesorData['AsigAcadeProf'];
-    $AsigProf = $profesorData['AsigProf'];
-    $AreaProf = $profesorData['AreaProf'];
-    $Email = $profesorData['Email'];
-    $Password = $profesorData['Password'];
-    $NombreImagen = $profesorData['NomImg'];
+    $IdUser = $profesorData['IdUser'];$ultimoId_Imagen = $profesorData['IdImg'];$Nombre = $profesorData['Nombre'];$Apellido = $profesorData['Apellido'];$TipoDcto = $profesorData["TipoDcto"];$NumDocumento = $profesorData['NumDcto'];$Telefono = $profesorData['Telefono'];$Fecha_Nacimiento = $profesorData['FechNacimiento'];$Direccion = $profesorData['Direccion'];$AsigAcadeProf = $profesorData['AsigAcadeProf'];$AsigProf = $profesorData['AsigProf'];$AreaProf = $profesorData['AreaProf'];$Email = $profesorData['Email'];$Password = $profesorData['Password'];$NombreImagen = $profesorData['NomImg'];
   }  else {
     echo 'error';
   }
