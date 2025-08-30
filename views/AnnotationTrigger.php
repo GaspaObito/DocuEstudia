@@ -8,11 +8,11 @@ include ("$RootPath/models/DatabaseConnection.php");?>
     <a></a>
     <h1 id="TitleStart">HISTORIAL DE ACCIONES</h1>
     <div>
-      <a href="../Profesor/anotaciones_busc.php">
+      <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
         <div class="botonAtras">
           <div class="margen__boton">
             <svg class="navbar-icon" style="margin:0;">
-              <use xlink:href="../Assets/Svg/Arrow_Back.svg#Arrow_Back-icon">
+              <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Back.svg#Arrow_Back-icon">
             </svg>
           </div>
         </div>
@@ -20,9 +20,9 @@ include ("$RootPath/models/DatabaseConnection.php");?>
     </div>
   </div>
   <?php
-  $consultar = mysqli_query($conexion, "SELECT NumDcto, h.*, o.NumDcto
-        FROM historial_operaciones h
-        LEFT JOIN observador o ON h.IdEstOpera = o.IdObs ORDER BY FecModifOpera DESC") or die("ERROR AL TRAER LOS DATOS");
+  $sql_triggerOper = mysqli_query($conexion, "SELECT h.*,u.NumDcto FROM historial_operaciones h
+        LEFT JOIN observador o ON h.IdEstOpera = o.IdObs
+        LEFT JOIN usuarios u ON u.IdUser = o.IdUser ORDER BY FecModifOpera DESC") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM historial_operaciones";
   $resultado = mysqli_query($conexion, $query);
   $datos = mysqli_fetch_assoc($resultado);
@@ -45,7 +45,7 @@ include ("$RootPath/models/DatabaseConnection.php");?>
       <!-- TITULO DE LAS COLUMNAS -->
       <!-- CUERPO DE LA TABLA -->
       <tbody>
-        <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+        <?php while ($extraido = mysqli_fetch_array($sql_triggerOper)) { ?>
           <tr>
             <td><?php echo $extraido['NomProfOpera']; ?></td>
             <td><?php echo $extraido['IdAnotaOpera']; ?></td>

@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }elseif ($_SERVER['REQUEST_METHOD'] === 'GET' || !empty($_GET['DNI'])) {
   $resultados = searchStudent($conexion);
   // Accede a las variables retornadas desde el array de resultados
-  $consultar = $resultados['consultar'];
+  $sql_observador = $resultados['sql_observador'];
   $totalFilas = $resultados['totalFilas'];
 }
 // ========== ELIMINAR DELETE FUNCTION ==========
@@ -284,10 +284,10 @@ function searchStudent($conexion)
     $consultaSQL .= " WHERE o.NumDcto='$NumDcto'";
   }
   // Realiza la consulta
-  $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
+  $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultado = mysqli_query($conexion, $query);
   $datos = mysqli_fetch_assoc($resultado);
   $totalFilas = $datos['total'];
   // Retorna las variables como un array
-  return ['consultar' => $consultar, 'totalFilas' => $totalFilas];
+  return ['sql_observador' => $sql_observador, 'totalFilas' => $totalFilas];
 }

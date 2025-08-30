@@ -1,42 +1,12 @@
-<?php 
+<?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");
-include ("$RootPath/config/ProtectPages.php");
-include ("$RootPath/models/DatabaseConnection.php");
-include ("$RootPath/models/StudentModel.php"); ?>
+include($RootPath . "/templates/HomeHeader.php");
+include($RootPath . "/config/ProtectPages.php");
+include($RootPath . "/models/StudentModel.php");
+include($RootPath . "/models/AnnotationsModel.php"); ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php
-    $Id_Profe = $_SESSION['Id_Profe'];
-    $consultar2 = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.AsigProf
-        FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser WHERE u.IdUser='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");
-    while ($extraido = mysqli_fetch_array($consultar2)) {
-      $_SESSION['NombreProfe'] = $extraido['NombreCompleto']; ?>
-      <div class="usuario__especifico">
-        <h3 id="DataUser">Perfil</h3>
-        <div class="imagen">
-          <img width="100"
-            src="<?php echo BASE_URL; ?>/assets/images/phototeacher/<?php echo $extraido['NomImg'] ?>">
-        </div>
-        <h3 id="DataUser">DATOS DEL PROFESOR</h3>
-        <div class="usuario__campo">
-          <label>Nombre:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NombreCompleto'] ?>">
-        </div>
-        <div class="usuario__campo">
-          <label>DNI:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDcto'] ?>">
-        </div>
-        <div class="usuario__campo">
-          <label>Asignatura:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['AsigProf'] ?>">
-        </div>
-        <div class="usuario__campo">
-          <label>Email:</label>
-          <input readonly class="Input_Text" type="text" value="<?php echo $extraido['Email'] ?>">
-        </div>
-      </div>
-    <?php } ?>
+    <?php include($RootPath . "/controllers/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
       <h1 id="TitleStart">ANOTACIONES</h1>
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
@@ -70,7 +40,7 @@ include ("$RootPath/models/StudentModel.php"); ?>
             </tr>
           </thead>
           <tbody>
-            <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+            <?php while ($extraido = mysqli_fetch_array($sql_observador)) { ?>
               <tr>
                 <td><?php echo $extraido['NumDcto'] ?></td>
                 <td><?php echo $extraido['NombreCompleto'] ?></td>
@@ -94,9 +64,9 @@ include ("$RootPath/models/StudentModel.php"); ?>
                       </svg>
                     </button>
                   </form>
-                  <form action="<?php echo BASE_URL; ?>/controllers/teacher/Annotations.php" method="post">
+                  <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
                     <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                    <input type="hidden" name="action" value="read">
+                    <input type="hidden" name="action">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow.svg#Arrow-icon">
@@ -117,4 +87,4 @@ include ("$RootPath/models/StudentModel.php"); ?>
       </div>
     </div>
 </main>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include("$RootPath/templates/HomeFooter.php"); ?>

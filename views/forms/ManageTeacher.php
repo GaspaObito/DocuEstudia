@@ -1,7 +1,7 @@
 <?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
 include ($RootPath . "/templates/HomeHeader.php");
-include ("$RootPath/config/ProtectPages.php");
+include ($RootPath . "/config/ProtectPages.php");
 include ($RootPath . "/models/TeacherModel.php"); ?>
 <main class="ContainerGeneral">
   <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Profesor</h1>

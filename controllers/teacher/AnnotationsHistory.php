@@ -1,17 +1,18 @@
 <?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");
-include ("$RootPath/config/ProtectPages.php");
-include ("$RootPath/models/DatabaseConnection.php"); ?>
+include($RootPath . "/templates/HomeHeader.php");
+include($RootPath . "/config/ProtectPages.php");
+include($RootPath . "/models/AnnotationsModel.php");
+?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php include ("$RootPath/controllers/teacher/StudentInfo.php"); ?>
+    <?php include("$RootPath/controllers/teacher/StudentInfo.php"); ?>
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
         <h1 id="TitleStart">ANOTACIONES</h1>
         <div>
-          <a href="Annotations.php">
+          <a href="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php">
             <div class="botonAtras">
               <div class="margen__boton">
                 <svg class="navbar-icon" style="margin:0;">
@@ -22,13 +23,6 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
           </a>
         </div>
       </div>
-      <?php
-      $consultar2 = mysqli_query($conexion, "select * from anotacion WHERE IdObs='$Id_Est'") or die("ERROR AL TRAER LOS DATOS");
-      $query = "SELECT COUNT(*) AS total FROM anotacion WHERE IdObs='$Id_Est'";
-      $resultado = mysqli_query($conexion, $query);
-      $datos = mysqli_fetch_assoc($resultado);
-      $totalFilas = $datos['total'];
-      $contador = 1; ?>
       <div class="Container1">
         <label>Resultados Obtenidos: (<?php echo $totalFilas ?>)</label>
         <table class="Custom_Table">
@@ -42,7 +36,7 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
             </tr>
           </thead>
           <tbody>
-            <?php while ($extraido = mysqli_fetch_array($consultar2)) { ?>
+            <?php while ($extraido = mysqli_fetch_array($anotacionesConsulta)) { ?>
               <tr>
                 <td><?php echo $contador++ ?></td>
                 <td><?php echo $extraido['TipoFalta'] ?></td>
@@ -58,9 +52,9 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
                       </svg>
                     </button>
                   </form>
-                  <form action="AnnotationsDescription.php" method="post">
+                  <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
                     <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
-                    <input type="hidden" name="action" value="read">
+                    <input type="hidden" name="action" value="readespecefy">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow.svg#Arrow-icon">
@@ -76,4 +70,4 @@ include ("$RootPath/models/DatabaseConnection.php"); ?>
     </div>
   </div>
 </main>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include("$RootPath/templates/HomeFooter.php"); ?>
