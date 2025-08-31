@@ -79,9 +79,9 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Ultimo Curso</label>
+            <label>Ultimo mt_grados</label>
             <div class="setting">
-              <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo Curso Cursado" required>
+              <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo mt_grados Cursado" required>
             </div>
           </div>
           <div>
@@ -271,18 +271,18 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Curso Estudiante</label>
+            <label>mt_grados Estudiante</label>
             <div class="setting">
-              <input type="hidden" name="NomCurso_Actual" value="<?php echo htmlspecialchars($IdCurso)?>">
+              <input type="hidden" name="NomCurso_Actual" value="<?php echo htmlspecialchars($IdGrado)?>">
               <select name="FornCurso" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomCurso)?></option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado)?></option>
                 <?php  } else { ?>
-                    <option disabled selected>Selecione el Curso</option>
+                    <option disabled selected>Selecione el mt_grados</option>
                 <?php } ?>              
                 <?php foreach ($totalCurso as $opciones): ?>
-                  <option value="<?php echo $opciones['IdCurso'] ?>">
-                    <?php echo $opciones['NomCurso'] ?>
+                  <option value="<?php echo $opciones['IdGrado'] ?>">
+                    <?php echo $opciones['NomGrado'] ?>
                   </option>
                 <?php endforeach; ?>
               </select>

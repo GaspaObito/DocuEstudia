@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }  else {
     echo 'error';
   }
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' || !empty($_GET['DNI'])) {
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' || !empty($_GET['DNI'])) {//CONSULTA TODO
   $resultados = searchTeacher($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
@@ -45,7 +45,7 @@ function deleteTeacher($conexion, $IdUser)
   mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/TeacherSearchAdmin.php'</script>";
+  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
@@ -61,7 +61,7 @@ function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellid
   // Mover la imagen a la carpeta de destino
   move_uploaded_file($Imagen_temporal, "$RootPath/assets/images/phototeacher/$NombreImagen");
   // Insertar en la base de datos 
-  $sql_TbImagen = "INSERT INTO imagenes (TipoEntImg,NomImg, BinImg) VALUES (?,?,?)";
+  $sql_TbImagen = "INSERT INTO imagenes (IdRol,NomImg, BinImg) VALUES (?,?,?)";
   $stmt = $conexion->prepare($sql_TbImagen);
   $stmt->bind_param('iss', $IdRol, $NombreImagen, $BinarioImagen);
   $stmt->execute();
@@ -85,7 +85,7 @@ function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellid
 
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/TeacherSearchAdmin.php'</script>";
+  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
@@ -144,7 +144,7 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
   $actprofesor->close();
 
   echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/TeacherSearchAdmin.php'</script>";
+  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== LEER READ FUNCTION ==========
 function readTeacher($conexion, $IdUser)
@@ -165,8 +165,9 @@ function readTeacher($conexion, $IdUser)
 function searchTeacher($conexion)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, p.*,u.NumDcto, c.NomCurso FROM profesor p LEFT JOIN curso c ON p.IdProf = c.IdProf 
-  LEFT JOIN usuarios u ON u.IdUser = p.IdUser";
+  $consultaSQL = "SELECT u.IdRol,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, p.*,u.NumDcto, c.IdGrupo,g.NomGrado FROM profesor p LEFT JOIN usuarios u ON u.IdUser =p.IdUser 
+  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
+  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado ";
   $query = "SELECT COUNT(*) AS total FROM profesor";
   // Verifica si se envió el formulario de búsqueda
   if (!empty($_GET['DNI'])) {

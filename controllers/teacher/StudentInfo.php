@@ -4,11 +4,11 @@
     $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
   }
   $IdObs = $_SESSION['Id_Session'];
-  /* Utilizar Join para Ingresar el otro Campos de Curso */
-  $DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomCurso, i.NomImg
+  /* Utilizar Join para Ingresar el otro Campos de mt_grados */
+  $DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomGrado, i.NomImg
       FROM observador o 
       LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg 
-      LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+      LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
       LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
   while ($extraido = mysqli_fetch_array($DatosUsuario)) { ?>
     <h3 id="DataUser">Perfil</h3>
@@ -29,9 +29,9 @@
       </div>
     </div>
     <div class="usuario__campo">
-      <label>Curso:</label>
+      <label>mt_grados:</label>
       <div>
-        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NomCurso'] ?>">
+        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NomGrado'] ?>">
       </div>
     </div>
   <?php } ?>
@@ -45,8 +45,8 @@
 <div class="margen__miniventana">
   <?php
   /*DATOS MÉDICOS DEL ESTUDIANTE*/
-  $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*,u.*, c.NomCurso FROM observador o
-  LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+  $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*,u.*, c.NomGrado FROM observador o
+  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
   LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
   ?>
   <div class="miniVentana" id="miniVentana">
@@ -116,7 +116,7 @@
         </form>
       <?php }
         /*DATOS MÉDICOS DEL ESTUDIANTE*/
-        $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.NomEPSMed, t.GrupoSanguineo FROM observador o LEFT JOIN info_medica i ON o.IdMed = i.IdMed LEFT JOIN tipo_sangre t ON i.IdTipoSanMed = t.IdTipoSanMed WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS"); ?>
+        $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.NomEPSMed, t.GrupoSanguineo FROM observador o LEFT JOIN info_medica i ON o.IdMed = i.IdMed LEFT JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS"); ?>
       <form id="formulario2" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -280,7 +280,7 @@
               <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['AnteriorEsc'] ?>">
             </div>
             <div class="formulario__miniventana">
-              <label>Curso</label>
+              <label>mt_grados</label>
               <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['CursoEsc'] ?>">
             </div>
             <div class="formulario__miniventana">

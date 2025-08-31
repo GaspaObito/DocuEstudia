@@ -11,14 +11,14 @@ $ColegioAnterior = '';$UltCursoCursado = '';$Jornada = '';$EsRepitente = '';$Cua
 // info_medica
 $Eps = '';$Sanitaria = '';$Ocupacion = '';$Recomendaciones = '';$Antecendentes = '';$FornTipoSangre = '';
 // Student
-$NombreStu = '';$ApellidoStu = '';$TipoDcto = '';$TelefonoStu = '';$FechaNacimientoStu = '';$Direccion = '';$NumDcto = '';$IdCurso = '';$Email = '';$Password = '';$IdRol = 1;//Estudiante
+$NombreStu = '';$ApellidoStu = '';$TipoDcto = '';$TelefonoStu = '';$FechaNacimientoStu = '';$Direccion = '';$NumDcto = '';$IdGrado = '';$Email = '';$Password = '';$IdRol = 1;//Estudiante
 // Recolecion ID Observador 
 $IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdObs > 0;
-// Consulta para Tipo de Sangre y Curso
-$totalSangre = "SELECT * FROM tipo_sangre";
+// Consulta para Tipo de Sangre y mt_grados
+$totalSangre = "SELECT * FROM mt_tsangre";
 $totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
-$totalCurso = "SELECT * FROM curso";
+$totalCurso = "SELECT * FROM mt_grados";
 $totalCurso = mysqli_query($conexion, $totalCurso) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
@@ -29,7 +29,7 @@ if (isset($_POST["SendDataStudent"])) {
   // info_medica
   $IdMed = $_POST['IdMedica'];$Eps = $_POST["Eps"];$Sanitaria = $_POST["Sanitaria"];$Ocupacion = $_POST["Ocupacion"];$Recomendaciones = $_POST["Recomendaciones"];$Antecendentes = $_POST["Antecendentes"];$FornTipoSangre = $_POST["FornTipoSangre"];
   // Student
-  $IdObs = $_POST['IdObservador'];$IdUser = $_POST['IdUser'];$NombreStu = $_POST["Nombre_Est"];$ApellidoStu = $_POST["Apellido_Est"];$TipoDcto = $_POST["TipoDcto"];$NumDcto = $_POST["NumeroIdentif_Est"];$IdCurso = $_POST["FornCurso"];$TelefonoStu = $_POST["Telefono_Est"];$FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];$Direccion = $_POST["Residencia_Est"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
+  $IdObs = $_POST['IdObservador'];$IdUser = $_POST['IdUser'];$NombreStu = $_POST["Nombre_Est"];$ApellidoStu = $_POST["Apellido_Est"];$TipoDcto = $_POST["TipoDcto"];$NumDcto = $_POST["NumeroIdentif_Est"];$IdGrado = $_POST["FornCurso"];$TelefonoStu = $_POST["Telefono_Est"];$FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];$Direccion = $_POST["Residencia_Est"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
   //Recibimos Imagen POST
   $IdImgEst = $_POST['IdImgEst'];$TipoImagen = $_FILES['Imagen']['type'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
       $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
       $Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-      $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+      $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
       $NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'update') {
     updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
      $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
      $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-     $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+     $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
      $IdImgEst,$NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'read') {
     $StudentData = readStudent($conexion, $IdObs);
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // info_medica
     $IdMed = $StudentData['IdMed'];$Eps = $StudentData["NomEPSMed"];$Sanitaria = $StudentData["PrioSanitaMed"];$Ocupacion = $StudentData["OcupaMed"];$Recomendaciones = $StudentData["RecomMed"];$Antecendentes = $StudentData["AnteceMed"];$IdTipoSangre = $StudentData["IdTipoSanMed"];$NomTipoSangre = $StudentData["GrupoSanguineo"];
     // Student
-    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImgEst = $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdCurso = $StudentData["IdCurso"];$NomCurso = $StudentData["NomCurso"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
+    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImgEst = $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdGrado = $StudentData["IdGrado"];$NomGrado = $StudentData["NomGrado"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
   }  else {
     echo 'error';
   }
@@ -76,8 +76,8 @@ function deleteStudent($conexion, $IdObs)
 {
   mysqli_query($conexion, "delete from observador where IdObs='$IdObs'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   // ---StartCurso
-  $sql_curso = "UPDATE curso c SET NumAlumnos = (SELECT COUNT(*) FROM observador o 
-  WHERE o.IdCurso = c.IdCurso)";
+  $sql_curso = "UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o 
+  WHERE o.IdGrado = c.IdGrado)";
   mysqli_query($conexion, $sql_curso) or die ("ERROR EN LA INSERCION" . $IdObs);
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
@@ -88,7 +88,7 @@ function deleteStudent($conexion, $IdObs)
 function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+  $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
   $NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -133,12 +133,12 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $insert_usuario->close();
   $ultimoId_Usuario = mysqli_insert_id($conexion);  // Last Id Insert 
   // ---StartObservador
-  $insert_observador = $conexion->prepare("INSERT INTO observador (IdUser, IdDatAcudi, IdHistEsc, IdMed, IdCurso) VALUES (?, ?, ?, ?, ?)");
-  $insert_observador->bind_param("iiiii",$ultimoId_Usuario,$ultimoId_DatosFamiliar,$ultimoId_HistorialEscolar,$ultimoId_InfoMedica,$IdCurso);
+  $insert_observador = $conexion->prepare("INSERT INTO observador (IdUser, IdDatAcudi, IdHistEsc, IdMed, IdGrado) VALUES (?, ?, ?, ?, ?)");
+  $insert_observador->bind_param("iiiii",$ultimoId_Usuario,$ultimoId_DatosFamiliar,$ultimoId_HistorialEscolar,$ultimoId_InfoMedica,$IdGrado);
   $insert_observador->execute();
   $insert_observador->close();
   // ---StartCurso
-  $sql_curso = $conexion->prepare("UPDATE curso c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdCurso = c.IdCurso)");
+  $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
   $sql_curso->execute();
   $sql_curso->close();
   mysqli_close($conexion);
@@ -149,7 +149,7 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
 function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdCurso,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+  $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
   $IdImgEst,$NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -215,8 +215,8 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
     $stmt->close();
   }
   // El usuario ha seleccionado la opción "mantener"
-  if ($IdCurso === "mantener") {
-    $IdCurso = $_POST["NomCurso_Actual"];
+  if ($IdGrado === "mantener") {
+    $IdGrado = $_POST["NomCurso_Actual"];
   }
   //Revisa si la contraseña cambia oh sigue igual
   $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
@@ -235,13 +235,13 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   $act_usuario->execute();
   $act_usuario->close();
   // ---StartObservador
-  $sql_Actualizar = "UPDATE observador SET IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdCurso =? WHERE IdObs =?";
+  $sql_Actualizar = "UPDATE observador SET IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdGrado =? WHERE IdObs =?";
   $stmt = $conexion->prepare($sql_Actualizar);
-  $stmt->bind_param('iiiii', $IdDatAcudi, $IdHistEsc, $IdMed, $IdCurso, $IdObs);
+  $stmt->bind_param('iiiii', $IdDatAcudi, $IdHistEsc, $IdMed, $IdGrado, $IdObs);
   $stmt->execute();
   $stmt->close();
   // ---StartCurso
-  $sql_curso = $conexion->prepare("UPDATE curso c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdCurso = c.IdCurso)");
+  $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
   $sql_curso->execute();
   $sql_curso->close();
   mysqli_close($conexion);
@@ -251,12 +251,12 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
 // ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
 function readStudent($conexion, $IdObs)
 {
-  $stmt = $conexion->prepare("SELECT *,t.GrupoSanguineo,c.NomCurso,p.NomImg FROM observador o 
+  $stmt = $conexion->prepare("SELECT *,t.GrupoSanguineo,c.NomGrado,p.NomImg FROM observador o 
   JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi 
   JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc 
   JOIN info_medica i ON o.IdMed  = i.IdMed 
-  JOIN tipo_sangre t ON i.IdTipoSanMed = t.IdTipoSanMed
-  JOIN curso c ON o.IdCurso = c.IdCurso 
+  JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed
+  JOIN mt_grados c ON o.IdGrado = c.IdGrado 
   JOIN usuarios s ON s.IdUser = o.IdUser
   JOIN imagenes p ON s.IdImg = p.IdImg  WHERE IdObs = ?");
   $stmt->bind_param('i', $IdObs);
@@ -272,8 +272,9 @@ function readStudent($conexion, $IdObs)
 function searchStudent($conexion)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = ("SELECT u.IdUser,o.IdObs,NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, c.NomCurso FROM observador o
-  LEFT JOIN curso c ON o.IdCurso = c.IdCurso
+  $consultaSQL = ("SELECT u.IdUser,o.IdObs,NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,o.IdGrupo, c.NomGrado FROM observador o
+  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
+  LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo
   LEFT JOIN usuarios u ON u.IdUser = o.IdUser") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM observador";
   // Verifica si se envió el formulario de búsqueda

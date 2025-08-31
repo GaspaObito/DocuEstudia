@@ -10,7 +10,7 @@ include ("$RootPath/config/ProtectPages.php");?>
     $consultar = mysqli_query($conexion, "SELECT CONCAT(o.Nombre_Estudiante, ' ', o.Apellido_Estudiante) AS NombreCompleto, o.*, c.Nom_Curso, i.Nombre_Imagen
                     FROM observador o
                     LEFT JOIN imagenes i ON o.Id_Imagen = i.Id_Imagen
-                    LEFT JOIN curso c ON o.Id_Curso = c.Id_Curso WHERE o.Numero_Documento='$Identificacion'") or die("ERROR AL TRAER LOS DATOS");
+                    LEFT JOIN mt_grados c ON o.Id_Curso = c.Id_Curso WHERE o.Numero_Documento='$Identificacion'") or die("ERROR AL TRAER LOS DATOS");
     while ($extraido = mysqli_fetch_array($consultar)) {
       $Id_Est = $extraido['Id_Estudiante'];
       echo '<div class="usuario__especifico">       
@@ -28,7 +28,7 @@ include ("$RootPath/config/ProtectPages.php");?>
                     <input readonly class="Input_Text" type="text" value="' . $extraido['Numero_Documento'] . '">
                 </div>
                 <div class="usuario__campo">
-                    <label>Curso:</label>
+                    <label>mt_grados:</label>
                     <input readonly class="Input_Text" type="text" value="' . $extraido['Nom_Curso'] . '">
                 </div>
             </div>';

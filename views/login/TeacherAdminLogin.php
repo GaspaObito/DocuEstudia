@@ -1,8 +1,9 @@
-<?php 
+<?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");?>
+include("$RootPath/templates/HomeHeader.php"); ?>
 <div class="bienvenido">
   <div class="bienvenido__login">
+
     <h1 id="TitleStart">BIENVENIDO</h1>
     <p>Por favor ingrese los siguientes datos para iniciar sesión como profesor</p>
     <form class="Form_Acudiente" action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="post">
@@ -35,6 +36,10 @@ include ("$RootPath/templates/HomeHeader.php");?>
           <i><input class="ShowPass" type="checkbox" onclick="ShowPassword()"></i>
         </div>
       </div>
+      <?php if (isset($_SESSION['error'])): ?>
+        <div class="error"><?= $_SESSION['error']; ?></div>
+        <?php unset($_SESSION['error']); ?>
+      <?php endif; ?>
       <div class="alinear-boton">
         <button class="boton" type="submit" name='button_Auth'>INICIAR SESION</button>
       </div>
@@ -69,4 +74,4 @@ include ("$RootPath/templates/HomeHeader.php");?>
     </div>
   </div>
 </div>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include("$RootPath/templates/HomeFooter.php"); ?>

@@ -1,5 +1,5 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/models/DatabaseConnection.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia/models/DatabaseConnection.php");
 session_start();
 /* Inicio Sesion PROFESOR,ADMIN*/
 if (isset($_POST["button_Auth"])) {
@@ -12,20 +12,22 @@ if (isset($_POST["button_Auth"])) {
   if ($fila = $resultado->fetch_assoc()) {
     if ($fila['IdRol'] == '3' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
-      $_SESSION['Id_Admin'] = $fila['IdUser'];//ELIMINAR ESTA LINEA HASTA QUE ESTEN PERMISOS
+      $_SESSION['IdRol'] = $fila['IdRol'];
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
-      echo "<script>location.href='../../controllers/admin/TeacherSearchAdmin.php'</script>";
-    } elseif ($fila['IdRol'] == '2'&& password_verify($Contrasena, $fila['Password'])) {
+      echo "<script>location.href='../../controllers/admin/ManageUsers.php'</script>";
+    } elseif ($fila['IdRol'] == '2' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
       echo "<script>location.href='../../controllers/teacher/AnnotationsSearch.php'</script>";
     } else {
-      echo "<script>alert('USUARIO O CONTRASEÑA INCORRECTA')</script>";
-      echo "<script>location.href='../../views/login/TeacherAdminLogin.php'</script>";
+      $_SESSION['error'] = "Usuario o contraseña incorrectos";
+      header("Location: ../../views/login/TeacherAdminLogin.php");
+      exit();
     }
   } else {
-    echo "<script>alert('USUARIO NO ENCONTRADO')</script>";
-    echo "<script>location.href='../../views/login/TeacherAdminLogin.php'</script>";
+    $_SESSION['error'] = "Usuario no encontrado";
+    header("Location: ../../views/login/TeacherAdminLogin.php");
+    exit();
   }
   $sentencia->close();
   $conexion->close();

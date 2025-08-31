@@ -35,7 +35,8 @@ include($RootPath . "/models/AnnotationsModel.php"); ?>
             <tr>
               <th>Numero Documento</th>
               <th>Nombre</th>
-              <th>Curso</th>
+              <th>Grado</th>
+              <th>Grupo</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -44,7 +45,8 @@ include($RootPath . "/models/AnnotationsModel.php"); ?>
               <tr>
                 <td><?php echo $extraido['NumDcto'] ?></td>
                 <td><?php echo $extraido['NombreCompleto'] ?></td>
-                <td><?php echo $extraido['NomCurso'] ?></td>
+                <td><?php echo $extraido['NomGrado'] ?></td>
+                <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
                     <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">

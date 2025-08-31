@@ -1,12 +1,12 @@
-<?php 
+<?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ($RootPath . "/templates/HomeHeader.php");
-include ($RootPath . "/config/ProtectPages.php");
-include ($RootPath . "/models/TeacherModel.php"); ?>
+include($RootPath . "/templates/HomeHeader.php");
+include($RootPath . "/config/ProtectPages.php");
+include($RootPath . "/models/TeacherModel.php"); ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">ACTUALIZAR PROFESOR</h1>
-    <form action="<?php echo BASE_URL; ?>/controllers/admin/TeacherSearchAdmin.php" method="GET">
+    <form action="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php" method="GET">
       <fieldset>
         <legend>Buscar Docente por DNI</legend>
         <div class="Formulario_Campos1">
@@ -15,7 +15,7 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
             <input class="Input_Text" type="text" id="DNI" name="DNI" placeholder="DNI del Docente">
           </div>
           <div class="alinear-boton">
-            <button class="boton" type="submit">BUSCAR DOCENTE</button>
+            <button class="boton" type="submit">BUSCAR PROFESOR</button>
           </div>
         </div>
       </fieldset>
@@ -25,20 +25,24 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
       <table class="Custom_Table">
         <thead>
           <tr>
+            <th>Rol</th>
             <th>Numero Documento</th>
             <th>Nombre</th>
             <th>Asignado</th>
-            <th>Curso</th>
+            <th>Grado</th>
+            <th>Grupo</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
             <tr>
+              <td><?php echo $extraido['IdRol']; ?></td>
               <td><?php echo $extraido['NumDcto']; ?></td>
               <td><?php echo $extraido['NombreCompleto']; ?></td>
               <td><?php echo $extraido['AsigProf']; ?></td>
-              <td><?php echo $extraido['NomCurso']; ?></td>
+              <td><?php echo $extraido['NomGrado']; ?></td>
+              <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf']; ?>">
@@ -71,4 +75,4 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
     </a>
   </div>
 </main>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include("$RootPath/templates/HomeFooter.php"); ?>

@@ -1,16 +1,14 @@
 <?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");
-include ("$RootPath/config/ProtectPages.php");?>
+include("$RootPath/templates/HomeHeader.php");
+include("$RootPath/config/ProtectPages.php"); ?>
 <main class="ContainerGeneral contenedor sombra">
   <div>
     <?php
     include '../Config/Conexion.php';
     $Identificacion = $_SESSION['Id_Estudiante'];
     $consultar = mysqli_query($conexion, "SELECT CONCAT(o.Nombre_Estudiante, ' ', o.Apellido_Estudiante) AS NombreCompleto, o.*, c.Nom_Curso, i.Nombre_Imagen
-                    FROM observador o
-                    LEFT JOIN imagenes i ON o.Id_Imagen = i.Id_Imagen
-                    LEFT JOIN curso c ON o.Id_Curso = c.Id_Curso WHERE o.Numero_Documento='$Identificacion'") or die("ERROR AL TRAER LOS DATOS");
+                    FROM observador o LEFT JOIN imagenes i ON o.Id_Imagen = i.Id_Imagen LEFT JOIN mt_grados c ON o.Id_Curso = c.Id_Curso WHERE o.Numero_Documento='$Identificacion'") or die("ERROR AL TRAER LOS DATOS");
     while ($extraido = mysqli_fetch_array($consultar)) {
       ?>
       <div class="usuario__especifico">
@@ -41,7 +39,7 @@ include ("$RootPath/config/ProtectPages.php");?>
           <input readonly class="Input_Text" type="text" value="<?php echo $extraido['Numero_Documento']; ?>">
         </div>
         <div class="usuario__campo">
-          <label>Curso:</label>
+          <label>mt_grados:</label>
           <input readonly class="Input_Text" type="text" value="<?php echo $extraido['Nom_Curso']; ?>">
         </div>
       </div>
@@ -72,4 +70,4 @@ include ("$RootPath/config/ProtectPages.php");?>
     </div>
   </div>
 </main>
-<?php include ("../Template/FooterProfe2.php"); ?>
+<?php include("../Template/FooterProfe2.php"); ?>
