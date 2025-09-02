@@ -11,11 +11,10 @@ include($RootPath . "/models/AnnotationsModel.php"); ?>
       <h1 id="TitleStart">ANOTACIONES</h1>
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
-          <legend>Buscar Estudiante por DNI</legend>
+          <legend>Buscar Estudiante por # Documento Identidad</legend>
           <div class="Formulario_Campos1">
             <div style="display:flex;">
-              <label for="DNI" style="padding: 10px 10px 10px 0;">D.N.I</label>
-              <input class="Input_Text" type="text" id="DNI" name="DNI" placeholder="DNI del estudiante">
+              <input class="Input_Text" type="text" id="DNI" name="DNI" placeholder="# Documento del estudiante">
             </div>
             <div class="alinear-boton">
               <button class="boton" type="submit">BUSCAR ESTUDIANTE</button>

@@ -4,13 +4,18 @@ $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
 // Conexion Base de Datos
 include ("$RootPath/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 3;//Administrador
+$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;//Profesor
 // Recolecion ID Profesor 
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
+// Consulta para Tipo de Sangre y mt_grados
+$mt_grados = "SELECT * FROM mt_grados";
+$mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
+$mt_grupos = "SELECT * FROM mt_grupos";
+$mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
-  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
+  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'] ?? null;
   //Recibimos Imagen POST
   $ultimoId_Imagen = $_POST['id_lastImg'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
@@ -20,16 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($action === 'delete') {
     deleteTeacher($conexion, $IdUser);
   } elseif ($action === 'create') {
-    createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal);
+    createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal);
+    updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal);
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $IdUser);
     // Asignar las variables desde el array devuelto
-    $IdUser = $profesorData['IdUser'];$ultimoId_Imagen = $profesorData['IdImg'];$Nombre = $profesorData['Nombre'];$Apellido = $profesorData['Apellido'];$TipoDcto = $profesorData["TipoDcto"];$NumDocumento = $profesorData['NumDcto'];$Telefono = $profesorData['Telefono'];$Fecha_Nacimiento = $profesorData['FechNacimiento'];$Direccion = $profesorData['Direccion'];$AsigAcadeProf = $profesorData['AsigAcadeProf'];$AsigProf = $profesorData['AsigProf'];$AreaProf = $profesorData['AreaProf'];$Email = $profesorData['Email'];$Password = $profesorData['Password'];$NombreImagen = $profesorData['NomImg'];
+    $IdUser = $profesorData['IdUser'];$ultimoId_Imagen = $profesorData['IdImg'];$Nombre = $profesorData['Nombre'];$Apellido = $profesorData['Apellido'];$TipoDcto = $profesorData["TipoDcto"];$NumDocumento = $profesorData['NumDcto'];$Telefono = $profesorData['Telefono'];$Fecha_Nacimiento = $profesorData['FechNacimiento'];$Direccion = $profesorData['Direccion'];$AsigAcadeProf = $profesorData['AsigAcadeProf'];$AsigProf = $profesorData['AsigProf'];$AreaProf = $profesorData['AreaProf'];$Email = $profesorData['Email'];$Password = $profesorData['Password'];$NombreImagen = $profesorData['NomImg'];$IdGrupo = $profesorData['IdGrupo'];
   }  else {
     echo 'error';
   }
@@ -50,7 +53,7 @@ function deleteTeacher($conexion, $IdUser)
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal)
+      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo)
 {
   // Obtener la extensión del archivo original
   $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -82,7 +85,16 @@ function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellid
   $creaprofesor->bind_param('isss', $ultimoId_User, $AsigAcadeProf, $AsigProf, $AreaProf );
   $creaprofesor->execute();
   $creaprofesor->close();
-
+  // Last Id Insert 
+  $ultimoIdProf = mysqli_insert_id($conexion);
+//MANDA ERROR
+if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
+    $actgrupos = $conexion->prepare("UPDATE mt_grupos SET IdProf=? WHERE IdGrupo=?");
+    $actgrupos->bind_param('ii', $ultimoIdProf, $IdGrupo);
+    $actgrupos->execute();
+    $actgrupos->close();
+}
+  
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
   echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
@@ -131,6 +143,9 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
       $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
     }
   }
+  if ($TipoDcto === "mantener") {
+    $TipoDcto = $_POST["TipoDcto_Actual"];
+  }
   // 1. Actualizar tabla usuarios 
   $actusuarios = $conexion->prepare("UPDATE usuarios SET  Nombre = ?, Apellido = ?, TipoDcto = ?, NumDcto = ?, Telefono = ?, FechNacimiento = ?, Direccion = ?, Email = ?, Password = ? WHERE IdUser = ?");
   $actusuarios->bind_param('sssssssssi',$Nombre,$Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $Email, $hashedPass, $IdUser);
@@ -149,9 +164,11 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
 // ========== LEER READ FUNCTION ==========
 function readTeacher($conexion, $IdUser)
 {
-  $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password FROM profesor p 
+  $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password,m.IdGrado,m.NomGrado,g.IdGrupo FROM profesor p 
     LEFT JOIN usuarios u ON u.IdUser = p.IdUser
-    LEFT JOIN imagenes i ON i.IdImg = u.IdImg  WHERE IdProf = ?");
+    LEFT JOIN mt_grupos g ON g.IdProf = p.IdProf
+    LEFT JOIN mt_grados m ON m.IdGrado = g.IdGrado
+    LEFT JOIN imagenes i ON i.IdImg = u.IdImg  WHERE p.IdProf = ?");
   $stmt->bind_param('i', $IdUser);
   $stmt->execute();
   $result = $stmt->get_result();

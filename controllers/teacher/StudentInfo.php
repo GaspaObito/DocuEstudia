@@ -7,9 +7,9 @@
   /* Utilizar Join para Ingresar el otro Campos de mt_grados */
   $DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomGrado, i.NomImg
       FROM observador o 
-      LEFT JOIN imagenes i ON o.IdImgEst = i.IdImg 
       LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
-      LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
+      LEFT JOIN usuarios u ON u.IdUser = o.IdUser
+      LEFT JOIN imagenes i ON i.IdImg= u.IdImg  WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
   while ($extraido = mysqli_fetch_array($DatosUsuario)) { ?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">

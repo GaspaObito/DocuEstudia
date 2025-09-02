@@ -16,10 +16,10 @@ $NombreStu = '';$ApellidoStu = '';$TipoDcto = '';$TelefonoStu = '';$FechaNacimie
 $IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdObs > 0;
 // Consulta para Tipo de Sangre y mt_grados
-$totalSangre = "SELECT * FROM mt_tsangre";
-$totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
-$totalCurso = "SELECT * FROM mt_grados";
-$totalCurso = mysqli_query($conexion, $totalCurso) or die(mysqli_error($conexion));
+$mt_grupos = "SELECT * FROM mt_grupos";
+$mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
+$mt_grados = "SELECT * FROM mt_grados";
+$mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
   // Guardian
@@ -31,7 +31,7 @@ if (isset($_POST["SendDataStudent"])) {
   // Student
   $IdObs = $_POST['IdObservador'];$IdUser = $_POST['IdUser'];$NombreStu = $_POST["Nombre_Est"];$ApellidoStu = $_POST["Apellido_Est"];$TipoDcto = $_POST["TipoDcto"];$NumDcto = $_POST["NumeroIdentif_Est"];$IdGrado = $_POST["FornCurso"];$TelefonoStu = $_POST["Telefono_Est"];$FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];$Direccion = $_POST["Residencia_Est"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
   //Recibimos Imagen POST
-  $IdImgEst = $_POST['IdImgEst'];$TipoImagen = $_FILES['Imagen']['type'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
+  $IdImg= $_POST['IdImg'];$TipoImagen = $_FILES['Imagen']['type'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
      $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
      $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
-     $IdImgEst,$NombreImagenOriginal,$Imagen_temporal);
+     $IdImg,$NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'read') {
     $StudentData = readStudent($conexion, $IdObs);
     // Asignar las variables desde el array devuelto
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // info_medica
     $IdMed = $StudentData['IdMed'];$Eps = $StudentData["NomEPSMed"];$Sanitaria = $StudentData["PrioSanitaMed"];$Ocupacion = $StudentData["OcupaMed"];$Recomendaciones = $StudentData["RecomMed"];$Antecendentes = $StudentData["AnteceMed"];$IdTipoSangre = $StudentData["IdTipoSanMed"];$NomTipoSangre = $StudentData["GrupoSanguineo"];
     // Student
-    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImgEst = $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdGrado = $StudentData["IdGrado"];$NomGrado = $StudentData["NomGrado"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
+    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImg= $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdGrado = $StudentData["IdGrado"];$NomGrado = $StudentData["NomGrado"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
   }  else {
     echo 'error';
   }
@@ -150,7 +150,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
   $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
-  $IdImgEst,$NombreImagenOriginal,$Imagen_temporal)
+  $IdImg,$NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
   // El usuario ha seleccionado la opción "mantener"
@@ -205,7 +205,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
     // Actualizar en la base de datos utilizando una consulta preparada
     $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";//MAX FILE SIZE 8MG
     $stmt = $conexion->prepare($sql_TbImagen);
-    $stmt->bind_param('ssi', $NombreImagen, $BinarioImagen, $IdImgEst);
+    $stmt->bind_param('ssi', $NombreImagen, $BinarioImagen, $IdImg);
     // Ejecutar la consulta preparada y capturar la excepción en caso de error
     try {
       $stmt->execute();
@@ -231,7 +231,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   }
   // ---StartUsuario
   $act_usuario =  $conexion->prepare("UPDATE usuarios SET IdRol = ?, IdImg = ?, Nombre = ?, Apellido = ?, TipoDcto = ?, NumDcto = ?, Telefono = ?, FechNacimiento = ?, Direccion = ?, Email = ?, Password = ? WHERE IdUser = ?");
-  $act_usuario->bind_param("iisssssssssi", $IdRol, $IdImgEst, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $hashedPass, $IdUser);
+  $act_usuario->bind_param("iisssssssssi", $IdRol, $IdImg, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $hashedPass, $IdUser);
   $act_usuario->execute();
   $act_usuario->close();
   // ---StartObservador
@@ -258,7 +258,7 @@ function readStudent($conexion, $IdObs)
   JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed
   JOIN mt_grados c ON o.IdGrado = c.IdGrado 
   JOIN usuarios s ON s.IdUser = o.IdUser
-  JOIN imagenes p ON s.IdImg = p.IdImg  WHERE IdObs = ?");
+  JOIN imagenes p ON p.IdImg = s.IdImg  WHERE IdObs = ?");
   $stmt->bind_param('i', $IdObs);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -280,9 +280,9 @@ function searchStudent($conexion)
   // Verifica si se envió el formulario de búsqueda
   if (!empty($_GET['DNI'])) {
     $NumDcto = $_GET['DNI'];
-    $query = "SELECT COUNT(*) AS total FROM observador WHERE NumDcto=$NumDcto";
+    $query = "SELECT COUNT(*) AS total FROM usuarios WHERE NumDcto=$NumDcto";
     // Modifica la consulta para filtrar por número de documento
-    $consultaSQL .= " WHERE o.NumDcto='$NumDcto'";
+    $consultaSQL .= " WHERE u.NumDcto='$NumDcto'";
   }
   // Realiza la consulta
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");

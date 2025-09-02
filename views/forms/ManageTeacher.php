@@ -1,8 +1,8 @@
 <?php
 $RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ($RootPath . "/templates/HomeHeader.php");
-include ($RootPath . "/config/ProtectPages.php");
-include ($RootPath . "/models/TeacherModel.php"); ?>
+include($RootPath . "/templates/HomeHeader.php");
+include($RootPath . "/config/ProtectPages.php");
+include($RootPath . "/models/TeacherModel.php"); ?>
 <main class="ContainerGeneral">
   <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Profesor</h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
@@ -10,56 +10,98 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
       <div class="formulario__campos1">
         <div>
           <label>Nombre</label>
-          <input type="text" name="Nombre" class="Input_Text" value="<?php echo htmlspecialchars($Nombre); ?>" placeholder="Nombre del Profesor" required>
+          <input type="text" name="Nombre" class="Input_Text" value="<?php echo htmlspecialchars($Nombre); ?>"
+            placeholder="Nombre del Profesor" required>
         </div>
         <div>
           <label>Apellido</label>
-          <input type="text" name="Apellido" class="Input_Text" value="<?php echo htmlspecialchars($Apellido); ?>" placeholder="Apellido del Profesor" required>
+          <input type="text" name="Apellido" class="Input_Text" value="<?php echo htmlspecialchars($Apellido); ?>"
+            placeholder="Apellido del Profesor" required>
         </div>
         <div>
           <label>Tipo de Documento</label>
-          <input type="text" name="TipoDcto" class="Input_Text" value="<?php echo htmlspecialchars($TipoDcto); ?>" placeholder="Seleccione tipo Documento" required>
+          <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto) ?>">
+          <select type="text" name="TipoDcto" class="Input_Text">
+            <?php if ($isUpdate) { ?>
+              <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoDcto) ?></option>
+            <?php } else { ?>
+              <option disabled selected>...</option>
+            <?php } ?>
+            <option>CC</option>
+            <option>TI</option>
+            <option>CE</option>
+          </select>
         </div>
         <div>
           <label>Numero de Documento</label>
-          <input type="number" name="NumDocumento" class="Input_Text" value="<?php echo htmlspecialchars($NumDocumento); ?>" placeholder="Digite Numero de documento" required>
+          <input type="number" name="NumDocumento" class="Input_Text"
+            value="<?php echo htmlspecialchars($NumDocumento); ?>" placeholder="Digite Numero de documento" required>
         </div>
         <div>
           <label>Teléfono</label>
-          <input type="number" name="Telefono" class="Input_Text" value="<?php echo htmlspecialchars($Telefono); ?>" placeholder="Teléfono del Profesor" required>
+          <input type="number" name="Telefono" class="Input_Text" value="<?php echo htmlspecialchars($Telefono); ?>"
+            placeholder="Teléfono del Profesor" required>
         </div>
         <div>
           <label>Fecha Nacimiento</label>
-          <input type="date" name="Fecha_Nacimiento" class="Input_Text" value="<?php echo htmlspecialchars($Fecha_Nacimiento); ?>" placeholder="Fecha de Nacimiento del Profesor" required>
+          <input type="date" name="Fecha_Nacimiento" class="Input_Text"
+            value="<?php echo htmlspecialchars($Fecha_Nacimiento); ?>" placeholder="Fecha de Nacimiento del Profesor"
+            required>
         </div>
         <div>
           <label>Direccion</label>
-          <input type="text" name="Direccion" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Localidad Hogar" required>
+          <input type="text" name="Direccion" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>"
+            placeholder="Localidad Hogar" required>
         </div>
         <div>
           <label>Asignación Academica</label>
-          <input type="text" name="AsigAcadeProf" class="Input_Text" value="<?php echo htmlspecialchars($AsigAcadeProf); ?>" placeholder="Asignatura Academica del Profesor" maxlength="20" required>
+          <input type="text" name="AsigAcadeProf" class="Input_Text"
+            value="<?php echo htmlspecialchars($AsigAcadeProf); ?>" placeholder="Asignatura Academica del Profesor"
+            maxlength="20" required>
         </div>
         <div>
           <label>Asignatura</label>
-          <input type="text" name="AsignaturaProfe" class="Input_Text" value="<?php echo htmlspecialchars($AsigProf); ?>" placeholder="Asignatura del Profesor" maxlength="30" required>
+          <input type="text" name="AsignaturaProfe" class="Input_Text"
+            value="<?php echo htmlspecialchars($AsigProf); ?>" placeholder="Asignatura del Profesor" maxlength="30"
+            required>
         </div>
         <div>
           <label>Area</label>
-          <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($AreaProf); ?>" placeholder="Area del Profesor" maxlength="30">
+          <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($AreaProf); ?>"
+            placeholder="Area del Profesor" maxlength="30">
+        </div>
+        <div>
+          <label>Seleccione Grupo si es Director<label>
+              <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
+              <select name="FornIdGrupo" class="Input_Text">
+                <?php if ($isUpdate) { ?>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
+                <?php } ?>
+                <?php
+                foreach ($mt_grupos as $opciones): ?>
+                  <option value="<?php echo $opciones['IdGrupo'] ?>">
+                    <?php echo $opciones['IdGrupo'] ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
         </div>
         <div>
           <label>Email</label>
-          <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Profesor" maxlength="50">
+          <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>"
+            placeholder="Correo del Profesor" maxlength="50">
         </div>
         <div>
           <label>Contraseña</label>
-          <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Profesor" maxlength="255">
+          <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>"
+            placeholder="Contraseña del Profesor" maxlength="255">
         </div>
         <div>
           <label>Imagen Usuario Nueva</label>
           <div class="setting">
-            <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
+            <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate)
+              echo 'required'; ?>>
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
                 <path
@@ -95,4 +137,5 @@ include ($RootPath . "/models/TeacherModel.php"); ?>
   </form>
 </main>
 </body>
+
 </html>

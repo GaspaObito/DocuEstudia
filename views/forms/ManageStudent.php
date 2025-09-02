@@ -47,7 +47,7 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>¿Vive con el acudiente?</label>
+            <label>¿Vive con el estudiante?</label>
             <div class="setting">
               <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua)?>">                
               <select name="ViveAcudiente" class="Input_Text">
@@ -69,7 +69,7 @@ include ($RootPath . "/models/StudentModel.php");?>
     </div>
     <!-- ===== Formulario historial_escolar ===== -->
     <div id="form2" class="formulario" style="display: none;">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Hisorial Escolar</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Información del Colegio Anterior (Estudiante)</h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
@@ -79,7 +79,7 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Ultimo mt_grados</label>
+            <label>Ultimo Grado Realizado</label>
             <div class="setting">
               <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo mt_grados Cursado" required>
             </div>
@@ -125,7 +125,7 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>¿Practica Deporte?</label>
+            <label>¿Practicaba algun deporte?</label>
             <div class="setting">
               <input type="hidden" name="PracticDep_Actual" value="<?php echo htmlspecialchars($PracticaDeporte)?>">
               <select name="PracticaDeporte" class="Input_Text">
@@ -140,7 +140,7 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Nombre Deporte</label>
+            <label>Nombre del Deporte</label>
             <div class="setting">
               <input type="text" name="Nombre_Deporte" class="Input_Text" value="<?php echo htmlspecialchars($NombreDeporte); ?>" placeholder="Ingrese Nombre Deporte">
             </div>
@@ -154,7 +154,7 @@ include ($RootPath . "/models/StudentModel.php");?>
     </div>
     <!-- ===== Formulario Medicos ===== -->
     <div id="form3" class="formulario" style="display: none;">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Datos Medicos</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Datos Medicos  (Estudiante)</h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
@@ -164,13 +164,19 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Prioridad Sanitaria</label>
+            <label>Prioridad Sanitaria (ELIMINAR)</label>
             <div class="setting">
               <input type="text" name="Sanitaria" class="Input_Text" value="<?php echo htmlspecialchars($Sanitaria); ?>" placeholder="Parentesco del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Ocupación</label>
+            <label>Discapacidades (IMPLEMENTAR)</label>
+            <div class="setting">
+              <input type="text" name="Sanitaria" class="Input_Text" value="<?php echo htmlspecialchars($Sanitaria); ?>" placeholder="Parentesco del acudiente" required>
+            </div>
+          </div>
+          <div>
+            <label>Enfermedades actuales (IMPLEMENTAR)</label>
             <div class="setting">
               <input type="text" name="Ocupacion" class="Input_Text" value="<?php echo htmlspecialchars($Ocupacion); ?>" placeholder="Ocupación del acudiente" required>
             </div>
@@ -271,18 +277,38 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>mt_grados Estudiante</label>
+            <label>Grado Actual<label>
             <div class="setting">
-              <input type="hidden" name="NomCurso_Actual" value="<?php echo htmlspecialchars($IdGrado)?>">
-              <select name="FornCurso" class="Input_Text">
+             <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
+              <select name="FornIdGrado" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>Selecione el mt_grados</option>
-                <?php } ?>              
-                <?php foreach ($totalCurso as $opciones): ?>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
+                <?php } ?>
+                <?php
+                foreach ($mt_grados as $opciones): ?>
                   <option value="<?php echo $opciones['IdGrado'] ?>">
                     <?php echo $opciones['NomGrado'] ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label>Seleccione Grupo al que va a pertenecer<label>
+            <div class="setting">
+              <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
+              <select name="FornIdGrupo" class="Input_Text">
+                <?php if ($isUpdate) { ?>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
+                <?php } ?>
+                <?php
+                foreach ($mt_grupos as $opciones): ?>
+                  <option value="<?php echo $opciones['IdGrupo'] ?>">
+                    <?php echo $opciones['IdGrupo'] ?>
                   </option>
                 <?php endforeach; ?>
               </select>
@@ -333,7 +359,7 @@ include ($RootPath . "/models/StudentModel.php");?>
           <input type="hidden" name="IdMedica" value="<?php echo htmlspecialchars($IdMed); ?>">
           <input type="hidden" name="IdObservador" value="<?php echo htmlspecialchars($IdObs); ?>">
           <input type="hidden" name="IdUser" value="<?php echo htmlspecialchars($IdUser); ?>">
-          <input type="hidden" name="IdImgEst" value="<?php echo htmlspecialchars($IdImgEst); ?>">
+          <input type="hidden" name="IdImg" value="<?php echo htmlspecialchars($IdImg); ?>">
           <button type="submit" class="boton" name="SendDataStudent">Enviar</button>
         </div>
       </fieldset>
