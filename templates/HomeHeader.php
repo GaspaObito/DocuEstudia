@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <?php require_once(__DIR__ . "/../config/config.php");?>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DocuEstudia</title>
-  <?php define('BASE_URL', '/proyectos/DocuEstudia'); ?>
+  <!-- Usamos BASE_URL que viene desde config.php -->
   <link rel="icon" href="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" type="icon" />
   <link rel="preload" href="<?php echo BASE_URL; ?>/assets/css/normalize.css" as="style">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Main.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Annotation.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Login.css">
   <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js"></script>
+</head>
+
 </head>
 
 <body>

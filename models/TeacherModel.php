@@ -1,8 +1,7 @@
 <!-- ================ CRUD PARA TEACHER ================ -->
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-// Conexion Base de Datos
-include ("$RootPath/models/DatabaseConnection.php");
+require_once(__DIR__ . "/../config/config.php");
+require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
 $Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;//Profesor
 // Recolecion ID Profesor 
@@ -48,7 +47,7 @@ function deleteTeacher($conexion, $IdUser)
   mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
+  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
@@ -62,7 +61,7 @@ function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellid
   // Leer el contenido binario de la imagen
   $BinarioImagen = file_get_contents($Imagen_temporal);
   // Mover la imagen a la carpeta de destino
-  move_uploaded_file($Imagen_temporal, "$RootPath/assets/images/phototeacher/$NombreImagen");
+  move_uploaded_file($Imagen_temporal,  BASE_URL . "/assets/images/phototeacher/$NombreImagen");
   // Insertar en la base de datos 
   $sql_TbImagen = "INSERT INTO imagenes (IdRol,NomImg, BinImg) VALUES (?,?,?)";
   $stmt = $conexion->prepare($sql_TbImagen);
@@ -97,7 +96,7 @@ if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
   
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
+  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
@@ -110,7 +109,7 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
     $rutaImagenAnterior = "$RootPath/assets/images/phototeacher/" . $Before_NameImage;
     if (file_exists($rutaImagenAnterior)) {
       $New_NameImage = "Obsolete_" . $Before_NameImage;
-      rename($rutaImagenAnterior, "$RootPath/assets/images/phototeacher/phototeacherobsolete/" . $New_NameImage);
+      rename($rutaImagenAnterior, BASE_URL . "/assets/images/phototeacher/phototeacherobsolete/" . $New_NameImage);
     }
     // Obtener la extensión del archivo original
     $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -119,7 +118,7 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
     // Leer el contenido binario de la imagen
     $BinarioImagen = file_get_contents($Imagen_temporal);
     // Mover la imagen a la carpeta de destino
-    move_uploaded_file($Imagen_temporal, "$RootPath/assets/images/phototeacher/$NombreImagen");
+    move_uploaded_file($Imagen_temporal, BASE_URL . "/assets/images/phototeacher/$NombreImagen");
     // Actualizar en la base de datos utilizando una consulta preparada
     $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";
     $stmt = $conexion->prepare($sql_TbImagen);
@@ -181,7 +180,7 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
   $actgrupos->close();
   }
 echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</script>";
-echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
+echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== LEER READ FUNCTION ==========
 function readTeacher($conexion, $IdUser)

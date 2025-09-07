@@ -1,4 +1,4 @@
-<?php include("templates/HomeHeader.php");?>
+<?php require_once("templates/HomeHeader.php");?>
 <div id="Fondo">
     <div id="TitleStart" style="padding-top: 100px;">
         <h1>OBSERVADOR ONLINE</h1>
@@ -54,4 +54,4 @@
         <img class="Image-Style" src="assets/ui/retroalimentacion.jpg" alt="Imagen" class="right-image">
     </div>
 </div>
-<?php include("templates/HomeFooter.php");?>
+<?php require_once("templates/HomeFooter.php");?>

@@ -1,8 +1,8 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ("$RootPath/templates/HomeHeader.php");
-include ("$RootPath/models/DatabaseConnection.php");?>
-
+require_once(__DIR__ . "/../config/config.php");
+require_once (ROOT_PATH."/templates/HomeHeader.php");
+require_once (ROOT_PATH."/models/DatabaseConnection.php");
+?>
 <main class="ContainerGeneral" style="max-height: 180rem;">
   <div class="nav__miniventana">
     <a></a>
@@ -60,4 +60,4 @@ include ("$RootPath/models/DatabaseConnection.php");?>
     </table>
   </div>
 </main>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include (ROOT_PATH."/templates/HomeFooter.php"); ?>

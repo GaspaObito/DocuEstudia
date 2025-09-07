@@ -1,8 +1,9 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include($RootPath . "/templates/HomeHeader.php");
-include($RootPath . "/config/ProtectPages.php");
-include($RootPath . "/models/TeacherModel.php"); ?>
+require_once(__DIR__ . "/../../config/config.php");
+require_once(ROOT_PATH . "/templates/HomeHeader.php");
+require_once(ROOT_PATH . "/config/ProtectPages.php");
+require_once(ROOT_PATH . "/models/TeacherModel.php");
+?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">ACTUALIZAR PROFESOR</h1>
@@ -75,4 +76,4 @@ include($RootPath . "/models/TeacherModel.php"); ?>
     </a>
   </div>
 </main>
-<?php include("$RootPath/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

@@ -1,12 +1,12 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include($RootPath . "/templates/HomeHeader.php");
-include($RootPath . "/config/ProtectPages.php");
-include($RootPath . "/models/AnnotationsModel.php");
+require_once(__DIR__ . "/../../config/config.php");
+require_once(ROOT_PATH . "/templates/HomeHeader.php");
+require_once(ROOT_PATH . "/config/ProtectPages.php");
+require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php include("$RootPath/controllers/teacher/StudentInfo.php"); ?>
+    <?php require_once(ROOT_PATH ."/controllers/teacher/StudentInfo.php"); ?>
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
@@ -70,4 +70,4 @@ include($RootPath . "/models/AnnotationsModel.php");
     </div>
   </div>
 </main>
-<?php include("$RootPath/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH ."/templates/HomeFooter.php"); ?>

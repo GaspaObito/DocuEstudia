@@ -1,8 +1,9 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include($RootPath . "/templates/HomeHeader.php");
-include($RootPath . "/config/ProtectPages.php");
-include($RootPath . "/models/TeacherModel.php"); ?>
+require_once(__DIR__ . "/../../config/config.php");
+require_once(ROOT_PATH . "/templates/HomeHeader.php");
+require_once(ROOT_PATH . "/config/ProtectPages.php");
+require_once(ROOT_PATH . "/models/TeacherModel.php");
+?>
 <main class="ContainerGeneral">
   <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Profesor</h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
@@ -139,6 +140,6 @@ include($RootPath . "/models/TeacherModel.php"); ?>
     </fieldset>
   </form>
 </main>
+<?php include(ROOT_PATH."/templates/HomeFooter.php"); ?>
 </body>
-
 </html>

@@ -1,6 +1,7 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include("$RootPath/templates/HomeHeader.php"); ?>
+require_once(__DIR__ . "/../../config/config.php");
+require_once (ROOT_PATH."/templates/HomeHeader.php");
+?>
 <div class="bienvenido">
   <div class="bienvenido__login">
 
@@ -74,4 +75,4 @@ include("$RootPath/templates/HomeHeader.php"); ?>
     </div>
   </div>
 </div>
-<?php include("$RootPath/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH."/templates/HomeFooter.php"); ?>

@@ -1,8 +1,7 @@
 <!-- ================ CRUD PARA ANNOTATION ================ -->
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-// Conexion Base de Datos
-include("$RootPath/models/DatabaseConnection.php");
+require_once(__DIR__ . "/../config/config.php");
+require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
 $Nombre = '';$Apellido = '';$DescFalta = '';
 // Recolecion ID Annotation 
@@ -55,7 +54,7 @@ function deleteAnnotation($conexion, $idAnot)
   mysqli_query($conexion, "delete from anotacion where IdAnot='$idAnot'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('LA ANOTACION SE ELIMINO CORRECTAMENTE')</script>
-  <script>location.href='/proyectos/DocuEstudia/controllers/teacher/AnnotationsHistory.php'</script>";
+  <script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsHistory.php'</script>";
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion)
@@ -65,7 +64,7 @@ function createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripc
   mysqli_query($conexion, $sql_detalle) or die("ERROR EN LA INSERCION");
   mysqli_close($conexion);
   echo "<script>alert('LA ANOTACION SE INSERTO CORRECTAMENTE')</script>
-  <script>location.href = '/proyectos/DocuEstudia/views/forms/ManageAnnotations.php'</script>";
+  <script>location.href = '" . BASE_URL . "/views/forms/ManageAnnotations.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion)
@@ -80,7 +79,7 @@ function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descrip
   mysqli_query($conexion, $sql_detalle) or die("ERROR EN LA INSERCION");
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>
-    <script>location.href = '/proyectos/DocuEstudia/views/forms/ManageAnnotations.php  '</script>";
+    <script>location.href = '" . BASE_URL . "/views/forms/ManageAnnotations.php  '</script>";
 }
 // ========== LEER READ FUNCTION ==========
 function readAnnotation($conexion, $IdObs)

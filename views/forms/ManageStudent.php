@@ -1,8 +1,9 @@
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-include ($RootPath . "/templates/HomeHeader.php");
-include ($RootPath . "/config/ProtectPages.php");
-include ($RootPath . "/models/StudentModel.php");?>
+require_once(__DIR__ . "/../../config/config.php");
+require_once(ROOT_PATH . "/templates/HomeHeader.php");
+require_once(ROOT_PATH . "/config/ProtectPages.php");
+require_once(ROOT_PATH . "/models/StudentModel.php");
+?>
 <main class="ContainerGeneral">
   <!-- ===== Formulario Acuediente ===== -->
   <form method="post" enctype="multipart/form-data">
@@ -374,4 +375,4 @@ include ($RootPath . "/models/StudentModel.php");?>
     document.getElementById(formulario).style.display = 'block';
   }
 </script>
-<?php include ("$RootPath/templates/HomeFooter.php"); ?>
+<?php include (ROOT_PATH."/templates/HomeFooter.php"); ?>

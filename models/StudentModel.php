@@ -1,8 +1,7 @@
 <!-- ================ CRUD PARA STUDENT ================ -->
 <?php
-$RootPath = ($_SERVER['DOCUMENT_ROOT'] . "/proyectos/DocuEstudia");
-// Conexion Base de Datos
-include ("$RootPath/models/DatabaseConnection.php");
+require_once(__DIR__ . "/../config/config.php");
+require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // ========== Inicializar variables con valores por defecto ==========
 // Guardian
 $NombreGua = '';$ApellidoGua = '';$OcupacionGua = '';$TelefonoGua = '';$EmailGua = '';$ParentescoGua = '';$ViveAcudienteGua = '';
@@ -41,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($action === 'delete') {
     deleteStudent($conexion, $IdObs);
   } elseif ($action === 'create') {
-    createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
+    createStudent($conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
       $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
       $Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
       $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
       $NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'update') {
-    updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
+    updateStudent($conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
      $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
      $IdMed,$Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
      $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
@@ -83,11 +82,11 @@ function deleteStudent($conexion, $IdObs)
   mysqli_query($conexion, $sql_curso) or die ("ERROR EN LA INSERCION" . $IdObs);
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/teacher/AnnotationsSearch.php'</script>";
+  echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
+function createStudent($conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
   $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
@@ -119,7 +118,7 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   // Leer el contenido binario de la imagen
   $BinarioImagen = file_get_contents($Imagen_temporal);
   // Mover la imagen a la carpeta de destino
-  move_uploaded_file($Imagen_temporal, "$RootPath/assets/images/photostudent/$NombreImagen");
+  move_uploaded_file($Imagen_temporal, ROOT_PATH."/assets/images/photostudent/$NombreImagen");
   // Insertar en la base de datos
   $sql_TbImagen = "INSERT INTO imagenes (IdRol,NomImg,BinImg) VALUES (?,?,?)";//MAX FILE SIZE 8MG
   $stmt = $conexion->prepare($sql_TbImagen); 
@@ -145,10 +144,10 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $sql_curso->close();
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE CREARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/teacher/AnnotationsSearch.php'</script>";
+  echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
+function updateStudent($conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
   $IdMed,$Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
   $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
@@ -191,10 +190,10 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
     // Comprueba si existe la imagen Anterior para Rename, Change Locate
     $Before_NameImage = $_POST["Nom_Imagen"];
-    $rutaImagenAnterior = "$RootPath/assets/images/photostudent/" . $Before_NameImage;
+    $rutaImagenAnterior = ROOT_PATH."/assets/images/photostudent/" . $Before_NameImage;
     if (file_exists($rutaImagenAnterior)) {
       $New_NameImage = "Obsolete_" . $Before_NameImage;
-      rename($rutaImagenAnterior, "$RootPath/assets/images/photostudent/photostudentobsolete/" . $New_NameImage);
+      rename($rutaImagenAnterior, ROOT_PATH."/assets/images/photostudent/photostudentobsolete/" . $New_NameImage);
     }
     // Obtener la extensión del archivo original
     $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -203,7 +202,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
     // Leer el contenido binario de la imagen
     $BinarioImagen = file_get_contents($Imagen_temporal);
     // Mover la imagen a la carpeta de destino
-    move_uploaded_file($Imagen_temporal, "$RootPath/assets/images/photostudent/$NombreImagen");
+    move_uploaded_file($Imagen_temporal, ROOT_PATH."/assets/images/photostudent/$NombreImagen");
     // Actualizar en la base de datos utilizando una consulta preparada
     $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";//MAX FILE SIZE 8MG
     $stmt = $conexion->prepare($sql_TbImagen);
@@ -248,7 +247,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   $sql_curso->close();
   mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>";
-  echo "<script>location.href = '/proyectos/DocuEstudia/controllers/teacher/AnnotationsSearch.php'</script>";
+  echo "<script>location.href = '" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
 }
 // ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
 function readStudent($conexion, $IdObs)

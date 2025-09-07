@@ -139,8 +139,16 @@
               <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['NomEPSMed'] ?>">
             </div>
             <div class="formulario__miniventana">
-              <label>Prioridad Sanitaria</label>
-              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['PrioSanitaMed'] ?>">
+              <label>Restricciones médicas</label>
+              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['RestSanitaMed'] ?>">
+            </div>
+            <div class="formulario__miniventana">
+              <label>Discapacidades</label>
+              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['DiscapMed'] ?>">
+            </div>
+            <div class="formulario__miniventana">
+              <label>Enfermedades actuales</label>
+              <input readonly class="input_miniventana" type="text" value="<?php echo $extraido['EnferMed'] ?>">
             </div>
             <div class="formulario__miniventana">
               <label>Recomendaciones Medicas</label>
