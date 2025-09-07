@@ -9,7 +9,7 @@ $NombreGua = '';$ApellidoGua = '';$OcupacionGua = '';$TelefonoGua = '';$EmailGua
 // Historial_escolar
 $ColegioAnterior = '';$UltCursoCursado = '';$Jornada = '';$EsRepitente = '';$CuantasVeces = '';$PracticaDeporte = '';$NombreDeporte = '';
 // info_medica
-$Eps = '';$Sanitaria = '';$Ocupacion = '';$Recomendaciones = '';$Antecendentes = '';$FornTipoSangre = '';
+$Eps = '';$RestSanitaMed = '';$DiscapMed = '';$EnferMed = '';$Recomendaciones = '';$Antecendentes = '';$FornTipoSangre = '';
 // Student
 $NombreStu = '';$ApellidoStu = '';$TipoDcto = '';$TelefonoStu = '';$FechaNacimientoStu = '';$Direccion = '';$NumDcto = '';$IdGrado = '';$Email = '';$Password = '';$IdRol = 1;//Estudiante
 // Recolecion ID Observador 
@@ -20,6 +20,8 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
+$totalSangre = "SELECT * FROM mt_tsangre";
+$totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
   // Guardian
@@ -27,9 +29,9 @@ if (isset($_POST["SendDataStudent"])) {
   // Historial_escolar
   $IdHistEsc = $_POST['IdEscolar'];$ColegioAnterior = $_POST["Colegio_Anterior"];$UltCursoCursado = $_POST["Ult_Curso_Cursado"];$Jornada = $_POST["Jornada"];$EsRepitente = $_POST["Es_Repitente"];$CuantasVeces = $_POST["CuantasVeces"];$PracticaDeporte = $_POST["PracticaDeporte"];$NombreDeporte = $_POST["Nombre_Deporte"];
   // info_medica
-  $IdMed = $_POST['IdMedica'];$Eps = $_POST["Eps"];$Sanitaria = $_POST["Sanitaria"];$Ocupacion = $_POST["Ocupacion"];$Recomendaciones = $_POST["Recomendaciones"];$Antecendentes = $_POST["Antecendentes"];$FornTipoSangre = $_POST["FornTipoSangre"];
+  $IdMed = $_POST['IdMedica'];$Eps = $_POST["Eps"];$RestSanitaMed = $_POST["RestSanitaMed"];$DiscapMed = $_POST["DiscapMed"];$EnferMed = $_POST["EnferMed"];$Recomendaciones = $_POST["Recomendaciones"];$Antecendentes = $_POST["Antecendentes"];$FornTipoSangre = $_POST["FornTipoSangre"];
   // Student
-  $IdObs = $_POST['IdObservador'];$IdUser = $_POST['IdUser'];$NombreStu = $_POST["Nombre_Est"];$ApellidoStu = $_POST["Apellido_Est"];$TipoDcto = $_POST["TipoDcto"];$NumDcto = $_POST["NumeroIdentif_Est"];$IdGrado = $_POST["FornCurso"];$TelefonoStu = $_POST["Telefono_Est"];$FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];$Direccion = $_POST["Residencia_Est"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
+  $IdObs = $_POST['IdObservador'];$IdUser = $_POST['IdUser'];$NombreStu = $_POST["Nombre_Est"];$ApellidoStu = $_POST["Apellido_Est"];$TipoDcto = $_POST["TipoDcto"];$NumDcto = $_POST["NumeroIdentif_Est"];$IdGrado = $_POST["FornIdGrado"];$IdGrupo = $_POST["FornIdGrupo"];$TelefonoStu = $_POST["Telefono_Est"];$FechaNacimientoStu = $_POST["Fecha_Nacimiento_Est"];$Direccion = $_POST["Residencia_Est"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];
   //Recibimos Imagen POST
   $IdImg= $_POST['IdImg'];$TipoImagen = $_FILES['Imagen']['type'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
@@ -41,14 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($action === 'create') {
     createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
       $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
-      $Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-      $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+      $Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
+      $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
       $NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'update') {
     updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
      $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
-     $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-     $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+     $IdMed,$Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
+     $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
      $IdImg,$NombreImagenOriginal,$Imagen_temporal);
   } elseif ($action === 'read') {
     $StudentData = readStudent($conexion, $IdObs);
@@ -58,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Historial_escolar
     $IdHistEsc = $StudentData['IdHistEsc'];$ColegioAnterior = $StudentData["AnteriorEsc"];$UltCursoCursado = $StudentData["CursoEsc"];$Jornada = $StudentData["JornadaEsc"];$EsRepitente = $StudentData["RepitenteEsc"];$CuantasVeces = $StudentData["CantRepiEsc"];$PracticaDeporte = $StudentData["PracDeportEsc"];$NombreDeporte = $StudentData["NomDeportEsc"];
     // info_medica
-    $IdMed = $StudentData['IdMed'];$Eps = $StudentData["NomEPSMed"];$Sanitaria = $StudentData["PrioSanitaMed"];$Ocupacion = $StudentData["OcupaMed"];$Recomendaciones = $StudentData["RecomMed"];$Antecendentes = $StudentData["AnteceMed"];$IdTipoSangre = $StudentData["IdTipoSanMed"];$NomTipoSangre = $StudentData["GrupoSanguineo"];
+    $IdMed = $StudentData['IdMed'];$Eps = $StudentData["NomEPSMed"];$RestSanitaMed = $StudentData["RestSanitaMed"];$DiscapMed = $StudentData["DiscapMed"];$EnferMed = $StudentData["EnferMed"];$Recomendaciones = $StudentData["RecomMed"];$Antecendentes = $StudentData["AnteceMed"];$IdTipoSanMed = $StudentData["IdTipoSanMed"];$NomTipoSangre = $StudentData["GrupoSanguineo"];
     // Student
-    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImg= $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdGrado = $StudentData["IdGrado"];$NomGrado = $StudentData["NomGrado"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
+    $IdObs = $StudentData['IdObs'];$IdUser = $StudentData['IdUser'];$IdImg= $StudentData['IdImg'];$NombreImagen = $StudentData['NomImg'];$NombreStu = $StudentData["Nombre"];$ApellidoStu = $StudentData["Apellido"];$TipoDcto = $StudentData["TipoDcto"];$NumDcto = $StudentData["NumDcto"];$IdGrado = $StudentData["IdGrado"];$IdGrupo = $StudentData["IdGrupo"];$NomGrado = $StudentData["NomGrado"];$TelefonoStu = $StudentData["Telefono"];$FechaNacimientoStu = $StudentData["FechNacimiento"];$Direccion = $StudentData["Direccion"];$Email = $StudentData["Email"];$Password = $StudentData["Password"];
   }  else {
     echo 'error';
   }
@@ -87,8 +89,8 @@ function deleteStudent($conexion, $IdObs)
 // ========== CREAR CREATE FUNCTION ==========
 function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
-  $Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+  $Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
+  $NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
   $NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -103,9 +105,9 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $insert_historial->execute();
   $insert_historial->close();
   $ultimoId_HistorialEscolar = mysqli_insert_id($conexion);  //  Last Id Insert
-  // ---Startinfo_medica
-  $insert_infomedica = $conexion->prepare("INSERT INTO info_medica  (NomEPSMed, PrioSanitaMed, OcupaMed, RecomMed, AnteceMed, IdTipoSanMed)  VALUES (?, ?, ?, ?, ?, ?)");
-  $insert_infomedica->bind_param("sssssi",$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre);
+  // ---Startinfo_medicaEnferMed
+  $insert_infomedica = $conexion->prepare("INSERT INTO info_medica  (NomEPSMed, RestSanitaMed, DiscapMed, EnferMed, RecomMed, AnteceMed, IdTipoSanMed)  VALUES (?, ?, ?, ?, ?, ?, ?)");
+  $insert_infomedica->bind_param("ssssssi",$Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre);
   $insert_infomedica->execute();
   $insert_infomedica->close();
   $ultimoId_InfoMedica = mysqli_insert_id($conexion);  // Last Id Insert 
@@ -133,8 +135,8 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
   $insert_usuario->close();
   $ultimoId_Usuario = mysqli_insert_id($conexion);  // Last Id Insert 
   // ---StartObservador
-  $insert_observador = $conexion->prepare("INSERT INTO observador (IdUser, IdDatAcudi, IdHistEsc, IdMed, IdGrado) VALUES (?, ?, ?, ?, ?)");
-  $insert_observador->bind_param("iiiii",$ultimoId_Usuario,$ultimoId_DatosFamiliar,$ultimoId_HistorialEscolar,$ultimoId_InfoMedica,$IdGrado);
+  $insert_observador = $conexion->prepare("INSERT INTO observador (IdUser, IdDatAcudi, IdHistEsc, IdMed, IdGrado,IdGrupo) VALUES (?, ?, ?, ?, ?, ?)");
+  $insert_observador->bind_param("iiiiii",$ultimoId_Usuario,$ultimoId_DatosFamiliar,$ultimoId_HistorialEscolar,$ultimoId_InfoMedica,$IdGrado,$IdGrupo);
   $insert_observador->execute();
   $insert_observador->close();
   // ---StartCurso
@@ -148,8 +150,8 @@ function createStudent($RootPath,$conexion,$NombreGua,$ApellidoGua,$OcupacionGua
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
   $IdHistEsc,$ColegioAnterior,$UltCursoCursado,$Jornada,$EsRepitente,$CuantasVeces,$PracticaDeporte,$NombreDeporte,
-  $IdMed,$Eps,$Sanitaria,$Ocupacion,$Recomendaciones,$Antecendentes,$FornTipoSangre,
-  $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
+  $IdMed,$Eps,$RestSanitaMed,$DiscapMed,$EnferMed,$Recomendaciones,$Antecendentes,$FornTipoSangre,
+  $IdObs,$IdUser,$NombreStu,$ApellidoStu,$TipoDcto,$NumDcto,$IdGrado,$IdGrupo,$TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,
   $IdImg,$NombreImagenOriginal,$Imagen_temporal)
 {
   // ---StartGuardian
@@ -181,8 +183,8 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   if ($FornTipoSangre === "mantener") {
     $FornTipoSangre = $_POST["GrupSangui_Actual"];
   }
-  $act_infomedica = $conexion->prepare("UPDATE info_medica SET NomEPSMed = ?, PrioSanitaMed = ?, OcupaMed = ?, RecomMed = ?, AnteceMed = ?, IdTipoSanMed = ? WHERE IdMed = ?");
-  $act_infomedica->bind_param("ssssssi", $Eps, $Sanitaria, $Ocupacion, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdMed);
+  $act_infomedica = $conexion->prepare("UPDATE info_medica SET NomEPSMed = ?, RestSanitaMed = ?, DiscapMed=?, EnferMed = ?, RecomMed = ?, AnteceMed = ?, IdTipoSanMed = ? WHERE IdMed = ?");
+  $act_infomedica->bind_param("sssssssi", $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdMed);
   $act_infomedica->execute();
   $act_infomedica->close();
   // Validamos si recibio o no imagen
@@ -216,7 +218,7 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   }
   // El usuario ha seleccionado la opción "mantener"
   if ($IdGrado === "mantener") {
-    $IdGrado = $_POST["NomCurso_Actual"];
+    $IdGrado = $_POST["IdGrado_Actual"];
   }
   //Revisa si la contraseña cambia oh sigue igual
   $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
@@ -235,9 +237,9 @@ function updateStudent($RootPath,$conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$
   $act_usuario->execute();
   $act_usuario->close();
   // ---StartObservador
-  $sql_Actualizar = "UPDATE observador SET IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdGrado =? WHERE IdObs =?";
+  $sql_Actualizar = "UPDATE observador SET IdDatAcudi =?, IdHistEsc =?, IdMed =?, IdGrado =?, IdGrupo =? WHERE IdObs =?";
   $stmt = $conexion->prepare($sql_Actualizar);
-  $stmt->bind_param('iiiii', $IdDatAcudi, $IdHistEsc, $IdMed, $IdGrado, $IdObs);
+  $stmt->bind_param('iiiiii', $IdDatAcudi, $IdHistEsc, $IdMed, $IdGrado,$IdGrupo, $IdObs);
   $stmt->execute();
   $stmt->close();
   // ---StartCurso
@@ -254,11 +256,11 @@ function readStudent($conexion, $IdObs)
   $stmt = $conexion->prepare("SELECT *,t.GrupoSanguineo,c.NomGrado,p.NomImg FROM observador o 
   JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi 
   JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc 
-  JOIN info_medica i ON o.IdMed  = i.IdMed 
-  JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed
-  JOIN mt_grados c ON o.IdGrado = c.IdGrado 
+  LEFT JOIN info_medica i ON o.IdMed  = i.IdMed 
+  LEFT JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed
+  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado 
   JOIN usuarios s ON s.IdUser = o.IdUser
-  JOIN imagenes p ON p.IdImg = s.IdImg  WHERE IdObs = ?");
+  LEFT JOIN imagenes p ON p.IdImg = s.IdImg  WHERE IdObs = ?");
   $stmt->bind_param('i', $IdObs);
   $stmt->execute();
   $result = $stmt->get_result();

@@ -15,7 +15,7 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
-  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'] ?? null;
+  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'];
   //Recibimos Imagen POST
   $ultimoId_Imagen = $_POST['id_lastImg'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal);
+    updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $IdUser);
     // Asignar las variables desde el array devuelto
@@ -101,7 +101,7 @@ if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal)
+      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf)
 {
   // Validamos si recibio o no imagen
   if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
@@ -158,8 +158,30 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
   $actprofesor->execute();  
   $actprofesor->close();
 
-  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
+  $buscarIdProf = $conexion->prepare("SELECT IdProf FROM profesor WHERE IdUser = ?");
+  $buscarIdProf->bind_param('i', $IdUser);
+  $buscarIdProf->execute();
+  $buscarIdProf->bind_result($IdProf);
+  $buscarIdProf->fetch();
+  $buscarIdProf->close();
+
+  if ($IdGrupo === "mantener") {
+    $IdGrupo = $_POST["IdGrupo_Actual"];
+    
+  }
+  if (!empty($IdGrupo)) {
+  $limpiarAsignaciones = $conexion->prepare("UPDATE mt_grupos SET IdProf=NULL WHERE IdProf=?");
+  $limpiarAsignaciones->bind_param('i', $IdProf);
+  $limpiarAsignaciones->execute();
+  $limpiarAsignaciones->close();
+
+  $actgrupos = $conexion->prepare("UPDATE mt_grupos SET IdProf=? WHERE IdGrupo=?");
+  $actgrupos->bind_param('ii', $IdProf, $IdGrupo);
+  $actgrupos->execute();
+  $actgrupos->close();
+  }
+echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</script>";
+echo "<script>location.href='/proyectos/DocuEstudia/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== LEER READ FUNCTION ==========
 function readTeacher($conexion, $IdUser)

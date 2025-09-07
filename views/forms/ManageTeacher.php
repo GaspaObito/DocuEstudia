@@ -76,6 +76,9 @@ include($RootPath . "/models/TeacherModel.php"); ?>
               <select name="FornIdGrupo" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                   <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
+                  <option value="quitar">
+                    Sin grupo
+                  </option>
                 <?php } else { ?>
                   <option disabled selected>...</option>
                 <?php } ?>

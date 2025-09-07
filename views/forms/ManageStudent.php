@@ -164,21 +164,21 @@ include ($RootPath . "/models/StudentModel.php");?>
             </div>
           </div>
           <div>
-            <label>Prioridad Sanitaria (ELIMINAR)</label>
+            <label>Restricciones médicas</label>
             <div class="setting">
-              <input type="text" name="Sanitaria" class="Input_Text" value="<?php echo htmlspecialchars($Sanitaria); ?>" placeholder="Parentesco del acudiente" required>
+              <input type="text" name="RestSanitaMed" class="Input_Text" value="<?php echo htmlspecialchars($RestSanitaMed); ?>" placeholder="Parentesco del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Discapacidades (IMPLEMENTAR)</label>
+            <label>Discapacidades</label>
             <div class="setting">
-              <input type="text" name="Sanitaria" class="Input_Text" value="<?php echo htmlspecialchars($Sanitaria); ?>" placeholder="Parentesco del acudiente" required>
+              <input type="text" name="DiscapMed" class="Input_Text" value="<?php echo htmlspecialchars($DiscapMed); ?>" placeholder="Parentesco del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Enfermedades actuales (IMPLEMENTAR)</label>
+            <label>Enfermedades actuales</label>
             <div class="setting">
-              <input type="text" name="Ocupacion" class="Input_Text" value="<?php echo htmlspecialchars($Ocupacion); ?>" placeholder="Ocupación del acudiente" required>
+              <input type="text" name="EnferMed" class="Input_Text" value="<?php echo htmlspecialchars($EnferMed); ?>" placeholder="Ocupación del acudiente" required>
             </div>
           </div>
           <div>
@@ -196,7 +196,7 @@ include ($RootPath . "/models/StudentModel.php");?>
           <div>
             <label>Grupo Sangüínea</label>
             <div class="setting">
-              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSangre)?>">
+              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSanMed)?>">
               <select name="FornTipoSangre" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                     <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomTipoSangre)?></option>
@@ -298,7 +298,6 @@ include ($RootPath . "/models/StudentModel.php");?>
           <div>
             <label>Seleccione Grupo al que va a pertenecer<label>
             <div class="setting">
-              <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
               <select name="FornIdGrupo" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                   <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
