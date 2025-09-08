@@ -1,7 +1,7 @@
 <?php require_once("templates/HomeHeader.php");?>
 <div id="Fondo">
     <div id="TitleStart" style="padding-top: 100px;">
-        <h1>OBSERVADOR ONLINE</h1>
+        <h1>OBSERVADOR ONLINE <i class="fa-solid fa-school"></i></h1>
     </div>
     <div id="content">
         <p>La observación de colegios es un proceso esencial para garantizar la calidad educativa y el buen desempeño

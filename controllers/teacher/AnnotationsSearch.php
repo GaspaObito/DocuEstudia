@@ -9,7 +9,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
   <div class="ContainerUser">
     <?php include(ROOT_PATH . "/controllers/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
-      <h1 id="TitleStart">ANOTACIONES</h1>
+      <h1 id="TitleStart">OBSERVADOR <i class="fa-solid fa-eye"></i></h1>
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
           <legend>Buscar Estudiante por # Documento Identidad</legend>
@@ -18,14 +18,14 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
               <input class="Input_Text" type="text" id="DNI" name="DNI" placeholder="# Documento del estudiante">
             </div>
             <div class="alinear-boton">
-              <button class="boton" type="submit">BUSCAR ESTUDIANTE</button>
+              <button class="boton" type="submit"><i class="fa-solid fa-magnifying-glass"></i> BUSCAR ESTUDIANTE</button>
             </div>
           </div>
         </fieldset>
       </form>
       <div class="alinear-boton">
         <a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">
-          <button class="boton" type="submit" name='buscarDatos'>VER HISTORIAL SERVIDOR</button>
+          <button class="boton" type="submit" name='buscarDatos'><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL SERVIDOR</button>
         </a>
       </div>
       <div class="Container1">
@@ -84,7 +84,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
       <div class="alinear-boton">
         <a href="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php">
           <input type="hidden" name="action" value="create">
-          <button class="boton" type="submit">AÑADIR ESTUDIANTE</button>
+          <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> CREAR ESTUDIANTE</button>
         </a>
       </div>
     </div>

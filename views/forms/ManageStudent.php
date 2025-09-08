@@ -8,7 +8,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
   <!-- ===== Formulario Acuediente ===== -->
   <form method="post" enctype="multipart/form-data">
     <div id="form1" class="formulario">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Acudiente</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ACUDIENTE <i class="fa-solid fa-user-plus"></i></h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
@@ -32,7 +32,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Teléfono</label>
             <div class="setting">
-              <input class="Input_Text" type="number" name="telefono"  class="Input_Text" value="<?php echo htmlspecialchars($TelefonoGua); ?>" placeholder="Teléfono del acudiente" required>
+              <input class="Input_Text" type="number" name="telefono" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoGua); ?>" placeholder="Teléfono del acudiente" required>
             </div>
           </div>
           <div>
@@ -50,12 +50,12 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>¿Vive con el estudiante?</label>
             <div class="setting">
-              <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua)?>">                
+              <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua) ?>">
               <select name="ViveAcudiente" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>...</option>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
                 <?php } ?>
                 <option>Si</option>
                 <option>No</option>
@@ -64,13 +64,13 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           </div>
         </div>
         <div class="alinear-boton" style="justify-content: space-evenly;">
-          <button type="button" class="boton" onclick="mostrarFormulario('form2')">Siguiente</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form2')">SIGUIENTE <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </fieldset>
     </div>
     <!-- ===== Formulario historial_escolar ===== -->
     <div id="form2" class="formulario" style="display: none;">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Información del Colegio Anterior (Estudiante)</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>COLEGIO ANTERIOR <i class="fa-solid fa-school"></i></h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
@@ -94,12 +94,12 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>¿Es repitente?</label>
             <div class="setting">
-            <input type="hidden" name="Repitente_Actual" value="<?php echo htmlspecialchars($EsRepitente)?>">
+              <input type="hidden" name="Repitente_Actual" value="<?php echo htmlspecialchars($EsRepitente) ?>">
               <select name="Es_Repitente" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($EsRepitente)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>...</option>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($EsRepitente) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
                 <?php } ?>
                 <option>Si</option>
                 <option>No</option>
@@ -109,12 +109,12 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>¿Cuantas Veces?</label>
             <div class="setting">
-              <input type="hidden" name="RepiteCant_Actual" value="<?php echo htmlspecialchars($CuantasVeces)?>">
+              <input type="hidden" name="RepiteCant_Actual" value="<?php echo htmlspecialchars($CuantasVeces) ?>">
               <select name="CuantasVeces" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($CuantasVeces)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>...</option>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($CuantasVeces) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
                 <?php } ?>
                 <option>Ninguna</option>
                 <option>1</option>
@@ -128,12 +128,12 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>¿Practicaba algun deporte?</label>
             <div class="setting">
-              <input type="hidden" name="PracticDep_Actual" value="<?php echo htmlspecialchars($PracticaDeporte)?>">
+              <input type="hidden" name="PracticDep_Actual" value="<?php echo htmlspecialchars($PracticaDeporte) ?>">
               <select name="PracticaDeporte" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($PracticaDeporte)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>...</option>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($PracticaDeporte) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
                 <?php } ?>
                 <option>Si</option>
                 <option>No</option>
@@ -148,14 +148,14 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           </div>
         </div>
         <div class="alinear-boton" style="justify-content: space-evenly;">
-          <button type="button" class="boton" onclick="mostrarFormulario('form1')">Anterior</button>
-          <button type="button" class="boton" onclick="mostrarFormulario('form3')">Siguiente</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form1')"><i class="fa-solid fa-arrow-left"></i> ANTERIOR</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form3')">SIGUIENTE <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </fieldset>
     </div>
     <!-- ===== Formulario Medicos ===== -->
     <div id="form3" class="formulario" style="display: none;">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Datos Medicos  (Estudiante)</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>DATOS MEDICOS <i class="fa-solid fa-suitcase-medical"></i></h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
@@ -185,26 +185,28 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Recomendaciones Medicas</label>
             <div class="setting">
-              <input type="text" name="Recomendaciones" class="Input_Text" value="<?php echo htmlspecialchars($Recomendaciones); ?>" placeholder="Recomendaciones Medicas" required>
+              <input type="text" name="Recomendaciones" class="Input_Text"
+                value="<?php echo htmlspecialchars($Recomendaciones); ?>" placeholder="Recomendaciones Medicas" required>
             </div>
           </div>
           <div>
             <label>Antecendentes medicos</label>
             <div class="setting">
-              <input type="text" name="Antecendentes" class="Input_Text" value="<?php echo htmlspecialchars($Antecendentes); ?>" placeholder="Antecendentes Medicas" required>
+              <input type="text" name="Antecendentes" class="Input_Text"
+                value="<?php echo htmlspecialchars($Antecendentes); ?>" placeholder="Antecendentes Medicas" required>
             </div>
           </div>
           <div>
             <label>Grupo Sangüínea</label>
             <div class="setting">
-              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSanMed)?>">
+              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSanMed) ?>">
               <select name="FornTipoSangre" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomTipoSangre)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>Tipo de Sangre</option>
-                <?php } ?>              
-                <?php 
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomTipoSangre) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>Tipo de Sangre</option>
+                <?php } ?>
+                <?php
                 foreach ($totalSangre as $opciones): ?>
                   <option value="<?php echo $opciones['IdTipoSanMed'] ?>">
                     <?php echo $opciones['GrupoSanguineo'] ?>
@@ -215,20 +217,20 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           </div>
         </div>
         <div class="alinear-boton" style="justify-content: space-evenly;">
-          <button type="button" class="boton" onclick="mostrarFormulario('form2')">Anterior</button>
-          <button type="button" class="boton" onclick="mostrarFormulario('form4')">Siguiente</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form2')"><i class="fa-solid fa-arrow-left"></i> ANTERIOR</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form4')">SIGUIENTE <i class="fa-solid fa-arrow-right"></i></button>
         </div>
       </fieldset>
     </div>
     <!-- ===== Formulario Estudiante ===== -->
     <div id="form4" class="formulario" style="display: none;">
-      <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Estudiante</h1>
+      <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ESTUDIANTE <i class="fa-solid fa-address-book"></i></h1>
       <fieldset>
         <div class="formulario__campos1">
           <div>
             <label>Nombre</label>
             <div class="setting">
-              <input  type="text" name="Nombre_Est" class="Input_Text" value="<?php echo htmlspecialchars($NombreStu); ?>" placeholder="Nombre del Estudiante" required>
+              <input type="text" name="Nombre_Est" class="Input_Text" value="<?php echo htmlspecialchars($NombreStu); ?>" placeholder="Nombre del Estudiante" required>
             </div>
           </div>
           <div>
@@ -240,17 +242,17 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Tipo de Documento</label>
             <div class="setting">
-              <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto)?>">
+              <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto) ?>">
               <select name="TipoDcto" class="Input_Text">
                 <?php if ($isUpdate) { ?>
-                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoDcto)?></option>
-                <?php  } else { ?>
-                    <option disabled selected>...</option>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoDcto) ?></option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
                 <?php } ?>
                 <option>CC</option>
                 <option>TI</option>
                 <option>CE</option>
-              </select>  
+              </select>
             </div>
           </div>
           <div>
@@ -279,80 +281,84 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           </div>
           <div>
             <label>Grado Actual<label>
-            <div class="setting">
-             <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
-              <select name="FornIdGrado" class="Input_Text">
-                <?php if ($isUpdate) { ?>
-                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado) ?></option>
-                <?php } else { ?>
-                  <option disabled selected>...</option>
-                <?php } ?>
-                <?php
-                foreach ($mt_grados as $opciones): ?>
-                  <option value="<?php echo $opciones['IdGrado'] ?>">
-                    <?php echo $opciones['NomGrado'] ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
+                <div class="setting">
+                  <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
+                  <select name="FornIdGrado" class="Input_Text">
+                    <?php if ($isUpdate) { ?>
+                      <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado) ?></option>
+                    <?php } else { ?>
+                      <option disabled selected>...</option>
+                    <?php } ?>
+                    <?php
+                    foreach ($mt_grados as $opciones): ?>
+                      <option value="<?php echo $opciones['IdGrado'] ?>">
+                        <?php echo $opciones['NomGrado'] ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
           </div>
           <div>
             <label>Seleccione Grupo al que va a pertenecer<label>
-            <div class="setting">
-              <select name="FornIdGrupo" class="Input_Text">
-                <?php if ($isUpdate) { ?>
-                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
-                <?php } else { ?>
-                  <option disabled selected>...</option>
-                <?php } ?>
-                <?php
-                foreach ($mt_grupos as $opciones): ?>
-                  <option value="<?php echo $opciones['IdGrupo'] ?>">
-                    <?php echo $opciones['IdGrupo'] ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
+                <div class="setting">
+                  <select name="FornIdGrupo" class="Input_Text">
+                    <?php if ($isUpdate) { ?>
+                      <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
+                    <?php } else { ?>
+                      <option disabled selected>...</option>
+                    <?php } ?>
+                    <?php
+                    foreach ($mt_grupos as $opciones): ?>
+                      <option value="<?php echo $opciones['IdGrupo'] ?>">
+                        <?php echo $opciones['IdGrupo'] ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
           </div>
           <div>
             <label>Email</label>
-            <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Estudiante" maxlength="50">
-           </div>
+            <div class="setting">
+              <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Estudiante" maxlength="50" required>
+            </div>
+          </div>
           <div>
             <label>Contraseña</label>
-            <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Estudiante" maxlength="255">
-          </div>         
+            <div class="setting">
+              <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Estudiante" maxlength="255" required>
+            </div>
+          </div>
           <div>
-          <label>Imagen Usuario Nueva</label>
-          <div class="setting">
-            <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                <path
-                  d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
-                </path>
-              </svg>
+            <label>Imagen Usuario Nueva</label>
+            <div class="setting">
+              <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+                  <path
+                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                  </path>
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <label>Imagen Usuario Anterior</label>
-          <div class="setting">
-            <input type="hidden" name="Nom_Imagen" value="<?php echo htmlspecialchars($NombreImagen); ?>">
-            <div class="imagenChange Input_Text">
-              <img
-                src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo htmlspecialchars($NombreImagen); ?>">
-            </div>
-            <div>
-              <svg class="navbar-icon" style="margin:0;">
-                <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Picture.svg#Picture-icon">
-              </svg>
+          <div>
+            <label>Imagen Usuario Anterior</label>
+            <div class="setting">
+              <input type="hidden" name="Nom_Imagen" value="<?php echo htmlspecialchars($NombreImagen); ?>">
+              <div class="imagenChange Input_Text">
+                <img
+                  src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo htmlspecialchars($NombreImagen); ?>">
+              </div>
+              <div>
+                <svg class="navbar-icon" style="margin:0;">
+                  <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Picture.svg#Picture-icon">
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
         </div>
         <div class="alinear-boton" style="justify-content: space-evenly;">
-          <button type="button" class="boton" onclick="mostrarFormulario('form3')">Anterior</button>
+          <button type="button" class="boton" onclick="mostrarFormulario('form3')"><i class="fa-solid fa-arrow-left"></i> ANTERIOR</button>
           <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
           <input type="hidden" name="IdGuardian" value="<?php echo htmlspecialchars($IdDatAcudi); ?>">
           <input type="hidden" name="IdEscolar" value="<?php echo htmlspecialchars($IdHistEsc); ?>">
@@ -360,7 +366,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <input type="hidden" name="IdObservador" value="<?php echo htmlspecialchars($IdObs); ?>">
           <input type="hidden" name="IdUser" value="<?php echo htmlspecialchars($IdUser); ?>">
           <input type="hidden" name="IdImg" value="<?php echo htmlspecialchars($IdImg); ?>">
-          <button type="submit" class="boton" name="SendDataStudent">Enviar</button>
+          <button type="submit" class="boton" name="SendDataStudent">ENVIAR <i class="fa-solid fa-paper-plane"></i></button>
         </div>
       </fieldset>
     </div>
@@ -375,4 +381,4 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
     document.getElementById(formulario).style.display = 'block';
   }
 </script>
-<?php include (ROOT_PATH."/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

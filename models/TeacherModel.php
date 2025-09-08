@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;//Profesor
+$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;$IdProf = 2;//Profesor
 // Recolecion ID Profesor 
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
@@ -24,10 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($action === 'delete') {
     deleteTeacher($conexion, $IdUser);
   } elseif ($action === 'create') {
-    createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
+    createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
+    updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
   } elseif ($action === 'read') {
     $profesorData = readTeacher($conexion, $IdUser);
     // Asignar las variables desde el array devuelto
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }  else {
     echo 'error';
   }
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' || !empty($_GET['DNI'])) {//CONSULTA TODO
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {//CONSULTA TODO
   $resultados = searchTeacher($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
@@ -51,7 +51,7 @@ function deleteTeacher($conexion, $IdUser)
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
+function createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
       $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo)
 {
   // Obtener la extensión del archivo original
@@ -61,7 +61,7 @@ function createTeacher($RootPath, $conexion, $ultimoId_Imagen, $Nombre, $Apellid
   // Leer el contenido binario de la imagen
   $BinarioImagen = file_get_contents($Imagen_temporal);
   // Mover la imagen a la carpeta de destino
-  move_uploaded_file($Imagen_temporal,  BASE_URL . "/assets/images/phototeacher/$NombreImagen");
+  move_uploaded_file($Imagen_temporal,  ROOT_PATH. "/assets/images/phototeacher/$NombreImagen");
   // Insertar en la base de datos 
   $sql_TbImagen = "INSERT INTO imagenes (IdRol,NomImg, BinImg) VALUES (?,?,?)";
   $stmt = $conexion->prepare($sql_TbImagen);
@@ -99,17 +99,17 @@ if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
   echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
+function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
       $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf)
 {
   // Validamos si recibio o no imagen
   if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
     // Comprueba si existe la imagen Anterior para Rename, Change Locate
     $Before_NameImage = $_POST["Nom_Imagen"];
-    $rutaImagenAnterior = "$RootPath/assets/images/phototeacher/" . $Before_NameImage;
+    $rutaImagenAnterior = ROOT_PATH. "/assets/images/phototeacher/" . $Before_NameImage;
     if (file_exists($rutaImagenAnterior)) {
       $New_NameImage = "Obsolete_" . $Before_NameImage;
-      rename($rutaImagenAnterior, BASE_URL . "/assets/images/phototeacher/phototeacherobsolete/" . $New_NameImage);
+      rename($rutaImagenAnterior, ROOT_PATH. "/assets/images/phototeacher/phototeacherobsolete/" . $New_NameImage);
     }
     // Obtener la extensión del archivo original
     $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
@@ -118,7 +118,7 @@ function updateTeacher($RootPath, $conexion, $IdUser, $ultimoId_Imagen, $Nombre,
     // Leer el contenido binario de la imagen
     $BinarioImagen = file_get_contents($Imagen_temporal);
     // Mover la imagen a la carpeta de destino
-    move_uploaded_file($Imagen_temporal, BASE_URL . "/assets/images/phototeacher/$NombreImagen");
+    move_uploaded_file($Imagen_temporal, ROOT_PATH. "/assets/images/phototeacher/$NombreImagen");
     // Actualizar en la base de datos utilizando una consulta preparada
     $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";
     $stmt = $conexion->prepare($sql_TbImagen);
@@ -202,23 +202,49 @@ function readTeacher($conexion, $IdUser)
 // ========== BUSCAR SEARCH FUNCTION ==========
 function searchTeacher($conexion)
 {
-  // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = "SELECT u.IdRol,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, p.*,u.NumDcto, c.IdGrupo,g.NomGrado FROM profesor p LEFT JOIN usuarios u ON u.IdUser =p.IdUser 
-  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
-  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado ";
-  $query = "SELECT COUNT(*) AS total FROM profesor";
-  // Verifica si se envió el formulario de búsqueda
-  if (!empty($_GET['DNI'])) {
-    $Numero_Documento = $_GET['DNI'];
-    $query = "SELECT COUNT(*) AS total FROM usuarios WHERE NumDcto=$Numero_Documento";
-    // Modifica la consulta para filtrar por número de documento
-    $consultaSQL .= " WHERE u.NumDcto='$Numero_Documento'";
-  }
-  // Realiza la consulta
-  $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
-  $resultado = mysqli_query($conexion, $query);
-  $datos = mysqli_fetch_assoc($resultado);
-  $totalFilas = $datos['total'];
-  // Retorna las variables como un array
-  return ['consultar' => $consultar, 'totalFilas' => $totalFilas];
+    $consultaSQL = "SELECT u.IdRol,
+                           CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, 
+                           p.*, u.NumDcto, c.IdGrupo, g.NomGrado 
+                    FROM profesor p
+                    LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
+                    LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
+                    LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado";
+
+    $conditions = []; // Aquí guardamos los filtros dinámicos
+
+    // Filtros dinámicos
+    if (!empty($_GET['DNI'])) {
+        $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
+        $conditions[] = "u.NumDcto = '$dni'";
+    }
+
+    if (!empty($_GET['Nombre'])) {
+        $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
+        $conditions[] = "u.Nombre LIKE '%$nombre%'";
+    }
+
+    if (!empty($_GET['Apellido'])) {
+        $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
+        $conditions[] = "u.Apellido LIKE '%$apellido%'";
+    }
+
+    if (!empty($_GET['Grado'])) {
+        $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
+        $conditions[] = "c.IdGrado = $Grado";
+    }
+
+    if (!empty($conditions)) {
+        $consultaSQL .= " WHERE " . implode(" AND ", $conditions);
+    }
+
+    // Consulta de conteo
+    $query = "SELECT COUNT(*) AS total FROM profesor";
+    $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
+    $resultado = mysqli_query($conexion, $query);
+    $datos = mysqli_fetch_assoc($resultado);
+
+    return [
+        'consultar' => $consultar,
+        'totalFilas' => $datos['total']
+    ];
 }

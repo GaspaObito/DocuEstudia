@@ -11,7 +11,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
-        <h1 id="TitleStart"><?php echo $isUpdate ? 'Actualizar ' : 'Registrar '; ?>Anotacion</h1>
+        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ANOTACION <i class="fa-solid fa-book"></i></h1>
         <div>
           <!-- Aquí usamos BASE_URL -->
           <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
@@ -50,7 +50,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
               </div>
               <div class="Add_Anotacion">
                 <label>DESCRIPCION DE LA ANOTACIÓN</label>
-                <textarea maxlength="255" name="descripcion" class="Input_Text"><?php echo htmlspecialchars($DescFalta) ?></textarea>
+                <textarea required maxlength="255" name="descripcion" class="Input_Text"><?php echo htmlspecialchars($DescFalta) ?></textarea>
               </div>
             </div>
             <?php if ($isUpdate): ?>
@@ -75,7 +75,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
           </fieldset>
           <div class="alinear-boton">
             <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
-            <input type="submit" name="SendAnnotation" class="boton" value="ENVIAR ANOTACION">
+            <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR ANOTACION</button>
           </div>
         </form>
       </div>
@@ -83,7 +83,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
         <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php" method="post">
           <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
           <input type="hidden" name="action" value="read">
-          <button type="submit" class="boton">VER HISTORIAL</button>
+          <button type="submit" class="boton"><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL</button>
         </form>
       </div>
     </div>

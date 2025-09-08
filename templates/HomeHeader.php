@@ -9,6 +9,7 @@
   <!-- Usamos BASE_URL que viene desde config.php -->
   <link rel="icon" href="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" type="icon" />
   <link rel="preload" href="<?php echo BASE_URL; ?>/assets/css/normalize.css" as="style">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Main.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Annotation.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Login.css">

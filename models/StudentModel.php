@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo 'error';
   }
 // Se inicia la busqueda automatica de los estudiantes
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' || !empty($_GET['DNI'])) {
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $resultados = searchStudent($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $sql_observador = $resultados['sql_observador'];
@@ -270,7 +270,7 @@ function readStudent($conexion, $IdObs)
   }
 }
 // ========== SHOW DATA ALL STUDENTS FUNCTION ==========
-function searchStudent($conexion)
+function searchStudent($conexion,$dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
   $consultaSQL = ("SELECT u.IdUser,o.IdObs,NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,o.IdGrupo, c.NomGrado FROM observador o
@@ -279,12 +279,11 @@ function searchStudent($conexion)
   LEFT JOIN usuarios u ON u.IdUser = o.IdUser") or die("ERROR AL TRAER LOS DATOS");
   $query = "SELECT COUNT(*) AS total FROM observador";
   // Verifica si se envió el formulario de búsqueda
-  if (!empty($_GET['DNI'])) {
-    $NumDcto = $_GET['DNI'];
-    $query = "SELECT COUNT(*) AS total FROM usuarios WHERE NumDcto=$NumDcto";
-    // Modifica la consulta para filtrar por número de documento
-    $consultaSQL .= " WHERE u.NumDcto='$NumDcto'";
-  }
+  if ($dni) {
+        $dni = mysqli_real_escape_string($conexion, $dni);
+        $query = "SELECT COUNT(*) AS total FROM usuarios WHERE NumDcto='$dni'";
+        $consultaSQL .= " WHERE u.NumDcto='$dni'";
+    }
   // Realiza la consulta
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultado = mysqli_query($conexion, $query);
