@@ -6,13 +6,14 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php require_once(ROOT_PATH ."/controllers/teacher/StudentInfo.php"); ?>
+    <?php require_once(ROOT_PATH . "/controllers/teacher/StudentInfo.php"); ?>
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
         <h1 id="TitleStart">ANOTACIONES <i class="fa-solid fa-book"></i></h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php">
+            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
             <div class="botonAtras">
               <div class="margen__boton">
                 <svg class="navbar-icon" style="margin:0;">
@@ -20,6 +21,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                 </svg>
               </div>
             </div>
+            <?php endif; ?>
           </a>
         </div>
       </div>
@@ -43,15 +45,17 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                 <td><?php echo $extraido['FecCreacion'] ?></td>
                 <td><?php echo $extraido['FecModif'] ?></td>
                 <td class="td_Actions">
-                  <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
-                    <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
-                    <input type="hidden" name="action" value="delete">
-                    <button class="custom-button" type="submit">
-                      <svg class="navbar-icon" style="margin:0">
-                        <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
-                      </svg>
-                    </button>
-                  </form>
+                  <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+                    <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
+                      <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
+                      <input type="hidden" name="action" value="delete">
+                      <button class="custom-button" type="submit">
+                        <svg class="navbar-icon" style="margin:0">
+                          <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
+                        </svg>
+                      </button>
+                    </form>
+                  <?php endif; ?>
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
                     <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                     <input type="hidden" name="action" value="readespecefy">
@@ -70,4 +74,4 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
     </div>
   </div>
 </main>
-<?php include(ROOT_PATH ."/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

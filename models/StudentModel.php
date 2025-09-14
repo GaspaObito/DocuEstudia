@@ -230,6 +230,9 @@ function updateStudent($conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionG
       $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
     }
   }
+  if ($TipoDcto === "mantener") {
+    $TipoDcto = $_POST["TipoDcto_Actual"];
+  }
   // ---StartUsuario
   $act_usuario =  $conexion->prepare("UPDATE usuarios SET IdRol = ?, IdImg = ?, Nombre = ?, Apellido = ?, TipoDcto = ?, NumDcto = ?, Telefono = ?, FechNacimiento = ?, Direccion = ?, Email = ?, Password = ? WHERE IdUser = ?");
   $act_usuario->bind_param("iisssssssssi", $IdRol, $IdImg, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $hashedPass, $IdUser);
@@ -273,22 +276,51 @@ function readStudent($conexion, $IdObs)
 function searchStudent($conexion,$dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = ("SELECT u.IdUser,o.IdObs,NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,o.IdGrupo, c.NomGrado FROM observador o
+  $consultaSQL = "SELECT u.IdUser,o.IdObs,NumDcto,u.Nombre,u.Apellido,o.IdGrupo, c.NomGrado FROM observador o
   LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
   LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo
-  LEFT JOIN usuarios u ON u.IdUser = o.IdUser") or die("ERROR AL TRAER LOS DATOS");
-  $query = "SELECT COUNT(*) AS total FROM observador";
-  // Verifica si se envió el formulario de búsqueda
-  if ($dni) {
-        $dni = mysqli_real_escape_string($conexion, $dni);
-        $query = "SELECT COUNT(*) AS total FROM usuarios WHERE NumDcto='$dni'";
-        $consultaSQL .= " WHERE u.NumDcto='$dni'";
-    }
+  LEFT JOIN usuarios u ON u.IdUser = o.IdUser";
+
+  $conditions = []; // Aquí guardamos los filtros dinámicos
+
+  // Filtros dinámicos
+  if (!empty($_GET['DNI'])) {
+      $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
+      $conditions[] = "u.NumDcto = '$dni'";
+  }
+
+  if (!empty($_GET['Nombre'])) {
+      $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
+      $conditions[] = "u.Nombre LIKE '%$nombre%'";
+  }
+
+   if (!empty($_GET['Apellido'])) {
+      $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
+       $conditions[] = "u.Apellido LIKE '%$apellido%'";
+   }
+
+   if (!empty($_GET['Grado'])) {
+       $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
+       $conditions[] = "c.IdGrado = $Grado";
+   }
+  if (!empty($conditions)) {
+      $whereSQL = " WHERE " . implode(" AND ", $conditions);
+      $consultaSQL .= $whereSQL;
+  }else {
+      $whereSQL = ""; // Para reutilizar en el COUNT
+  }
+    // Consulta para contar el total
+    $consultaCount = "SELECT COUNT(*) AS total
+                  FROM observador o
+                  LEFT JOIN usuarios u ON u.IdUser = o.IdUser 
+                  LEFT JOIN mt_grupos c ON o.IdGrupo = c.IdGrupo
+                  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+                  $whereSQL";
   // Realiza la consulta
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
-  $resultado = mysqli_query($conexion, $query);
-  $datos = mysqli_fetch_assoc($resultado);
+  $resultCount = mysqli_query($conexion, $consultaCount);
+  $datos = mysqli_fetch_assoc($resultCount);
   $totalFilas = $datos['total'];
   // Retorna las variables como un array
-  return ['sql_observador' => $sql_observador, 'totalFilas' => $totalFilas];
+  return ['sql_observador' => $sql_observador,  'totalFilas' => $totalFilas];
 }

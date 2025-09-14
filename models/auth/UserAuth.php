@@ -11,18 +11,42 @@ if (isset($_POST["button_Auth"])) {
   $sentencia->execute();
   $resultado = $sentencia->get_result();
   if ($fila = $resultado->fetch_assoc()) {
+    //------ USUARIO ADMIN ------
     if ($fila['IdRol'] == '3' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       $_SESSION['IdRol'] = $fila['IdRol'];
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
       echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
+    //------ USUARIO TEACHER ------
     } elseif ($fila['IdRol'] == '2' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
-      echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
+      $_SESSION['IdRol'] = $fila['IdRol'];
+      echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>"; 
       echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
+    //------ USUARIO STUDENT ------
+    } elseif ($fila['IdRol'] == '1' && password_verify($Contrasena, $fila['Password'])) {
+      $_SESSION['Id_Estu'] = $fila['IdUser'];
+         // Consultar IdObs en la tabla observador
+    $idUser = $_SESSION['Id_Estu'];
+    $sqlObs = "SELECT IdObs FROM observador WHERE IdUser = '$idUser' LIMIT 1";
+    $resObs = mysqli_query($conexion, $sqlObs);
+    $filaObs = mysqli_fetch_assoc($resObs);
+    $_SESSION['Id_Session'] = $filaObs['IdObs']; 
+    $IdObs = $filaObs['IdObs']; 
+    // Generar formulario oculto y enviarlo automáticamente
+    echo "<script>alert('USUARIO ESTUDIANTE CORRECTO')</script>";
+    echo "
+    <form id='autoForm' action='" . BASE_URL . "/controllers/teacher/AnnotationsHistory.php' method='post'>
+        <input type='hidden' name='IdObs' value='{$IdObs}'>
+        <input type='hidden' name='action' value='read'>
+    </form>
+    <script>
+        document.getElementById('autoForm').submit();
+    </script>
+    ";
     } else {
       $_SESSION['error'] = "Usuario o contraseña incorrectos";
-      header("Location: " . BASE_URL . "/views/login/TeacherAdminLogin.php");
+      header("Location: " . BASE_URL . "/views/login/GuardianLogin.php");
       exit();
     }
   } else {
@@ -32,27 +56,6 @@ if (isset($_POST["button_Auth"])) {
   }
   $sentencia->close();
   $conexion->close();
-}
-/* Inicio Sesion ESTUDIANTE VALIDAR PORQUE NO SE ESTA USANDO*/
-if (isset($_POST["LoginStudent"])) {
-  if (empty($_POST["Identificacionn"])) {
-    echo "<script>alert('NO SE PUEDE DEJAR VACIO CAMPO N.I')</script>";
-    echo "<script>location.href='../../Login_Users/acudiente.php'</script>";
-  } else {
-    $Documento = $_POST["Identificacionn"];
-    $query = "SELECT * FROM observador WHERE NumDcto = '$Documento'";
-    $resultado = mysqli_query($conexion, $query);
-    if (mysqli_num_rows($resultado) > 0) {
-      echo "<script>alert('USUARIO CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/Login_Users/historial_anotaciones.php'</script>";
-      $_SESSION['Id_Estudiante'] = $_POST['Identificacionn'];
-    } else {
-      echo "<script>alert('ID NO ENCONTRADO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/Login_Users/acudiente.php'</script>";
-    }
-    $resultado->close();
-    $conexion->close();
-  }
 }
 if (isset($_POST["Cerrar_Login"])) {
   session_destroy();

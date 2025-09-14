@@ -202,9 +202,7 @@ function readTeacher($conexion, $IdUser)
 // ========== BUSCAR SEARCH FUNCTION ==========
 function searchTeacher($conexion)
 {
-    $consultaSQL = "SELECT u.IdRol,
-                           CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, 
-                           p.*, u.NumDcto, c.IdGrupo, g.NomGrado 
+    $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto, c.IdGrupo, g.NomGrado 
                     FROM profesor p
                     LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
                     LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
@@ -234,17 +232,24 @@ function searchTeacher($conexion)
     }
 
     if (!empty($conditions)) {
-        $consultaSQL .= " WHERE " . implode(" AND ", $conditions);
+        $whereSQL = " WHERE " . implode(" AND ", $conditions);
+        $consultaSQL .= $whereSQL;
+    }else {
+        $whereSQL = ""; // Para reutilizar en el COUNT
     }
+    // Consulta para contar el total
+    $consultaCount = "SELECT COUNT(*) AS total
+                  FROM profesor p
+                  LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
+                  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
+                  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+                  $whereSQL";
 
-    // Consulta de conteo
-    $query = "SELECT COUNT(*) AS total FROM profesor";
     $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
-    $resultado = mysqli_query($conexion, $query);
-    $datos = mysqli_fetch_assoc($resultado);
+    $resultCount  = mysqli_query($conexion, $consultaCount);
+    $datos = mysqli_fetch_assoc($resultCount );
 
     return [
-        'consultar' => $consultar,
-        'totalFilas' => $datos['total']
+        'consultar' => $consultar,'totalFilas' => $datos['total']
     ];
 }

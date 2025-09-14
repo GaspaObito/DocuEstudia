@@ -65,8 +65,9 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
         <thead>
           <tr>
             <th>Rol</th>
-            <th>Numero Documento</th>
+            <th># Documento</th>
             <th>Nombre</th>
+            <th>Apellido</th>
             <th>Asignado</th>
             <th>Grado</th>
             <th>Grupo</th>
@@ -78,7 +79,8 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
             <tr>
               <td><?php echo $extraido['IdRol']; ?></td>
               <td><?php echo $extraido['NumDcto']; ?></td>
-              <td><?php echo $extraido['NombreCompleto']; ?></td>
+              <td><?php echo $extraido['Nombre']; ?></td>
+              <td><?php echo $extraido['Apellido']; ?></td>
               <td><?php echo $extraido['AsigProf']; ?></td>
               <td><?php echo $extraido['NomGrado']; ?></td>
               <td><?php echo $extraido['IdGrupo']; ?></td>

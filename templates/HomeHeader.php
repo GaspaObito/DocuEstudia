@@ -38,7 +38,7 @@
       <ul class="navbar-menu" id="navbarMenu">
         <?php
         session_start();
-        if (isset($_SESSION['Id_Estudiante']) || isset($_SESSION['Id_Profe'])) { ?>
+        if (isset($_SESSION['Id_Estu']) || isset($_SESSION['Id_Profe'])) { ?>
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
           <a href="#">Acerca de</a>
           <?php if (isset($_SESSION['Id_Profe'])) { ?>
@@ -47,6 +47,9 @@
           <?php if (isset($_SESSION['IdRol'])) { ?>
             <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php">Maestros</a>
           <?php } ?>
+           <!-- <?php if (isset($_SESSION['Id_Estu'])) { ?>
+            <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php">Anotaciones</a>
+          <?php } ?> -->
           <form action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="POST">
             <button class="botonAtras" type="submit" name="Cerrar_Login">
               <div class="margen__boton">
@@ -59,7 +62,6 @@
           </form>
         <?php } else { ?>
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-          <a href="EscanearCodigos.php">Acerca de</a>
           <a href="<?php echo BASE_URL; ?>/views/login/GuardianLogin.php">Estudiante</a>
           <a href="<?php echo BASE_URL; ?>/views/login/TeacherAdminLogin.php">Profesor</a>
         <?php } ?>

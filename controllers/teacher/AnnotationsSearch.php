@@ -10,31 +10,67 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
     <?php include(ROOT_PATH . "/controllers/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
       <h1 id="TitleStart">OBSERVADOR <i class="fa-solid fa-eye"></i></h1>
+
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
-          <legend>Buscar Estudiante por # Documento Identidad</legend>
-          <div class="Formulario_Campos1">
-            <div style="display:flex;">
-              <input class="Input_Text" type="text" id="DNI" name="DNI" placeholder="# Documento del estudiante">
+          <legend>Filtrar Estudiante</legend>
+          <div class="formulario__campos1">
+            <!-- Filtro por DNI -->
+            <div>
+              <label for="DNI"># Documento Identidad:</label>
+              <div class="setting">
+                <input class="Input_Text" type="text" id="DNI" name="DNI"
+                  value="<?php echo isset($_GET['DNI']) ? htmlspecialchars($_GET['DNI']) : ''; ?>"
+                  placeholder="DNI del Estudiante">
+              </div>
             </div>
-            <div class="alinear-boton">
-              <button class="boton" type="submit"><i class="fa-solid fa-magnifying-glass"></i> BUSCAR ESTUDIANTE</button>
+            <!-- Filtro por Nombre -->
+            <div>
+              <label for="Nombre">Nombre:</label>
+              <div class="setting">
+                <input class="Input_Text" type="text" id="Nombre" name="Nombre"
+                  value="<?php echo isset($_GET['Nombre']) ? htmlspecialchars($_GET['Nombre']) : ''; ?>"
+                  placeholder="Nombre del Estudiante">
+              </div>
             </div>
+            <!-- Filtro por Apellido -->
+            <div>
+              <label for="Apellido">Apellido:</label>
+              <div class="setting">
+                <input class="Input_Text" type="text" id="Apellido" name="Apellido"
+                  value="<?php echo isset($_GET['Apellido']) ? htmlspecialchars($_GET['Apellido']) : ''; ?>"
+                  placeholder="Apellido del Estudiante">
+              </div>
+            </div>
+            <!-- Filtro por Grado -->
+            <div>
+              <label for="Grado">Grado:</label>
+              <div class="setting">
+                <select id="Grado" name="Grado" class="Input_Text">
+                  <option value="">-- TODOS --</option>
+                  <?php foreach ($mt_grados as $opciones): ?>
+                    <option value="<?php echo $opciones['IdGrado']; ?>" <?php echo (isset($_GET['Grado']) && $_GET['Grado'] == $opciones['IdGrado']) ? 'selected' : ''; ?>>
+                      <?php echo htmlspecialchars($opciones['NomGrado']); ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- Botón -->
+          <div class="alinear-boton">
+            <button class="boton" type="submit"><i class="fa-solid fa-magnifying-glass"></i> BUSCAR ESTUDIANTE</button>
           </div>
         </fieldset>
       </form>
-      <div class="alinear-boton">
-        <a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">
-          <button class="boton" type="submit" name='buscarDatos'><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL SERVIDOR</button>
-        </a>
-      </div>
       <div class="Container1">
         <label>Resultados Obtenidos: (<?php echo $totalFilas ?>)</label>
         <table class="Custom_Table">
           <thead>
             <tr>
-              <th>Numero Documento</th>
+              <th># Documento</th>
               <th>Nombre</th>
+              <th>Apellido</th>
               <th>Grado</th>
               <th>Grupo</th>
               <th>Acciones</th>
@@ -44,7 +80,8 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
             <?php while ($extraido = mysqli_fetch_array($sql_observador)) { ?>
               <tr>
                 <td><?php echo $extraido['NumDcto'] ?></td>
-                <td><?php echo $extraido['NombreCompleto'] ?></td>
+                <td><?php echo $extraido['Nombre'] ?></td>
+                <td><?php echo $extraido['Apellido'] ?></td>
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
@@ -82,6 +119,9 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
         </table>
       </div>
       <div class="alinear-boton">
+        <a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">
+          <button class="boton" type="submit" name='buscarDatos'><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL SERVIDOR</button>
+        </a>
         <a href="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php">
           <input type="hidden" name="action" value="create">
           <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> CREAR ESTUDIANTE</button>
@@ -89,4 +129,4 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
       </div>
     </div>
 </main>
-<?php include(ROOT_PATH ."/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

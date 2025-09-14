@@ -1,9 +1,11 @@
 <div class="usuario__especifico">
   <?php
+  
   if (isset($_POST['NumeroModificar'])) {
     $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
   }
   $IdObs = $_SESSION['Id_Session'];
+  
   /* Utilizar Join para Ingresar el otro Campos de mt_grados */
   $DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomGrado, i.NomImg
       FROM observador o 

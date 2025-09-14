@@ -12,13 +12,13 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
       <fieldset>
         <div class="formulario__campos1">
           <div>
-            <label>Nombre</label>
+            <label>Nombre *</label>
             <div class="setting">
               <input type="text" name="nombre" class="Input_Text" value="<?php echo htmlspecialchars($NombreGua); ?>" placeholder="Nombre del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Apellido</label>
+            <label>Apellido *</label>
             <div class="setting">
               <input type="text" name="apellido" class="Input_Text" value="<?php echo htmlspecialchars($ApellidoGua); ?>" placeholder="Apellido del acudiente" required>
             </div>
@@ -26,31 +26,31 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Ocupación</label>
             <div class="setting">
-              <input type="text" name="ocupacion" class="Input_Text" value="<?php echo htmlspecialchars($OcupacionGua); ?>" placeholder="Ocupación del acudiente" required>
+              <input type="text" name="ocupacion" class="Input_Text" value="<?php echo htmlspecialchars($OcupacionGua); ?>" placeholder="Ocupación del acudiente">
             </div>
           </div>
           <div>
-            <label>Teléfono</label>
+            <label>Teléfono *</label>
             <div class="setting">
               <input class="Input_Text" type="number" name="telefono" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoGua); ?>" placeholder="Teléfono del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Email</label>
+            <label>Email *</label>
             <div class="setting">
               <input type="text" name="emailgua" class="Input_Text" value="<?php echo htmlspecialchars($EmailGua); ?>" placeholder="Email del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Parentesco</label>
+            <label>Parentesco *</label>
             <div class="setting">
               <input type="text" name="parentesco" class="Input_Text" value="<?php echo htmlspecialchars($ParentescoGua); ?>" placeholder="Parentesco del acudiente" required>
             </div>
           </div>
           <div>
-            <label>¿Vive con el estudiante?</label>
+            <label>¿Vive con el estudiante? *</label>
             <div class="setting">
-              <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua) ?>">
+              <input type="hidden" name="ViveAcu_Actual" value="<?php echo htmlspecialchars($ViveAcudienteGua) ?>" required>
               <select name="ViveAcudiente" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                   <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($ViveAcudienteGua) ?></option>
@@ -82,13 +82,13 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Ultimo Grado Realizado</label>
             <div class="setting">
-              <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo mt_grados Cursado" required>
+              <input type="text" name="Ult_Curso_Cursado" class="Input_Text" value="<?php echo htmlspecialchars($UltCursoCursado); ?>" placeholder="Ultimo mt_grados Cursado">
             </div>
           </div>
           <div>
             <label>Jornada</label>
             <div class="setting">
-              <input type="text" name="Jornada" class="Input_Text" value="<?php echo htmlspecialchars($Jornada); ?>" placeholder="Horario Jornada" required>
+              <input type="text" name="Jornada" class="Input_Text" value="<?php echo htmlspecialchars($Jornada); ?>" placeholder="Horario Jornada">
             </div>
           </div>
           <div>
@@ -159,19 +159,19 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
       <fieldset>
         <div class="formulario__campos1">
           <div>
-            <label>Eps</label>
+            <label>Eps *</label>
             <div class="setting">
-              <input type="text" name="Eps" class="Input_Text" value="<?php echo htmlspecialchars($Eps); ?>" placeholder="Nombre Eps">
+              <input type="text" name="Eps" class="Input_Text" value="<?php echo htmlspecialchars($Eps); ?>" placeholder="Nombre Eps" required>
             </div>
           </div>
           <div>
-            <label>Restricciones médicas</label>
+            <label>Restricciones médicas *</label>
             <div class="setting">
               <input type="text" name="RestSanitaMed" class="Input_Text" value="<?php echo htmlspecialchars($RestSanitaMed); ?>" placeholder="Parentesco del acudiente" required>
             </div>
           </div>
           <div>
-            <label>Discapacidades</label>
+            <label>Discapacidades *</label>
             <div class="setting">
               <input type="text" name="DiscapMed" class="Input_Text" value="<?php echo htmlspecialchars($DiscapMed); ?>" placeholder="Parentesco del acudiente" required>
             </div>
@@ -179,7 +179,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Enfermedades actuales</label>
             <div class="setting">
-              <input type="text" name="EnferMed" class="Input_Text" value="<?php echo htmlspecialchars($EnferMed); ?>" placeholder="Ocupación del acudiente" required>
+              <input type="text" name="EnferMed" class="Input_Text" value="<?php echo htmlspecialchars($EnferMed); ?>" placeholder="Ocupación del acudiente">
             </div>
           </div>
           <div>
@@ -197,9 +197,9 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
             </div>
           </div>
           <div>
-            <label>Grupo Sangüínea</label>
+            <label>Grupo Sangüínea *</label>
             <div class="setting">
-              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSanMed) ?>">
+              <input type="hidden" name="GrupSangui_Actual" value="<?php echo htmlspecialchars($IdTipoSanMed) ?>" required>
               <select name="FornTipoSangre" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                   <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomTipoSangre) ?></option>
@@ -228,21 +228,21 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
       <fieldset>
         <div class="formulario__campos1">
           <div>
-            <label>Nombre</label>
+            <label>Nombre *</label>
             <div class="setting">
               <input type="text" name="Nombre_Est" class="Input_Text" value="<?php echo htmlspecialchars($NombreStu); ?>" placeholder="Nombre del Estudiante" required>
             </div>
           </div>
           <div>
-            <label>Apellido</label>
+            <label>Apellido *</label>
             <div class="setting">
               <input type="text" name="Apellido_Est" class="Input_Text" value="<?php echo htmlspecialchars($ApellidoStu); ?>" placeholder="Apellido del Estudiante" required>
             </div>
           </div>
           <div>
-            <label>Tipo de Documento</label>
+            <label>Tipo de Documento *</label>
             <div class="setting">
-              <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto) ?>">
+              <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto) ?>" required>
               <select name="TipoDcto" class="Input_Text">
                 <?php if ($isUpdate) { ?>
                   <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoDcto) ?></option>
@@ -256,7 +256,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
             </div>
           </div>
           <div>
-            <label>Número Identificación</label>
+            <label>Número Identificación *</label>
             <div class="setting">
               <input type="number" name="NumeroIdentif_Est" class="Input_Text" value="<?php echo htmlspecialchars($NumDcto); ?>" placeholder="NºI del Estudiante" required>
             </div>
@@ -264,25 +264,25 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Teléfono</label>
             <div class="setting">
-              <input type="number" name="Telefono_Est" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoStu); ?>" placeholder="Teléfono del Estudiante" required>
+              <input type="number" name="Telefono_Est" class="Input_Text" value="<?php echo htmlspecialchars($TelefonoStu); ?>" placeholder="Teléfono del Estudiante">
             </div>
           </div>
           <div>
-            <label>Fecha Nacimiento</label>
+            <label>Fecha Nacimiento *</label>
             <div class="setting">
               <input type="date" name="Fecha_Nacimiento_Est" class="Input_Text" value="<?php echo htmlspecialchars($FechaNacimientoStu); ?>" placeholder="Fecha de Nacimiento del Estudiante" required>
             </div>
           </div>
           <div>
-            <label>Direccion</label>
+            <label>Direccion *</label>
             <div class="setting">
               <input type="text" name="Residencia_Est" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Dirección del Estudiante" required>
             </div>
           </div>
           <div>
-            <label>Grado Actual<label>
+            <label>Grado Actual *<label>
                 <div class="setting">
-                  <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
+                  <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>" required>
                   <select name="FornIdGrado" class="Input_Text">
                     <?php if ($isUpdate) { ?>
                       <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado) ?></option>
@@ -299,7 +299,7 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
                 </div>
           </div>
           <div>
-            <label>Seleccione Grupo al que va a pertenecer<label>
+            <label>Seleccione Grupo al que va a pertenecer *<label>
                 <div class="setting">
                   <select name="FornIdGrupo" class="Input_Text">
                     <?php if ($isUpdate) { ?>
@@ -319,26 +319,20 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
           <div>
             <label>Email</label>
             <div class="setting">
-              <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Estudiante" maxlength="50" required>
+              <input type="text" name="Correo" class="Input_Text" value="<?php echo htmlspecialchars($Email); ?>" placeholder="Correo del Estudiante" maxlength="50">
             </div>
           </div>
           <div>
             <label>Contraseña</label>
             <div class="setting">
-              <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Estudiante" maxlength="255" required>
+              <input type="text" name="Contrasena" class="Input_Text" value="<?php echo htmlspecialchars($Password); ?>" placeholder="Contraseña del Estudiante" maxlength="255">
             </div>
           </div>
           <div>
-            <label>Imagen Usuario Nueva</label>
+            <label>Imagen Usuario Nueva *</label>
             <div class="setting">
               <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                  <path
-                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
-                  </path>
-                </svg>
-              </div>
+              <i class="fa-solid fa-upload fa-2x"></i>
             </div>
           </div>
           <div>
@@ -346,14 +340,9 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
             <div class="setting">
               <input type="hidden" name="Nom_Imagen" value="<?php echo htmlspecialchars($NombreImagen); ?>">
               <div class="imagenChange Input_Text">
-                <img
-                  src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo htmlspecialchars($NombreImagen); ?>">
+                <img src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo htmlspecialchars($NombreImagen); ?>">
               </div>
-              <div>
-                <svg class="navbar-icon" style="margin:0;">
-                  <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Picture.svg#Picture-icon">
-                </svg>
-              </div>
+              <i class="fa-solid fa-image fa-2x"></i>
             </div>
           </div>
         </div>

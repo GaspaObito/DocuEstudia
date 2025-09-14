@@ -10,19 +10,19 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
     <fieldset>
       <div class="formulario__campos1">
         <div>
-          <label>Nombre</label>
+          <label>Nombre *</label>
           <div class="setting">
             <input type="text" name="Nombre" class="Input_Text" value="<?php echo htmlspecialchars($Nombre); ?>" placeholder="Nombre del Profesor" required>
           </div>
         </div>
         <div>
-          <label>Apellido</label>
+          <label>Apellido *</label>
           <div class="setting">
             <input type="text" name="Apellido" class="Input_Text" value="<?php echo htmlspecialchars($Apellido); ?>" placeholder="Apellido del Profesor" required>
           </div>
         </div>
         <div>
-          <label>Tipo de Documento</label>
+          <label>Tipo de Documento *</label>
           <div class="setting">
           <input type="hidden" name="TipoDcto_Actual" value="<?php echo htmlspecialchars($TipoDcto) ?>">
           <select type="text" name="TipoDcto" class="Input_Text">
@@ -38,44 +38,44 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
           </div>
         </div>
         <div>
-          <label>Numero de Documento</label>
+          <label>Numero de Documento *</label>
           <div class="setting">
           <input type="number" name="NumDocumento" class="Input_Text"
             value="<?php echo htmlspecialchars($NumDocumento); ?>" placeholder="Digite Numero de documento" required>
             </div>
         </div>
         <div>
-          <label>Teléfono</label>
+          <label>Teléfono *</label>
           <div class="setting">
           <input type="number" name="Telefono" class="Input_Text" value="<?php echo htmlspecialchars($Telefono); ?>" placeholder="Teléfono del Profesor" required>
             </div>
         </div>
         <div>
-          <label>Fecha Nacimiento</label>
+          <label>Fecha Nacimiento *</label>
           <div class="setting">
             <input type="date" name="Fecha_Nacimiento" class="Input_Text" value="<?php echo htmlspecialchars($Fecha_Nacimiento); ?>" placeholder="Fecha de Nacimiento del Profesor" required>
           </div>
         </div>
         <div>
-          <label>Direccion</label>
+          <label>Direccion *</label>
           <div class="setting">
             <input type="text" name="Direccion" class="Input_Text" value="<?php echo htmlspecialchars($Direccion); ?>" placeholder="Localidad Hogar" required>
           </div>
         </div>
         <div>
-          <label>Asignación Academica</label>
+          <label>Asignación Academica *</label>
           <div class="setting">
             <input type="text" name="AsigAcadeProf" class="Input_Text" value="<?php echo htmlspecialchars($AsigAcadeProf); ?>" placeholder="Asignatura Academica del Profesor" maxlength="20" required>
           </div>
         </div>
         <div>
-          <label>Asignatura</label>
+          <label>Asignatura *</label>
           <div class="setting">
           <input type="text" name="AsignaturaProfe" class="Input_Text" value="<?php echo htmlspecialchars($AsigProf); ?>" placeholder="Asignatura del Profesor" maxlength="30" required>
           </div>
         </div>
         <div>
-          <label>Area</label>
+          <label>Area *</label>
           <div class="setting">
             <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($AreaProf); ?>" placeholder="Area del Profesor" maxlength="30">
           </div>

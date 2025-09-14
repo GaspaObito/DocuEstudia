@@ -29,7 +29,6 @@
       </form>
     <?php } else { ?>
       <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-      <a href="<?php echo BASE_URL; ?>/EscanearCodigos.php">Acerca de</a>
       <a href="<?php echo BASE_URL; ?>/views/login/GuardianLogin.php">Estudiante</a>
       <a href="<?php echo BASE_URL; ?>/views/login/TeacherAdminLogin.php">Profesor</a>
     <?php } ?>
