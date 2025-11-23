@@ -16,8 +16,6 @@
   <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js"></script>
 </head>
 
-</head>
-
 <body>
   <header>
     <nav class="navbar">
@@ -54,7 +52,7 @@
             <button class="botonAtras" type="submit" name="Cerrar_Login">
               <div class="margen__boton">
                 <svg class="navbar-icon" style="margin:0">
-                  <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Logout.svg#Logout-icon">
+                  <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Logout"></use>
                 </svg>
               </div>
               </div>
@@ -68,3 +66,4 @@
       </ul>
     </nav>
   </header>
+<?php require_once(__DIR__."/Slider.php");?>

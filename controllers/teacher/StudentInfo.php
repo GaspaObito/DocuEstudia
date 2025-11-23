@@ -62,7 +62,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Symbol_X.svg#Symbol_X-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Symbol_X"></use>
                     </svg>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Next.svg#Arrow_Next-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Next"></use>
                     </svg>
                   </div>
                 </div>
@@ -127,7 +127,7 @@
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
-                    <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Symbol_X.svg#Symbol_X-icon">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Symbol_X"></use>
                   </svg>
                 </div>
               </div>
@@ -171,7 +171,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Back.svg#Arrow_Back-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
                     </svg>
                   </div>
                 </div>
@@ -182,7 +182,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Next.svg#Arrow_Next-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Next"></use>
                     </svg>
                   </div>
                 </div>
@@ -202,7 +202,7 @@
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
-                    <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Symbol_X.svg#Symbol_X-icon">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Symbol_X"></use>
                   </svg>
                 </div>
               </div>
@@ -246,7 +246,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Back.svg#Arrow_Back-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
                     </svg>
                   </div>
                 </div>
@@ -257,7 +257,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Next.svg#Arrow_Next-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Next"></use>
                     </svg>
                   </div>
                 </div>
@@ -276,7 +276,7 @@
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
-                    <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Symbol_X.svg#Symbol_X-icon">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Symbol_X"></use>
                   </svg>
                 </div>
               </div>
@@ -320,7 +320,7 @@
                 <div class="botonAtras">
                   <div class="margen__boton">
                     <svg class="navbar-icon" style="margin:0;">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Back.svg#Arrow_Back-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
                     </svg>
                   </div>
                 </div>

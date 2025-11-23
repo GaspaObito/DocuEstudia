@@ -12,7 +12,7 @@ require_once (ROOT_PATH."/models/DatabaseConnection.php");
         <div class="botonAtras">
           <div class="margen__boton">
             <svg class="navbar-icon" style="margin:0;">
-              <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow_Back.svg#Arrow_Back-icon">
+              <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
             </svg>
           </div>
         </div>

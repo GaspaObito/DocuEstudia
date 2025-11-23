@@ -90,7 +90,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                     <input type="hidden" name="action" value="delete">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
-                        <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
+                        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                       </svg>
                     </button>
                   </form>
@@ -99,7 +99,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                     <input type="hidden" name="action" value="read">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
-                        <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Edit.svg#Edit-icon">
+                        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
                       </svg>
                     </button>
                   </form>
@@ -108,7 +108,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                     <input type="hidden" name="action">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
-                        <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Arrow.svg#Arrow-icon">
+                        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
                       </svg>
                     </button>
                   </form>

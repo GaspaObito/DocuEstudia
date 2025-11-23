@@ -90,7 +90,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
                   <input type="hidden" name="action" value="delete">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Trash.svg#Trash-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                     </svg>
                   </button>
                 </form>
@@ -99,7 +99,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
                   <input type="hidden" name="action" value="read">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">
-                      <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Edit.svg#Edit-icon">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
                     </svg>
                   </button>
                 </form>

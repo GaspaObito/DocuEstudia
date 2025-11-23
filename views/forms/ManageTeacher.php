@@ -118,13 +118,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
           <label>Imagen Usuario Nueva</label>
           <div class="setting">
             <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
-                <path
-                  d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
-                </path>
-              </svg>
-            </div>
+            <i class="fa-solid fa-download fa-2xl"></i>
           </div>
         </div>
         <div>
@@ -134,11 +128,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
             <div class="imagenChange Input_Text">
               <img src="<?php echo BASE_URL; ?>/assets/images/phototeacher/<?php echo htmlspecialchars($NombreImagen); ?>">
             </div>
-            <div>
-              <svg class="navbar-icon" style="margin:0;">
-                <use xlink:href="<?php echo BASE_URL; ?>/assets/images/svg/Picture.svg#Picture-icon">
-              </svg>
-            </div>
+           <i class="fa-solid fa-image fa-2xl"></i>
           </div>
         </div>
         <input type="hidden" name="id_lastImg" value="<?php echo htmlspecialchars($ultimoId_Imagen); ?>">
