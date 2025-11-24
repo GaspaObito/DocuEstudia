@@ -1,4 +1,4 @@
-<!-- ================ CRUD PARA TEACHER ================ -->
+<!-- ================ CRUD PARA Group ================ -->
 <?php
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
@@ -22,32 +22,27 @@ if (isset($_POST["Enviar2"])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
   $action = $_POST['action'];
   if ($action === 'delete') {
-    deleteTeacher($conexion, $IdUser);
+    deleteGroup($conexion, $IdUser);
   } elseif ($action === 'create') {
-    createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
+    createGroup($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
+    updateGroup($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
   } elseif ($action === 'read') {
-    $profesorData = readTeacher($conexion, $IdUser);
+    $profesorData = readGroup($conexion, $IdUser);
     // Asignar las variables desde el array devuelto
     $IdUser = $profesorData['IdUser'];$ultimoId_Imagen = $profesorData['IdImg'];$Nombre = $profesorData['Nombre'];$Apellido = $profesorData['Apellido'];$TipoDcto = $profesorData["TipoDcto"];$NumDocumento = $profesorData['NumDcto'];$Telefono = $profesorData['Telefono'];$Fecha_Nacimiento = $profesorData['FechNacimiento'];$Direccion = $profesorData['Direccion'];$AsigAcadeProf = $profesorData['AsigAcadeProf'];$AsigProf = $profesorData['AsigProf'];$AreaProf = $profesorData['AreaProf'];$Email = $profesorData['Email'];$Password = $profesorData['Password'];$NombreImagen = $profesorData['NomImg'];$IdGrupo = $profesorData['IdGrupo'];
   }  else {
     echo 'error';
   }
 }elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listar') {//CONSULTA TODO
-  $resultados = searchTeacher($conexion);
-  // Accede a las variables retornadas desde el array de resultados
-  $consultar = $resultados['consultar'];
-  $totalFilas = $resultados['totalFilas'];
-}elseif ($_GET['action'] === 'grupos') {//CONSULTA TODO
-  $resultados = gruposteacher($conexion);
+  $resultados = searchGroup($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 }
 // ========== ELIMINAR DELETE FUNCTION ==========
-function deleteTeacher($conexion, $IdUser)
+function deleteGroup($conexion, $IdUser)
 {
   mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
@@ -56,28 +51,9 @@ function deleteTeacher($conexion, $IdUser)
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo)
+function createGroup($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
+      $AsigAcadeProf, $AsigProf, $AreaProf, $Email,$IdRol,$IdGrupo)
 {
-  // Obtener la extensión del archivo original
-  $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
-  // Crear el nuevo nombre del archivo usando el número de documento
-  $NombreImagen = "Profesor_" . $NumDocumento . "." . $extension;
-  // Leer el contenido binario de la imagen
-  $BinarioImagen = file_get_contents($Imagen_temporal);
-  // Mover la imagen a la carpeta de destino
-  move_uploaded_file($Imagen_temporal,  ROOT_PATH. "/assets/images/phototeacher/$NombreImagen");
-  // Insertar en la base de datos 
-  $sql_TbImagen = "INSERT INTO imagenes (IdRol,NomImg, BinImg) VALUES (?,?,?)";
-  $stmt = $conexion->prepare($sql_TbImagen);
-  $stmt->bind_param('iss', $IdRol, $NombreImagen, $BinarioImagen);
-  $stmt->execute();
-  $stmt->close();
-  // Last Id Insert 
-  $ultimoId_Imagen = mysqli_insert_id($conexion);
-
-  $hashedPass = password_hash($Password, PASSWORD_DEFAULT); // Create password hash 
-
   $creausuario = $conexion->prepare("INSERT INTO usuarios (IdRol,IdImg,Nombre,Apellido,TipoDcto,NumDcto,Telefono,FechNacimiento,Direccion,Email,Password) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
   $creausuario->bind_param('iisssssssss', $IdRol, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento,$Direccion, $Email, $hashedPass);
   $creausuario->execute();
@@ -104,38 +80,9 @@ if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
   echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
+function updateGroup($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
       $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf)
 {
-  // Validamos si recibio o no imagen
-  if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
-    // Comprueba si existe la imagen Anterior para Rename, Change Locate
-    $Before_NameImage = $_POST["Nom_Imagen"];
-    $rutaImagenAnterior = ROOT_PATH. "/assets/images/phototeacher/" . $Before_NameImage;
-    if (file_exists($rutaImagenAnterior)) {
-      $New_NameImage = "Obsolete_" . $Before_NameImage;
-      rename($rutaImagenAnterior, ROOT_PATH. "/assets/images/phototeacher/phototeacherobsolete/" . $New_NameImage);
-    }
-    // Obtener la extensión del archivo original
-    $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
-    // Crear el nuevo nombre del archivo usando el número de documento
-    $NombreImagen = "Profesor_" . $NumDocumento . "." . $extension;
-    // Leer el contenido binario de la imagen
-    $BinarioImagen = file_get_contents($Imagen_temporal);
-    // Mover la imagen a la carpeta de destino
-    move_uploaded_file($Imagen_temporal, ROOT_PATH. "/assets/images/phototeacher/$NombreImagen");
-    // Actualizar en la base de datos utilizando una consulta preparada
-    $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";
-    $stmt = $conexion->prepare($sql_TbImagen);
-    $stmt->bind_param('ssi', $NombreImagen, $BinarioImagen, $ultimoId_Imagen);
-    // Ejecutar la consulta preparada y capturar la excepción en caso de error
-    try {
-      $stmt->execute();
-    } catch (Exception $e) {
-      echo "Error al actualizar la imagen: " . $e->getMessage();
-    }
-    $stmt->close();
-  }
   //Revisa si la contraseña cambia oh sigue igual
   $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
   $sentencia->execute();
@@ -188,7 +135,7 @@ echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</s
 echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
 }
 // ========== LEER READ FUNCTION ==========
-function readTeacher($conexion, $IdUser)
+function readGroup($conexion, $IdUser)
 {
   $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password,m.IdGrado,m.NomGrado,g.IdGrupo FROM profesor p 
     LEFT JOIN usuarios u ON u.IdUser = p.IdUser
@@ -204,62 +151,8 @@ function readTeacher($conexion, $IdUser)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION ==========
-function searchTeacher($conexion)
-{
-    $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto, c.IdGrupo, g.NomGrado 
-                    FROM profesor p
-                    LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
-                    LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
-                    LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado";
-
-    $conditions = []; // Aquí guardamos los filtros dinámicos
-
-    // Filtros dinámicos
-    if (!empty($_GET['DNI'])) {
-        $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
-        $conditions[] = "u.NumDcto = '$dni'";
-    }
-
-    if (!empty($_GET['Nombre'])) {
-        $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
-        $conditions[] = "u.Nombre LIKE '%$nombre%'";
-    }
-
-    if (!empty($_GET['Apellido'])) {
-        $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
-        $conditions[] = "u.Apellido LIKE '%$apellido%'";
-    }
-
-    if (!empty($_GET['Grado'])) {
-        $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
-        $conditions[] = "c.IdGrado = $Grado";
-    }
-
-    if (!empty($conditions)) {
-        $whereSQL = " WHERE " . implode(" AND ", $conditions);
-        $consultaSQL .= $whereSQL;
-    }else {
-        $whereSQL = ""; // Para reutilizar en el COUNT
-    }
-    // Consulta para contar el total
-    $consultaCount = "SELECT COUNT(*) AS total
-                  FROM profesor p
-                  LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
-                  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
-                  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
-                  $whereSQL";
-
-    $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
-    $resultCount  = mysqli_query($conexion, $consultaCount);
-    $datos = mysqli_fetch_assoc($resultCount );
-
-    return [
-        'consultar' => $consultar,'totalFilas' => $datos['total']
-    ];
-}
 // ========== GROUP TEAHCER FUNCTION ==========
-function gruposTeacher($conexion)
+function searchGroup($conexion)
 {
     $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo
                     FROM mt_grupos mt

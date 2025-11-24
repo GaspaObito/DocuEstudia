@@ -15,7 +15,7 @@
           <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">Observadores</a>
         <?php } ?>
         <?php if (isset($_SESSION['IdRol'])) { ?>
-          <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php">Maestros</a>
+          <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a>
         <?php } ?>
         <form action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="POST">
           <button class="botonAtras" type="submit" name="Cerrar_Login">

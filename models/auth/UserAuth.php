@@ -16,7 +16,7 @@ if (isset($_POST["button_Auth"])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       $_SESSION['IdRol'] = $fila['IdRol'];
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php'</script>";
+      echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
     //------ USUARIO TEACHER ------
     } elseif ($fila['IdRol'] == '2' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];

@@ -7,7 +7,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">MAESTROS <i class="fa-solid fa-chalkboard-user"></i></h1>
-    <form action="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php" method="GET">
+    <form action="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar" method="GET">
       <fieldset>
         <legend>Filtrar Docentes</legend>
         <div class="formulario__campos1">
@@ -111,8 +111,8 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php">
-      <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> AÑADIR PROFESOR</button>
+    <a href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php?action=crear">
+      <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR PROFESOR</button>
     </a>
   </div>
 </main>

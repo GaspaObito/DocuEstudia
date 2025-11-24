@@ -43,7 +43,7 @@
             <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">Observadores</a>
           <?php } ?>
           <?php if (isset($_SESSION['IdRol']) && ($_SESSION['IdRol'] == 3)) { ?>
-            <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php">Maestros</a>
+            <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a>
           <?php } ?>
            <!-- <?php if (isset($_SESSION['Id_Estu'])) { ?>
             <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php">Anotaciones</a>

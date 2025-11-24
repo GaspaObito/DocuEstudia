@@ -2,9 +2,9 @@
   <ul class="nav">
     <li class="nav__items ">
       <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
+        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Group"></use>
       </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
+      <a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listar">Grupos</a>
     </li>
      <li class="nav__items ">
       <svg class="navbar-icon">
