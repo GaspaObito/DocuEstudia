@@ -1,46 +1,61 @@
 <nav class="nav__cont">
   <ul class="nav">
-    <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Group"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listar">Grupos</a>
+    <li class="nav__items">
+      <a href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php">
+        <span class="icon">
+        <i class="fa-solid fa-chart-simple"></i>
+        </span>
+        <span class="label">Reporte</span>
+      </a>
     </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Symbol_X"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Logout"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-     <li class="nav__items ">
-      <svg class="navbar-icon">
-        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Next"></use>
-      </svg>
-      <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-    </li>
-  </ul>
+
+<li class="nav__items">
+  <a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listar">
+    <span class="icon">
+     <i class="fa-solid fa-people-group"></i>
+    </span>
+    <span class="label">Grupo</span>
+  </a>
+</li>
+<li class="nav__items">
+  <a href="#">
+    <span class="icon">
+      <i class="fa-solid fa-people-group"></i>
+    </span>
+    <span class="label">Gr43312upos</span>
+  </a>
+</li>
+<li class="nav__items">
+  <a href="#">
+    <span class="icon">
+     <i class="fa-brands fa-adn"></i>
+    </span>
+    <span class="label">Grupo312415513s</span>
+  </a>
+</li>
+<li class="nav__items">
+  <a href="#">
+    <span class="icon">
+      <i class="fa-brands fa-accessible-icon"></i>
+    </span>
+    <span class="label">Grupos</span>
+  </a>
+</li>
+<li class="nav__items">
+  <a href="#">
+    <span class="icon">
+      <i class="fa-solid fa-people-group"></i>
+    </span>
+    <span class="label">Grupos</span>
+  </a>
+</li>
+<li class="nav__items">
+  <a href="#">
+    <span class="icon">
+      <i class="fa-solid fa-people-group"></i>
+    </span>
+    <span class="label">Grupos</span>
+  </a>
+</li>
+
 </nav>

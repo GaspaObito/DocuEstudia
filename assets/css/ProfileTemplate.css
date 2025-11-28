@@ -329,7 +329,6 @@ select option:checked {
     position: fixed;
     width: 60px;
     top: 30vh;
-    ;
     height: 50vh;
     z-index: 100;
     background-color: #202020;
@@ -337,60 +336,81 @@ select option:checked {
     transition: width .3s ease;
     cursor: pointer;
     box-shadow: 4px 7px 10px rgba(0, 0, 0, .4);
-    &:hover {
-      width: 200px;
-    }
-  }
-  .nav {
-    list-style-type: none;
-    color: white;
-    &:first-child {
-      padding-top: 1.5rem;
-    }
-  }
-  .nav__items {
-    padding-bottom: 1rem;
-    a {
-      position: relative;
-      display: block;
-      top: -35px;
-      padding-left: 25px;
-      padding-right: 15px;
-      transition: all .3s ease;
-      margin-left: 25px;
-      margin-right: 10px;
-      text-decoration: none;
-      color: white;
-      font-weight: 100;
-      font-size: 1.35em;
-      &:after {
-        content: '';
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        border-radius: 2px;
-        background: radial-gradient(circle at 94.02% 88.03%, #54a4ff, transparent 100%);
-        opacity: 0;
-        transition: all .5s ease;
-        z-index: -10;
-      }
-    }
-    &:hover a:after {
-      opacity: 1;
-    }
-    svg {
-      width: 26px;
-      height: 26px;
-      position: relative;
-      left: -25px;
-      cursor: pointer;
+}
 
-      @media screen and(min-width:600px) {
-        width: 32px;
-        height: 32px;
-        left: -15px;
-      }
+.nav__cont:hover {
+    width: 200px;
+}
+
+.nav {
+    list-style: none;
+    color: white;
+    padding: 1.5rem 0 0 8px;
+    
+}
+
+.nav__items {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+}
+.nav__items a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    text-decoration: none;
+    color: inherit;
+    font-size: 18px;
+    position: relative;
+}
+
+/* ⬅️ TAMAÑO FIJO DEL ICONO */
+.nav__items .icon {
+    width: 32px;    /* ← tamaño fijo */
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav__items i.fa-solid {
+    font-size: 26px;
+}
+
+@media (min-width: 600px) {
+    .nav__items .icon {
+        width: 40px;
+        height: 40px;
     }
-  }
+
+    .nav__items i.fa-solid {
+        font-size: 32px;
+    }
+}
+
+
+.nav__items a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    background: radial-gradient(circle at 94.02% 88.03%, #54a4ff, transparent 100%);
+    opacity: 0;
+    transition: opacity .4s ease;
+    z-index: -1;
+}
+
+.nav__items:hover a::after {
+    opacity: 1;
+}
+
+.nav__items i.fa-solid {
+    font-size: 26px;
+}
+
+@media (min-width: 600px) {
+    .nav__items i.fa-solid {
+        font-size: 32px;
+    }
+}
