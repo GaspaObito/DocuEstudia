@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Annotation.css">
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Login.css">
   <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js"></script>
+  <script src="<?php echo BASE_URL; ?>/assets/js/Sliderbar.js"></script>
 </head>
 
 <body>
@@ -66,4 +67,4 @@
       </ul>
     </nav>
   </header>
-<?php require_once(__DIR__."/Slider.php");?>
+<?php require_once(__DIR__."/SliderBar.php");?>

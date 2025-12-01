@@ -6,29 +6,27 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
-    <h1 id="TitleStart">GRUPOS ACADEMICOS <i class="fa-solid fa-chalkboard-user"></i></h1>
+    <h1 id="TitleStart">GRADOS ACADEMICOS <i class="fa-solid fa-chalkboard-user"></i></h1>
     <div class="Container1">
       <label>Resultados Obtenidos: (<?php echo $totalFilas ?>)</label>
       <table class="Custom_Table">
         <thead>
           <tr>
-            <th>IdGrupo</th>
+            <th>IdGrado</th>
             <th>NomGrado</th>
-            <th>Nombre Profesor</th>
-            <th>NomGrupo</th>
+            <th>NumAlumnos</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
             <tr>
-              <td><?php echo $extraido['IdGrupo']; ?></td>
+              <td><?php echo $extraido['IdGrado']; ?></td>
               <td><?php echo $extraido['NomGrado']; ?></td>
-              <td><?php echo $extraido['NombreCompleto']; ?></td>
-              <td><?php echo $extraido['NomGrupo']; ?></td>
+              <td><?php echo $extraido['NumAlumnos']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado']; ?>">
                   <input type="hidden" name="action" value="delete">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">
@@ -36,8 +34,8 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
                     </svg>
                   </button>
                 </form>
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado']; ?>">
                   <input type="hidden" name="action" value="read">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">

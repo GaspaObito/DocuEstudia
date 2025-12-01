@@ -5,13 +5,16 @@ require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
 $Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;$IdProf = 2;//Profesor
 // Recolecion ID Profesor 
-$IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $IdUser > 0;
+$IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$isUpdate = $IdGrupo > 0;
 // Consulta para Tipo de Sangre y mt_grados
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
+
+$mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
+$mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
   $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'];
@@ -24,19 +27,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($action === 'delete') {
     deleteGroup($conexion, $IdUser);
   } elseif ($action === 'create') {
-    createGroup($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
+    createGroup($conexion, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
     // createProfesor($conexion, $id);
   } elseif ($action === 'update') {
-    updateGroup($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, $AsigAcadeProf, $AsigProf, $AreaProf,$Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
+    updateGroup($conexion, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
   } elseif ($action === 'read') {
-    $profesorData = readGroup($conexion, $IdUser);
+    $groupData = readGroup($conexion, $IdGrupo);
     // Asignar las variables desde el array devuelto
-    $IdUser = $profesorData['IdUser'];$ultimoId_Imagen = $profesorData['IdImg'];$Nombre = $profesorData['Nombre'];$Apellido = $profesorData['Apellido'];$TipoDcto = $profesorData["TipoDcto"];$NumDocumento = $profesorData['NumDcto'];$Telefono = $profesorData['Telefono'];$Fecha_Nacimiento = $profesorData['FechNacimiento'];$Direccion = $profesorData['Direccion'];$AsigAcadeProf = $profesorData['AsigAcadeProf'];$AsigProf = $profesorData['AsigProf'];$AreaProf = $profesorData['AreaProf'];$Email = $profesorData['Email'];$Password = $profesorData['Password'];$NombreImagen = $profesorData['NomImg'];$IdGrupo = $profesorData['IdGrupo'];
+   $IdGrupo = $groupData['IdGrupo'];$NomGrado = $groupData['NomGrado'];$NombreCompleto = $groupData['NombreCompleto'];$NomGrupo = $groupData['NomGrupo'];
   }  else {
     echo 'error';
   }
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listar') {//CONSULTA TODO
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listarGRPS') {//CONSULTA TODO
   $resultados = searchGroup($conexion);
+  // Accede a las variables retornadas desde el array de resultados
+  $consultar = $resultados['consultar'];
+  $totalFilas = $resultados['totalFilas'];
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listarGRDS') {//CONSULTA TODO
+  $resultados = searchGrades($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
@@ -54,8 +62,8 @@ function deleteGroup($conexion, $IdUser)
 function createGroup($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
       $AsigAcadeProf, $AsigProf, $AreaProf, $Email,$IdRol,$IdGrupo)
 {
-  $creausuario = $conexion->prepare("INSERT INTO usuarios (IdRol,IdImg,Nombre,Apellido,TipoDcto,NumDcto,Telefono,FechNacimiento,Direccion,Email,Password) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
-  $creausuario->bind_param('iisssssssss', $IdRol, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento,$Direccion, $Email, $hashedPass);
+  $creausuario = $conexion->prepare("INSERT INTO usuarios (IdRol,IdImg,Nombre,Apellido,TipoDcto,NumDcto,Telefono,FechNacimiento,Direccion,Email,Password) VALUES (?,?,?,?)");
+  $creausuario->bind_param('iisssssss', $IdRol, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto);
   $creausuario->execute();
   $creausuario->close();
    // Last Id Insert 
@@ -135,14 +143,14 @@ echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</s
 echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
 }
 // ========== LEER READ FUNCTION ==========
-function readGroup($conexion, $IdUser)
+function readGroup($conexion, $IdGrupo)
 {
-  $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password,m.IdGrado,m.NomGrado,g.IdGrupo FROM profesor p 
-    LEFT JOIN usuarios u ON u.IdUser = p.IdUser
-    LEFT JOIN mt_grupos g ON g.IdProf = p.IdProf
-    LEFT JOIN mt_grados m ON m.IdGrado = g.IdGrado
-    LEFT JOIN imagenes i ON i.IdImg = u.IdImg  WHERE p.IdProf = ?");
-  $stmt->bind_param('i', $IdUser);
+  $stmt = $conexion->prepare("SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo
+                    FROM mt_grupos mt
+                    LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado
+                    LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf
+                    LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  WHERE mt.IdGrupo = ?");
+  $stmt->bind_param('i', $IdGrupo);
   $stmt->execute();
   $result = $stmt->get_result();
   if ($row = $result->fetch_assoc()) {
@@ -159,6 +167,38 @@ function searchGroup($conexion)
                     LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado
                     LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf
                     LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
+
+    $conditions = []; // Aquí guardamos los filtros dinámicos
+
+    // Filtros dinámicos
+    if (!empty($_GET['Grado'])) {
+        $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
+        $conditions[] = "c.IdGrado = $Grado";
+    }
+
+    if (!empty($conditions)) {
+        $whereSQL = " WHERE " . implode(" AND ", $conditions);
+        $consultaSQL .= $whereSQL;
+    }else {
+        $whereSQL = ""; // Para reutilizar en el COUNT
+    }
+    // Consulta para contar el total
+    $consultaCount = "SELECT COUNT(*) AS total
+                  FROM mt_grupos mg
+                  $whereSQL";
+
+    $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
+    $resultCount  = mysqli_query($conexion, $consultaCount);
+    $datos = mysqli_fetch_assoc($resultCount );
+
+    return [
+        'consultar' => $consultar,'totalFilas' => $datos['total']
+    ];
+}
+// ========== GROUP TEAHCER FUNCTION ==========
+function searchGrades($conexion)
+{
+    $consultaSQL = "SELECT * FROM mt_grados";
 
     $conditions = []; // Aquí guardamos los filtros dinámicos
 
