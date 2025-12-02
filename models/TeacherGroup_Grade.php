@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$Nombre = '';$Apellido = '';$TipoDcto = '';$NumDocumento = '';$Telefono = '';$Fecha_Nacimiento = '';$Direccion = '';$AsigAcadeProf = '';$AsigProf = '';$AreaProf = '';$Email = '';$Password = '';$IdRol = 2;$IdProf = 2;//Profesor
+$IdGrupo= '';$IdGrado= '';$IdProf= '';$NomGrupo= '';//Grupo
 // Recolecion ID Profesor 
 $IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrupo > 0;
@@ -12,140 +12,93 @@ $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
-
 $mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
+
+function redirectTo($path) {
+    echo "<script>location.href='" . BASE_URL . "$path'</script>";
+    exit;
+}
+function goToGroupList() {
+    redirectTo("/views/subject/MtGroups.php?action=listarGRPS");
+}
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
-  $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AsigProf = $_POST["AsignaturaProfe"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'];
-  //Recibimos Imagen POST
-  $ultimoId_Imagen = $_POST['id_lastImg'];$NombreImagenOriginal = $_FILES['Imagen']['name'];$Imagen_temporal = $_FILES['Imagen']['tmp_name'];
+  $IdGrupo = $_POST['IdGrupo'] ?? $_POST['IdGrupo_Actual']; $IdGrado= $_POST['FornIdGrado'];$IdProf= $_POST['FornIdProf'];$NomGrupo= $_POST['NomGrupo'];//Grupo
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
   $action = $_POST['action'];
   if ($action === 'delete') {
-    deleteGroup($conexion, $IdUser);
+    deleteGroup($conexion, $IdGrupo);
   } elseif ($action === 'create') {
-    createGroup($conexion, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo);
-    // createProfesor($conexion, $id);
+    createGroup($conexion, $IdGrupo,$IdGrado,$IdProf,$NomGrupo);
   } elseif ($action === 'update') {
-    updateGroup($conexion, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf);
+    updateGroup($conexion, $IdGrupo,$IdGrado,$IdProf,$NomGrupo);
   } elseif ($action === 'read') {
     $groupData = readGroup($conexion, $IdGrupo);
     // Asignar las variables desde el array devuelto
-   $IdGrupo = $groupData['IdGrupo'];$NomGrado = $groupData['NomGrado'];$NombreCompleto = $groupData['NombreCompleto'];$NomGrupo = $groupData['NomGrupo'];
+   $IdGrupo = $groupData['IdGrupo'];$IdGrado = $groupData['IdGrado'];$IdProf = $groupData['IdProf'];$NomGrado = $groupData['NomGrado'];$NombreCompleto = $groupData['NombreCompleto'];$NomGrupo = $groupData['NomGrupo'];
   }  else {
     echo 'error';
   }
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listarGRPS') {//CONSULTA TODO
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action =$_GET['action'] ?? '') === 'listarGRPS') {//CONSULTA TODO
   $resultados = searchGroup($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listarGRDS') {//CONSULTA TODO
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET' &&  ($action =$_GET['action'] ?? '') === 'listarGRDS') {//CONSULTA TODO
   $resultados = searchGrades($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 }
 // ========== ELIMINAR DELETE FUNCTION ==========
-function deleteGroup($conexion, $IdUser)
+function deleteGroup($conexion, $IdGrupo)
 {
-  mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  mysqli_query($conexion, "delete from mt_grupos where IdGrupo='$IdGrupo'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
   echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
-  exit;
+  goToGroupList();
 }
 // ========== CREAR CREATE FUNCTION ==========
-function createGroup($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email,$IdRol,$IdGrupo)
+function createGroup($conexion, $IdGrupo,$IdGrado,$IdProf,$NomGrupo)
 {
-  $creausuario = $conexion->prepare("INSERT INTO usuarios (IdRol,IdImg,Nombre,Apellido,TipoDcto,NumDcto,Telefono,FechNacimiento,Direccion,Email,Password) VALUES (?,?,?,?)");
-  $creausuario->bind_param('iisssssss', $IdRol, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto);
-  $creausuario->execute();
-  $creausuario->close();
-   // Last Id Insert 
-  $ultimoId_User = mysqli_insert_id($conexion);
+  $creagrupo = $conexion->prepare("INSERT INTO mt_grupos (IdGrupo,IdGrado,IdProf,NomGrupo) VALUES (?,?,?,?)");
+  $creagrupo->bind_param('isss', $IdGrupo, $IdGrado, $IdProf, $NomGrupo);
+  $creagrupo->execute();
+  $creagrupo->close();
 
-  $creaprofesor = $conexion->prepare("INSERT INTO profesor (IdUser,AsigAcadeProf,AsigProf,AreaProf) VALUES (?,?,?,?)");
-  $creaprofesor->bind_param('isss', $ultimoId_User, $AsigAcadeProf, $AsigProf, $AreaProf );
-  $creaprofesor->execute();
-  $creaprofesor->close();
-  // Last Id Insert 
-  $ultimoIdProf = mysqli_insert_id($conexion);
-//MANDA ERROR
-if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
-    $actgrupos = $conexion->prepare("UPDATE mt_grupos SET IdProf=? WHERE IdGrupo=?");
-    $actgrupos->bind_param('ii', $ultimoIdProf, $IdGrupo);
-    $actgrupos->execute();
-    $actgrupos->close();
-}
-  
-  mysqli_close($conexion);
   echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
+  goToGroupList();
 }
+
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
-function updateGroup($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
-      $AsigAcadeProf, $AsigProf, $AreaProf, $Email, $Password,$IdRol, $NombreImagenOriginal, $Imagen_temporal,$IdGrupo,$IdProf)
+function updateGroup($conexion,$IdGrupo,$IdGrado,$IdProf,$NomGrupo)
 {
-  //Revisa si la contraseña cambia oh sigue igual
-  $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
-  $sentencia->execute();
-  $resultado = $sentencia->get_result();
-  if ($fila = $resultado->fetch_assoc()) {
-    if ($Password == $fila['Password']) {
-      $hashedPass = $fila['Password'];
-    } else {
-      $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
-    }
-  }
-  if ($TipoDcto === "mantener") {
-    $TipoDcto = $_POST["TipoDcto_Actual"];
-  }
+  if ($IdGrado === "mantener") {
+    $IdGrado = $_POST["IdGrado_Actual"];
+  }elseif ($IdGrado === "quitar"){
+    $IdGrado = null;
+  } 
+  if ($IdProf === "mantener") {
+    $IdProf = $_POST["IdProf_Actual"];
+  }elseif ($IdProf === "quitar"){
+    $IdProf = null;
+  } 
   // 1. Actualizar tabla usuarios 
-  $actusuarios = $conexion->prepare("UPDATE usuarios SET  Nombre = ?, Apellido = ?, TipoDcto = ?, NumDcto = ?, Telefono = ?, FechNacimiento = ?, Direccion = ?, Email = ?, Password = ? WHERE IdUser = ?");
-  $actusuarios->bind_param('sssssssssi',$Nombre,$Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $Email, $hashedPass, $IdUser);
-  $actusuarios->execute();
-  $actusuarios->close();
+  $actgrupo = $conexion->prepare("UPDATE mt_grupos SET  IdGrado = ?, IdProf = ?, NomGrupo = ? WHERE IdGrupo = ?");
+  $actgrupo->bind_param('iisi', $IdGrado, $IdProf, $NomGrupo,$IdGrupo);
+  $actgrupo->execute();
+  $actgrupo->close();
 
-  // 2. Actualizar tabla profesor
-  $actprofesor = $conexion->prepare("UPDATE profesor SET AsigAcadeProf = ?, AsigProf = ?, AreaProf = ? WHERE IdUser = ?");
-  $actprofesor->bind_param("sssi", $AsigAcadeProf, $AsigProf, $AreaProf, $IdUser);
-  $actprofesor->execute();  
-  $actprofesor->close();
-
-  $buscarIdProf = $conexion->prepare("SELECT IdProf FROM profesor WHERE IdUser = ?");
-  $buscarIdProf->bind_param('i', $IdUser);
-  $buscarIdProf->execute();
-  $buscarIdProf->bind_result($IdProf);
-  $buscarIdProf->fetch();
-  $buscarIdProf->close();
-
-  if ($IdGrupo === "mantener") {
-    $IdGrupo = $_POST["IdGrupo_Actual"];
-    
-  }
-  if (!empty($IdGrupo)) {
-  $limpiarAsignaciones = $conexion->prepare("UPDATE mt_grupos SET IdProf=NULL WHERE IdProf=?");
-  $limpiarAsignaciones->bind_param('i', $IdProf);
-  $limpiarAsignaciones->execute();
-  $limpiarAsignaciones->close();
-
-  $actgrupos = $conexion->prepare("UPDATE mt_grupos SET IdProf=? WHERE IdGrupo=?");
-  $actgrupos->bind_param('ii', $IdProf, $IdGrupo);
-  $actgrupos->execute();
-  $actgrupos->close();
-  }
-echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</script>";
-echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
+  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdGrupo. "');</script>";
+  goToGroupList();
 }
 // ========== LEER READ FUNCTION ==========
 function readGroup($conexion, $IdGrupo)
 {
-  $stmt = $conexion->prepare("SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo
+  $stmt = $conexion->prepare("SELECT mt.IdGrupo,mt.IdGrado,mt.IdProf,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo
                     FROM mt_grupos mt
                     LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado
                     LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf

@@ -25,7 +25,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
               <td><?php echo $extraido['NomGrado']; ?></td>
               <td><?php echo $extraido['NumAlumnos']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado']; ?>">
                   <input type="hidden" name="action" value="delete">
                   <button type="submit" class="custom-button">
@@ -34,7 +34,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
                     </svg>
                   </button>
                 </form>
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado']; ?>">
                   <input type="hidden" name="action" value="read">
                   <button type="submit" class="custom-button">
@@ -51,7 +51,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php">
+    <a href="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php">
       <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> AÑADIR GRUPO</button>
     </a>
   </div>

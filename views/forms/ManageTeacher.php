@@ -142,5 +142,3 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
   </form>
 </main>
 <?php include(ROOT_PATH."/templates/HomeFooter.php"); ?>
-</body>
-</html>
