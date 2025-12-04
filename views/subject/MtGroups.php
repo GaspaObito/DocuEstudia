@@ -29,7 +29,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
               <td class="td_Actions">
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
-                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="action" value="deleteGroup">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
@@ -38,7 +38,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
                 </form>
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
-                  <input type="hidden" name="action" value="read">
+                  <input type="hidden" name="action" value="readGroup">
                   <button type="submit" class="custom-button">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>

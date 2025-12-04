@@ -69,7 +69,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
         </div>
       </div>
       <div class="alinear-boton">
-        <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
+        <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateGroup' : 'createGroup'; ?>">
         <input type="submit" name="Enviar2" class="boton" value="Enviar">
       </div>
     </fieldset>
