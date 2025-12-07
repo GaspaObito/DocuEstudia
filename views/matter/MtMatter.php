@@ -54,6 +54,9 @@ require_once(ROOT_PATH . "/models/MatterModel.php");
     <a href="<?php echo BASE_URL; ?>/views/forms/ManageMatter.php">
       <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> AÑADIR MATERIA</button>
     </a>
+    <button class="boton" onclick="exportarExcel()">
+      <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
+    </button>
   </div>
 </main>
 <?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

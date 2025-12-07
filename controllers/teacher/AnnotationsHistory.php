@@ -14,13 +14,13 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
         <div>
           <a href="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php">
             <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
-            <div class="botonAtras">
-              <div class="margen__boton">
-                <svg class="navbar-icon" style="margin:0;">
-                  <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
-                </svg>
+              <div class="botonAtras">
+                <div class="margen__boton">
+                  <svg class="navbar-icon" style="margin:0;">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
+                  </svg>
+                </div>
               </div>
-            </div>
             <?php endif; ?>
           </a>
         </div>
@@ -70,6 +70,11 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
             <?php } ?>
           </tbody>
         </table>
+      </div>
+      <div class="alinear-boton">
+        <button class="boton" onclick="exportarExcel()">
+          <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
+        </button>
       </div>
     </div>
   </div>

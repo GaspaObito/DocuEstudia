@@ -126,6 +126,9 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
           <input type="hidden" name="action" value="create">
           <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> CREAR ESTUDIANTE</button>
         </a>
+        <button class="boton" onclick="exportarExcel()">
+          <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
+        </button>
       </div>
     </div>
 </main>

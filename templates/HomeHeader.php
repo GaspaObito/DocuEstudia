@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Login.css">
   <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js"></script>
   <script src="<?php echo BASE_URL; ?>/assets/js/Sliderbar.js"></script>
+  <!-- EXPORT DATA WITH XLSX JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="<?php echo BASE_URL; ?>/assets/js/Export_Xlsx.js"></script>
 </head>
 
 <body>
