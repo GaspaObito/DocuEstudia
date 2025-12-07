@@ -2,32 +2,32 @@
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
+require_once(ROOT_PATH . "/models/MatterModel.php");
 ?>
 <main class="ContainerGeneral">
-  <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>GRADO <?php echo $IdGrado ?> <i
+  <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MATERIA <?php echo $IdMateria ?> <i
       class="fa-solid fa-pen"></i></h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
     <fieldset>
       <div class="formulario__campos1">
-        <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
+        <input type="hidden" name="IdMateria_Actual" value="<?php echo htmlspecialchars($IdMateria) ?>">
           <div>
-            <label for="grupo">IdGrado</label>
+            <label for="grupo">Nombre Materia</label>
             <div class="setting">
               <!-- Nuevo registro -->
-              <input type="text" name="IdGrado" class="Input_Text" placeholder="Id Grado" maxlength="50"  <?php echo $isUpdate ? 'disabled' : '' ?> value="<?php echo htmlspecialchars($IdGrado) ?>">
+              <input type="text" name="NomMateria" class="Input_Text" placeholder="Ingrese Materia" maxlength="50"  value="<?php echo htmlspecialchars($NomMateria) ?>">
             </div>
           </div>
           <div>
-            <label for="grupo">Grado</label>
+            <label for="grupo">Descripcion</label>
             <div class="setting">
               <!-- Nuevo registro -->
-              <input type="text" name="NomGrado" class="Input_Text" placeholder="Nombre Grado" maxlength="50" value="<?php echo htmlspecialchars($NomGrado) ?>">
+              <input type="text" name="Descripcion" class="Input_Text" placeholder="Ingrese Descripcion" maxlength="50" value="<?php echo htmlspecialchars($Descripcion) ?>">
             </div>
           </div>
       </div>
       <div class="alinear-boton">
-        <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateGrade' : 'createGrade'; ?>">
+        <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateMatter' : 'createMatter'; ?>">
         <input type="submit" name="EnviarGrade" class="boton" value="Enviar">
       </div>
     </fieldset>

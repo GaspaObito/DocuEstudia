@@ -4,9 +4,12 @@ require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
 $IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = '';
-// Recolecion ID Profesor 
+// Recolecion ID
 $IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrupo > 0;
+
+$IdGrado = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$isUpdate = $IdGrado > 0;
 // Consulta para Tipo de Sangre y mt_grados
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
@@ -29,6 +32,10 @@ function goToGradeList()
   redirectTo("/views/subject/MtGrades.php?action=listarGRDS");
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
+if (isset($_POST["EnviarGrade"])) {
+  $IdGrado = $_POST['IdGrado']?? $_POST['IdGrado_Actual'];;
+  $NomGrado = $_POST['NomGrado'];
+}
 if (isset($_POST["Enviar2"])) {
   $IdGrupo = $_POST['IdGrupo'] ?? $_POST['IdGrupo_Actual'];
   $IdGrado = $_POST['FornIdGrado']; $IdProf = $_POST['FornIdProf']; $NomGrupo = $_POST['NomGrupo'];
@@ -56,14 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       deleteGrade($conexion, $IdGrado);
       break;
     case 'createGrade':
-      createGrade($conexion, $IdGrado);
+      createGrade($conexion, $IdGrado,$NomGrado);
       break;
     case 'updateGrade':
-      updateGrade($conexion, $IdGrado, $IdGrado, $IdProf, $NomGrupo);
+      updateGrade($conexion, $IdGrado, $NomGrado);
       break;
     case 'readGrade':
-      $gradeData = readGrade($conexion, $IdGrado);
-      $IdGrupo = $gradeData['IdGrupo']; $IdGrado = $gradeData['IdGrado']; $IdProf = $gradeData['IdProf']; $NomGrado = $gradeData['NomGrado']; $NombreCompleto = $gradeData['NombreCompleto']; $NomGrupo = $gradeData['NomGrupo'];
+      $groupData = readGrade($conexion, $IdGrado);
+      $IdGrado = $groupData['IdGrado'];$NomGrado = $groupData['NomGrado'];
       break;
   }
 // ========== SHOW ALL DATA ==========
@@ -137,51 +144,8 @@ function readGroup($conexion, $IdGrupo)
     return null;
   }
 }
-
-// ========== ELIMINAR DELETE FUNCTION GRADE==========
-function deleteGrade($conexion, $IdGrado)
-{
-  mysqli_query($conexion, "delete from mt_grados where IdGrado='$IdGrado'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
-  mysqli_close($conexion);
-  echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  goToGradeList();
-}
-// ========== CREAR CREATE FUNCTION GRADE==========
-function createGrade($conexion,$IdGrado, $IdProf, $NomGrupo)
-{
-  $creagrupo = $conexion->prepare("INSERT INTO mt_grupos (IdGrupo,IdProf,NomGrupo) VALUES (?,?,?)");
-  $creagrupo->bind_param('isss', $IdGrado, $IdProf, $NomGrupo);
-  $creagrupo->execute();
-  $creagrupo->close();
-
-  echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
-  goToGradeList();
-}
-
-// ========== ACTUALIZAR UPDATE FUNCTION GRADE==========
-function updateGrade($conexion, $IdGrado, $IdProf, $NomGrupo)
-{
-  if ($IdGrado === "mantener") {
-    $IdGrado = $_POST["IdGrado_Actual"];
-  } elseif ($IdGrado === "quitar") {
-    $IdGrado = null;
-  }
-  if ($IdProf === "mantener") {
-    $IdProf = $_POST["IdProf_Actual"];
-  } elseif ($IdProf === "quitar") {
-    $IdProf = null;
-  }
-  // 1. Actualizar tabla usuarios 
-  $actgrupo = $conexion->prepare("UPDATE mt_grupos SET  IdGrado = ?, IdProf = ?, NomGrupo = ? WHERE IdGrado = ?");
-  $actgrupo->bind_param('iisi', $IdGrado, $IdProf, $NomGrupo);
-  $actgrupo->execute();
-  $actgrupo->close();
-
-  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdGrado . "');</script>";
-  goToGradeList();
-}
-// ========== READ SEARCH FUNCTION GRADE==========
-function searchGrade($conexion)
+// ========== BUSCAR SEARCH FUNCTION GROUP==========
+function searchGroup($conexion)
 {
   $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo
                     FROM mt_grupos mt
@@ -189,24 +153,9 @@ function searchGrade($conexion)
                     LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf
                     LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
 
-  $conditions = []; // Aquí guardamos los filtros dinámicos
-
-  // Filtros dinámicos
-  if (!empty($_GET['Grado'])) {
-    $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
-    $conditions[] = "c.IdGrado = $Grado";
-  }
-
-  if (!empty($conditions)) {
-    $whereSQL = " WHERE " . implode(" AND ", $conditions);
-    $consultaSQL .= $whereSQL;
-  } else {
-    $whereSQL = ""; // Para reutilizar en el COUNT
-  }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total
-                  FROM mt_grupos mg
-                  $whereSQL";
+                  FROM mt_grupos mg";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);
@@ -217,29 +166,57 @@ function searchGrade($conexion)
     'totalFilas' => $datos['total']
   ];
 }
+// ========== ELIMINAR DELETE FUNCTION GRADE==========
+function deleteGrade($conexion, $IdGrado)
+{
+  mysqli_query($conexion, "delete from mt_grados where IdGrado='$IdGrado'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  mysqli_close($conexion);
+  echo "<script>alert('SE ELIMINO CORRECTAMENTE " . $IdGrado . "')</script>";
+  goToGradeList();
+}
+// ========== CREAR CREATE FUNCTION GRADE==========
+function createGrade($conexion,$IdGrado,$NomGrado)
+{
+  $creargrado = $conexion->prepare("INSERT INTO mt_grados (IdGrado,NomGrado) VALUES (?,?)");
+  $creargrado->bind_param('is', $IdGrado, $NomGrado);
+  $creargrado->execute();
+  $creargrado->close();
+
+  echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
+  goToGradeList();
+}
+
+// ========== ACTUALIZAR UPDATE FUNCTION GRADE==========
+function updateGrade($conexion,$IdGrado,$NomGrado)
+{
+  $actgrado = $conexion->prepare("UPDATE mt_grados SET  NomGrado = ? WHERE IdGrado = ?");
+  $actgrado->bind_param('si', $NomGrado,$IdGrado);
+  $actgrado->execute();
+  $actgrado->close();
+
+  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdGrado . "');</script>";
+  goToGradeList();
+}
+// ========== LEER READ FUNCTION GROUP ==========
+function readGrade($conexion, $IdGrado)
+{
+  $stmt = $conexion->prepare("SELECT * FROM mt_grados mt WHERE mt.IdGrado = ?");
+  $stmt->bind_param('i', $IdGrado);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($row = $result->fetch_assoc()) {
+    return $row;
+  } else {
+    return null;
+  }
+}
 // ========== SEARCH FUNCTION GRADE ==========
 function searchGrades($conexion)
 {
   $consultaSQL = "SELECT * FROM mt_grados";
-
-  $conditions = []; // Aquí guardamos los filtros dinámicos
-
-  // Filtros dinámicos
-  if (!empty($_GET['Grado'])) {
-    $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
-    $conditions[] = "c.IdGrado = $Grado";
-  }
-
-  if (!empty($conditions)) {
-    $whereSQL = " WHERE " . implode(" AND ", $conditions);
-    $consultaSQL .= $whereSQL;
-  } else {
-    $whereSQL = ""; // Para reutilizar en el COUNT
-  }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total
-                  FROM mt_grupos mg
-                  $whereSQL";
+                  FROM mt_grupos mg";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);

@@ -26,8 +26,8 @@
                 <i class="fa-solid fa-chevron-down arrow"></i>
             </a>
             <ul class="submenu">
-                <li><a href="#">Crear Materia</a></li>
-                <li><a href="#">Listar Materias</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/matter/MtMatter.php?action=listarMATTER">Maestro Materias</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listarGRPS">Materias Por Grado</a></li>
             </ul>
         </li>
 
