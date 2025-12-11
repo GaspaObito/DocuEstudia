@@ -1,4 +1,7 @@
-<?php require_once("templates/HomeHeader.php");?>
+<?php 
+define("PAGE_CSS", "Index");
+require_once("templates/HomeHeader.php");
+?>
 <div id="Fondo">
     <div id="TitleStart" style="padding-top: 100px;">
         <h1>OBSERVADOR ONLINE <i class="fa-solid fa-school"></i></h1>

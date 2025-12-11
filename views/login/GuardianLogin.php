@@ -1,4 +1,5 @@
 <?php
+define("PAGE_CSS", "Login");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 ?>

@@ -1,3 +1,9 @@
+/* =========================================
+    Layout Global (Header, Sidebar, Footer)
+    Reutilizado en TODO el sitio
+
+   VARIABLES GLOBALES
+========================================= */
 :root {
   --primary: #ec2525;
   --blanco: #eee;
@@ -6,17 +12,15 @@
   --Color_Button: linear-gradient(180deg, #ec2525 0%, #af2a3c 100%);
   --fuente_principal: "Open Sans", sans-serif;
 }
-/* =========================================================
-   Template para html body 
-   ========================================================= */
+/* =========================================
+   BASE DEL DOCUMENTO (HTML / BODY)
+========================================= */
 html {
   font-size: 62.5%; /*Valores para utilizar mejor los rem*/
   box-sizing: border-box;
   scroll-snap-type: y mandatory;
 }
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   /*Sirven para que cuando se le añada por ejemplo un heigt y un padding no cambie las el tamaño de la imagen */
   box-sizing: inherit;
 }
@@ -38,7 +42,9 @@ margin: 0;
 fieldset {
   border: none;
 }
-/*Header Navbar Styles*/
+/* =========================================
+   NAVBAR / HEADER GLOBAL
+========================================= */
 .navbar {
   background: var( --bg_linear);
   display: grid;
@@ -71,7 +77,16 @@ fieldset {
   width: 60px;
   height: 60px;
 }
-/*Footer Navbar Styles */
+/*Svg Styles*/
+.navbar-icon{
+  width:40px;
+  height:40px;
+  margin-right: 10px;
+}
+/* =========================================
+   FOOTER GLOBAL
+========================================= */
+
 .navbar-footer {
   background: var( --bg_linear);
   padding: 1rem;
@@ -98,114 +113,49 @@ footer p {
   padding: 1em;
   text-align: center;
 }
-/* Titulo Inicial */
-#TitleStart {
-  text-align: center;
-  color: var(--primary);
-}
-/*Informacion Usuario*/
-#DataUser {
-  font-size: 2.5rem;
-  text-align: center;
-}
-/*Boton General*/
-.boton {
-  padding: 1.2rem 5.5rem 1.5rem 5.2rem;
-  background: var(--Color_Button);
-  box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.11),0px 2px 4px -1px rgba(0, 0, 0, 0.07);
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s ease-in-out;
-  color: var(--blanco);
-}
-/* Button Logout */
-.botonAtras {
-  background: var(--Color_Button);
-  box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.11),0px 2px 4px -1px rgba(0, 0, 0, 0.07);
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  color: var(--blanco);
-  width: 100%;
-  padding-right: 0.5rem;
-  display: table-caption;
-}
-.custom-button {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-/* Tamaño Margenes Button */
-.margen__boton {
-  padding-left: 0.7rem;
-  padding-top: 0.5rem;
-}
-.alinear-boton {
+
+/* =========================================
+   ELEMENTOS GLOBALMENTE REUTILIZABLES
+========================================= */
+
+/* Contenido de Ficha: Contorno,Texto,Imagen */
+.BlockText {
   display: flex;
-  justify-content: space-evenly;
+  position: relative; /* Establece el contexto de posicionamiento para el div */
+  background-color: #454654;
+  border-radius: 30px;
+  margin: 100px auto;
+  justify-content: space-between;
+  word-wrap: break-word; /* Rompe las palabras largas */
+  word-break: break-word;
 }
-/*Input General*/
-.Input_Text {
-  font-size: inherit;
-  appearance: none;
-  padding: 1.5rem;
-  border: none;
-  width: 100%;
-  box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),
-    inset 2px 2px 4px rgba(170, 170, 204, 0.25),
-    inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
-  border-radius: 1rem;
+.section {
+  color: white;
+  flex-basis: 50%;
+  padding: 50px;
 }
-.usuario__campo {
-  margin: 2rem;
+.Image-Style {
+  object-position: 50%;
+  position:relative;
+  width: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
+  height: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
+  object-fit:cover;
+  clip-path: circle(100% at 100% 100%); /* Aplica un recorte circular hasta la mitad */
 }
-.Input_Text--BgNone {
-  box-shadow: none;
-  background: none;
-}
-.setting {
+.Image-Position{
   display: flex;
-}
-input,textarea,select.Input_Text {
-  font-family: var(--fuente_principal);
-}
-/*formulario de descripcion*/
-.Add_Anotacion {
-  padding-bottom: 50px;
-  display: grid;
-}
-.Add_Anotacion textarea {
-  height: 120px;
-}
+  justify-content: end;
+} 
+
+/* =========================================
+   CONTENEDORES GLOBALES
+========================================= */
+
 /*Centrar Texto Con boton Lateral*/
 .nav__miniventana {
   display: grid;
   grid-template-columns: 15% 70% 15%;;
   align-items: center;
-}
-/* Estilo para la opción seleccionada */
-select option:first-child {
-  color: var(--primary);
-  font-weight: bold;
-}
-select option:checked {
-  font-weight: bold;
-}
-/*Styles For Image Container Users*/
-.imagen {
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid black;
-  padding-bottom: 10px;
-}
-.imagen img {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 120px 20px 120px 20px;
 }
 /*Containers Generales,Datos Usuario*/
 .ContainerGeneral {
@@ -242,26 +192,179 @@ select option:checked {
   display: flex;
   align-items: center;
 }
-/*Svg Styles*/
-.navbar-icon{
-  width:40px;
-  height:40px;
-  margin-right: 10px;
+/*Informacion Usuario*/
+#DataUser {
+  font-size: 2.5rem;
+  text-align: center;
 }
-/* Estilos para la barra de desplazamiento */
-::-webkit-scrollbar {
-  width: 8px; /* Ancho de la barra de desplazamiento */
+/*Styles For Image Container Users*/
+.imagen {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
 }
-::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color del fondo de la barra de desplazamiento */
+.imagen img {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 120px 20px 120px 20px;
 }
-::-webkit-scrollbar-thumb {
-  background: #888; /* Color del agarre de la barra de desplazamiento */
-  border-radius: 4px; /* Radio de la esquina del agarre */
+
+/* =========================================
+   SIDEBAR GLOBALES
+========================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 55px;
+    height: 100vh;
+    background: #1f1f1f;
+    padding: 1rem 0;
+    overflow-y: auto;
+    box-shadow: 4px 7px 15px rgba(0, 0, 0, .4);
+    transition: width .3s ease;
+    z-index: 100;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color del agarre de la barra de desplazamiento al pasar el mouse */
+.sidebar:hover {
+    width: 240px;
 }
+/* Si usarás "active" para colapsar */
+#sidebar.active {
+    margin-left: -250px;
+}
+/*----- LOGO -----*/
+.sidebar__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+.sidebar__logo span {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+.sidebar:hover .sidebar__logo span {
+    opacity: 1;
+}
+/* Ocultar la barra visual */
+#sidebar::-webkit-scrollbar {
+    width: 0px !important;
+    background: transparent !important;
+}
+#sidebar {
+    scrollbar-width: none !important;  /* Firefox */
+}
+/*----- MENÚ PRINCIPAL -----*/
+.sidebar__menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 25px;
+}
+.menu-title {
+    color: #bbbbbb;
+    font-size: 12px;
+    padding: 6px 25px;
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+.sidebar:hover .menu-title {
+    opacity: 1;
+}
+.menu-item > a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background .3s ease;
+}
+.menu-item > a:hover {
+    background: #2b2b2b;
+}
+/* Iconos siempre visibles */
+.menu-item i {
+    font-size: 20px;
+}
+/* Texto oculto hasta hover */
+.menu-item span {
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+.sidebar:hover .menu-item span {
+    opacity: 1;
+}
+/* Botón fijo al lado del sidebar */
+.toggle-btn {
+    position: fixed;
+    top: 90rem;
+    left: 10px;
+    z-index: 200;  /* por encima del sidebar */
+    background: #1f1f1f;
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: left .3s ease;
+}
+/*----- SUBMENUS -----*/
+/* Submenu contenedor */
+.submenu {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
+}
+/* Submenu abierto */
+.has-submenu.open .submenu {
+    max-height: 300px;
+}
+/* Items del submenu */
+.submenu li {
+    margin: 3px 0;
+}
+/* Enlaces del submenu */
+.submenu li a {
+    display: block;
+    padding: 10px 55px;
+    font-size: 14px;
+    color: #dddddd;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+}
+/* Hover del submenu */
+.submenu li a:hover {
+    background: #2b2b2b;
+    border-left: 2px solid #54a4ff;
+}
+/* ----- FLECHAS / ARROW ----- */
+.arrow {
+    margin-left: auto;
+    transition: transform .3s ease;
+}
+.has-submenu.open .arrow {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   RESPONSIVE GLOBALES
+========================================= */
+
 /*Styles Mobile Tablet*/
 @media (max-width: 768px) {
   /*Header Navbar Styles*/
@@ -315,193 +418,4 @@ select option:checked {
   .ContainerUser {
     display: block;
   }
-}
- /*Alertas*/
-.alert {
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-}
-.alert-success { background: #d4edda; color: #155724; }
-.alert-danger { background: #f8d7da; color: #721c24; }
-.alert-warning { background: #fff3cd; color: #856404; }
-
-/* =========================================================
-   SIDEBAR GENERAL
-   ========================================================= */
-
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 55px;
-    height: 100vh;
-    background: #1f1f1f;
-    padding: 1rem 0;
-    overflow-y: auto;
-    box-shadow: 4px 7px 15px rgba(0, 0, 0, .4);
-    transition: width .3s ease;
-    z-index: 100;
-}
-
-.sidebar:hover {
-    width: 240px;
-    
-}
-
-/* Si usarás "active" para colapsar */
-#sidebar.active {
-    margin-left: -250px;
-}
-
-/* =========================================================
-   LOGO
-   ========================================================= */
-
-.sidebar__logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 15px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.sidebar__logo span {
-    opacity: 0;
-    transition: opacity .3s ease;
-}
-
-.sidebar:hover .sidebar__logo span {
-    opacity: 1;
-}
-/* Ocultar la barra visual */
-#sidebar::-webkit-scrollbar {
-    width: 0px !important;
-    background: transparent !important;
-}
-#sidebar {
-    scrollbar-width: none !important;  /* Firefox */
-}
-/* =========================================================
-   MENÚ PRINCIPAL
-   ========================================================= */
-
-.sidebar__menu {
-    list-style: none;
-    padding: 0;
-    margin-top: 25px;
-}
-
-.menu-title {
-    color: #bbbbbb;
-    font-size: 12px;
-    padding: 6px 25px;
-    text-transform: uppercase;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s ease;
-}
-
-.sidebar:hover .menu-title {
-    opacity: 1;
-}
-
-.menu-item > a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 20px;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    transition: background .3s ease;
-}
-
-.menu-item > a:hover {
-    background: #2b2b2b;
-}
-
-/* Iconos siempre visibles */
-.menu-item i {
-    font-size: 20px;
-}
-
-/* Texto oculto hasta hover */
-.menu-item span {
-    opacity: 0;
-    transition: opacity .3s ease;
-}
-
-.sidebar:hover .menu-item span {
-    opacity: 1;
-}
-/* Botón fijo al lado del sidebar */
-.toggle-btn {
-    position: fixed;
-    top: 90rem;
-    left: 10px;
-    z-index: 200;  /* por encima del sidebar */
-    background: #1f1f1f;
-    color: white;
-    border: none;
-    padding: 10px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 20px;
-    transition: left .3s ease;
-}
-/* =========================================================
-   SUBMENUS
-   ========================================================= */
-
-/* Submenu contenedor */
-.submenu {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .3s ease;
-}
-
-/* Submenu abierto */
-.has-submenu.open .submenu {
-    max-height: 300px;
-}
-
-/* Items del submenu */
-.submenu li {
-    margin: 3px 0;
-}
-
-/* Enlaces del submenu */
-.submenu li a {
-    display: block;
-    padding: 10px 55px;
-    font-size: 14px;
-    color: #dddddd;
-    text-decoration: none;
-    border-left: 2px solid transparent;
-    transition: background .3s ease, border-color .3s ease;
-}
-
-/* Hover del submenu */
-.submenu li a:hover {
-    background: #2b2b2b;
-    border-left: 2px solid #54a4ff;
-}
-
-/* =========================================================
-   FLECHAS / ARROW
-   ========================================================= */
-
-.arrow {
-    margin-left: auto;
-    transition: transform .3s ease;
-}
-
-.has-submenu.open .arrow {
-    transform: rotate(180deg);
 }

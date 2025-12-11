@@ -1,0 +1,42 @@
+/* ================================
+   Estilos exclusivos del Home/Index
+================================ */
+
+/* Contenido principal */
+#content {
+  color: aliceblue;
+  padding: 50px 50px;
+  text-align: center;
+}
+/* Fondo decorativo del Home */
+#Fondo {
+  background-image: url(../ui/fondo1.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-bottom: 100px;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 50% 100%, 0% 80%);
+}
+/* Titulo Inicial */
+#TitleStart {
+  text-align: center;
+  color: var(--primary);
+}
+
+/* ================================
+   Media Queries del Home
+================================ */
+
+/* Responsivo para móviles */
+@media (max-width: 768px) {
+  /* Si BlockText se usa SOLO en el Home, déjalo aquí.
+     Si es global, esta sección debería moverse a layout.css */
+  .BlockText {
+    display: block;
+    position: relative;
+    margin: 100px 0;
+    width: auto;
+    background-color: #454654;
+    border-radius: 30px;
+  }
+}

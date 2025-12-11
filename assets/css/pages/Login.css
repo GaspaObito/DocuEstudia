@@ -7,13 +7,13 @@
   padding: 100px 80px 100px 80px;
 }
 .BannerTeacher {
-  background-image: url(../ui/maestro.jpg);
+  background-image: url(../../ui/maestro.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 .BannerStudent {
-  background-image: url(../ui/estudiante.jpg);
+  background-image: url(../../ui/estudiante.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php require_once(__DIR__ . "/../config/config.php");?>
+  <?php require_once(__DIR__ . "/../config/config.php"); ?>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DocuEstudia</title>
-  <!-- Usamos BASE_URL que viene desde config.php -->
-  <link rel="icon" href="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" type="icon" />
-  <link rel="preload" href="<?php echo BASE_URL; ?>/assets/css/normalize.css" as="style">
+  <!-- Favicon -->
+  <link rel="icon" href="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" type="image/x-icon">
+  <!-- CSS Base (Normalize → Globals → Layout) -->
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/base/Normalize.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/base/Globals.css">
+  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/base/Layout.css">
+  <!-- Iconos (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Main.css">
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Annotation.css">
-  <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/Login.css">
-  <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js"></script>
-  <script src="<?php echo BASE_URL; ?>/assets/js/Sliderbar.js"></script>
-  <!-- EXPORT DATA WITH XLSX JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="<?php echo BASE_URL; ?>/assets/js/Export_Xlsx.js"></script>
+  <!-- JS globales (Navbar, Sidebar) -->
+  <script src="<?php echo BASE_URL; ?>/assets/js/Navbar_Toggler.js" defer></script>
+  <script src="<?php echo BASE_URL; ?>/assets/js/Sliderbar.js" defer></script>
+  <!-- Librerías externas (XLSX, gráficos, etc.) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+  <script src="<?php echo BASE_URL; ?>/assets/js/Export_Xlsx.js" defer></script>
+  <!-- CSS de cada Página (se carga dinámicamente en cada vista) -->
+  <?php if (defined("PAGE_CSS")): ?>
+      <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/pages/<?php echo PAGE_CSS; ?>.css">
+  <?php endif; ?>
 </head>
-
 <body>
   <header>
     <nav class="navbar">
