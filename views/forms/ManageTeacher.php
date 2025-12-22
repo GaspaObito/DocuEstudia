@@ -69,10 +69,26 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
           </div>
         </div>
         <div>
-          <label>Asignatura *</label>
-          <div class="setting">
-          <input type="text" name="AsignaturaProfe" class="Input_Text" value="<?php echo htmlspecialchars($AsigProf); ?>" placeholder="Asignatura del Profesor" maxlength="30" required>
-          </div>
+          <label>Seleccione Materia a Dictar *<label>
+            <div class="setting">
+              <input type="hidden" name="IdMateria_Actual" value="<?php echo htmlspecialchars($IdMateria) ?>">
+              <select name="FornIdMateria" class="Input_Text">
+                <?php if ($isUpdate) { ?>
+                  <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomMateria) ?></option>
+                  <option value="quitar">
+                    Sin grupo
+                  </option>
+                <?php } else { ?>
+                  <option disabled selected>...</option>
+                <?php } ?>
+                <?php
+                foreach ($mt_materias as $opciones): ?>
+                  <option value="<?php echo $opciones['IdMateria'] ?>">
+                    <?php echo $opciones['NomMateria'] ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
         </div>
         <div>
           <label>Area *</label>

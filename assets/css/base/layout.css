@@ -12,6 +12,7 @@
   --Color_Button: linear-gradient(180deg, #ec2525 0%, #af2a3c 100%);
   --fuente_principal: "Open Sans", sans-serif;
 }
+
 /* =========================================
    BASE DEL DOCUMENTO (HTML / BODY)
 ========================================= */
@@ -42,6 +43,7 @@ margin: 0;
 fieldset {
   border: none;
 }
+
 /* =========================================
    NAVBAR / HEADER GLOBAL
 ========================================= */
@@ -83,10 +85,10 @@ fieldset {
   height:40px;
   margin-right: 10px;
 }
+
 /* =========================================
    FOOTER GLOBAL
 ========================================= */
-
 .navbar-footer {
   background: var( --bg_linear);
   padding: 1rem;
@@ -113,39 +115,6 @@ footer p {
   padding: 1em;
   text-align: center;
 }
-
-/* =========================================
-   ELEMENTOS GLOBALMENTE REUTILIZABLES
-========================================= */
-
-/* Contenido de Ficha: Contorno,Texto,Imagen */
-.BlockText {
-  display: flex;
-  position: relative; /* Establece el contexto de posicionamiento para el div */
-  background-color: #454654;
-  border-radius: 30px;
-  margin: 100px auto;
-  justify-content: space-between;
-  word-wrap: break-word; /* Rompe las palabras largas */
-  word-break: break-word;
-}
-.section {
-  color: white;
-  flex-basis: 50%;
-  padding: 50px;
-}
-.Image-Style {
-  object-position: 50%;
-  position:relative;
-  width: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
-  height: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
-  object-fit:cover;
-  clip-path: circle(100% at 100% 100%); /* Aplica un recorte circular hasta la mitad */
-}
-.Image-Position{
-  display: flex;
-  justify-content: end;
-} 
 
 /* =========================================
    CONTENEDORES GLOBALES
@@ -215,7 +184,6 @@ footer p {
 /* =========================================
    SIDEBAR GLOBALES
 ========================================= */
-
 .sidebar {
     position: fixed;
     left: 0;
@@ -359,6 +327,45 @@ footer p {
 }
 .has-submenu.open .arrow {
     transform: rotate(180deg);
+}
+
+/* =========================================
+   TABLAS GLOBALES
+========================================= */
+.Custom_Table {
+  border-radius: 10px;
+  overflow: hidden;
+  border-collapse: collapse;
+  margin: 0 auto;
+  width: 100%;
+}
+.Custom_Table  thead tr {
+  text-align: center;
+  color: white;
+  background: linear-gradient(180deg, #EB3F57 0%, #893944 100%);
+  height: 60px;
+}
+.Custom_Table  tbody tr {
+  color: rgb(29, 29, 29);
+}
+.Custom_Table td,.Custom_Table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.Custom_Table td.td_Actions {
+  display: flex;
+  justify-content: space-evenly;
+}
+.Custom_Table tr:nth-child(even) {
+  background-color: #dadada;
+}
+.Custom_Table tr:hover {
+  background-color: #ddd;
+}
+.descripcion-anterior {
+  width: 400px;
+  /* Ajusta el ancho según tus necesidades */
+  word-wrap: break-word;
 }
 
 /* =========================================

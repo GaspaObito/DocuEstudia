@@ -1,3 +1,9 @@
+/* Titulo Inicial */
+#TitleStart {
+  text-align: center;
+  color: var(--primary);
+}
+
 /* =========================================
    BUTTON GLOBAL
 ========================================= */
@@ -47,6 +53,7 @@ select option:first-child {
 select option:checked {
   font-weight: bold;
 }
+
 /* =========================================
    INPUTS GLOBAL
 ========================================= */
@@ -83,8 +90,9 @@ input,textarea,select.Input_Text {
 .Add_Anotacion textarea {
   height: 120px;
 }
+
 /* =========================================
-   Alertas GLOBAL
+    Alertas GLOBAL
 ========================================= */
 .alert {
   padding: 15px;
@@ -95,6 +103,31 @@ input,textarea,select.Input_Text {
 .alert-danger { background: #f8d7da; color: #721c24; }
 .alert-warning { background: #fff3cd; color: #856404; }
 
+/* =========================================
+    Manage Form Update Create
+========================================= */
+/*Form-Campos input Visual*/
+.formulario {
+  padding: 1rem;
+}
+.formulario__campos1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+/*Imagen Modificar*/
+.imagenChange {
+  display: flex;
+  justify-content: center;
+}
+.imagenChange img {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50px;
+}
 /* =========================================
    SCROLLBARS GLOBAL
 ========================================= */

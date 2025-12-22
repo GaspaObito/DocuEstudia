@@ -98,28 +98,7 @@
 }
 /*FINALIZA Bloque Anotaciones_Profesor*/
 /*INICIA Bloque Formulario ActProfe_ActTrigger*/
-/*Form-Campos input Visual*/
-.formulario {
-  padding: 1rem;
-}
-.formulario__campos1 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-bottom: 3rem;
-}
-/*Imagen Modificar*/
-.imagenChange {
-  display: flex;
-  justify-content: center;
-}
-.imagenChange img {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50px;
-}
+
 input[type="file"]::file-selector-button {
   margin-right: 20px;
   border: none;
@@ -132,42 +111,6 @@ input[type="file"]::file-selector-button {
 }
 input[type="file"]::file-selector-button:hover {
   background: #e4223c;
-}
-/*Tablas Del Trigger*/
-.Custom_Table {
-  border-radius: 10px;
-  overflow: hidden;
-  border-collapse: collapse;
-  margin: 0 auto;
-  width: 100%;
-}
-.Custom_Table  thead tr {
-  text-align: center;
-  color: white;
-  background: linear-gradient(180deg, #EB3F57 0%, #893944 100%);
-  height: 60px;
-}
-.Custom_Table  tbody tr {
-  color: rgb(29, 29, 29);
-}
-.Custom_Table td,.Custom_Table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-.Custom_Table td.td_Actions {
-  display: flex;
-  justify-content: space-evenly;
-}
-.Custom_Table tr:nth-child(even) {
-  background-color: #dadada;
-}
-.Custom_Table tr:hover {
-  background-color: #ddd;
-}
-.descripcion-anterior {
-  width: 400px;
-  /* Ajusta el ancho según tus necesidades */
-  word-wrap: break-word;
 }
 /*FINALIZA Bloque Formulario ActProfe_ActTrigger*/
 /*Styles Mobile Tablet*/

@@ -13,7 +13,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
         <thead>
           <tr>
             <th>IdGrupo</th>
-            <th>NomGrado</th>
+            <th>NomGrupo</th>
             <th>Nombre Profesor</th>
             <th>NomGrupo</th>
             <th>Acciones</th>
