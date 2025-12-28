@@ -3,17 +3,20 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$IdMateria = ''; $NomMateria = ''; $Descripcion = '';
+$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; 
 // Recolecion ID
-$IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
+// $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdMateria > 0;
-// Consulta para Tipo de Sangre y mt_grados
+// Consulta para Tipo de Sangre, mt_grados,MatterxGrade
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
+$mt_materias = "SELECT * FROM mt_materias";
+$mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
 function redirectTo($path)
 {
   echo "<script>location.href='" . BASE_URL . "$path'</script>";
@@ -47,10 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $groupData = readMatter($conexion, $IdMateria);
       $IdMateria = $groupData['IdMateria'];$NomMateria = $groupData['NomMateria'];$Descripcion = $groupData['Descripcion'];
       break;
+    case 'readMatterXGrade':
+      $MatterxGradeData = readMatterXGrade($conexion, $IdMateria);
+      $IdMateria = $MatterxGradeData['IdMatGrado'];$IdGrado = $MatterxGradeData['IdGrado'];$IdMateria = $MatterxGradeData['IdMateria'];$NomGrado = $MatterxGradeData['NomGrado'];
+      
+      $resultados = searchMatter($conexion,$IdGrado);
+      $materiasAsignadas = $resultados['materiasAsignadas'];
+      break;
   }
 // ========== SHOW ALL DATA ==========
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTER') {//CONSULTA TODO GROUP
-  $resultados = searchMatter($conexion);
+  $resultados = searchMatter($conexion,$IdGrado);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
@@ -104,20 +114,45 @@ function readMatter($conexion, $IdMateria)
   }
 }
 // ========== BUSCAR SEARCH FUNCTION GROUP==========
-function searchMatter($conexion)
+function searchMatter($conexion,$IdGrado)
 {
   $consultaSQL = "SELECT * FROM mt_materias";
 
   // Consulta para contar el total
-  $consultaCount = "SELECT COUNT(*) AS total
-                  FROM mt_materias mm";
+  $consultaCount = "SELECT COUNT(*) AS total FROM mt_materias mm";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);
   $datos = mysqli_fetch_assoc($resultCount);
+  // Consulta Materias x Grado 
+  $materiasAsignadas = [];
+
+  if ($IdGrado > 0) {
+      $sqlAsignadas = "SELECT IdMateria FROM materias_x_grado WHERE IdGrado = $IdGrado";
+      $resAsignadas = mysqli_query($conexion, $sqlAsignadas);
+      while ($fila = mysqli_fetch_assoc($resAsignadas)) {
+          $materiasAsignadas[] = $fila['IdMateria'];
+      }
+  }
 
   return [
     'consultar' => $consultar,
-    'totalFilas' => $datos['total']
+    'totalFilas' => $datos['total'],
+    'materiasAsignadas' => $materiasAsignadas
   ];
+}
+// ========== LEER READ FUNCTION MATTER GRADE ==========
+function readMatterXGrade($conexion, $IdMateria)
+{
+  $stmt = $conexion->prepare("SELECT mg.*,mm.NomGrado FROM materias_x_grado mg
+  LEFT JOIN mt_grados mm ON mm.IdGrado = mg.IdGrado WHERE mg.IdGrado = ?");
+  $stmt->bind_param('i', $IdMateria);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($row = $result->fetch_assoc()) {
+    return $row;
+  } else {
+    return null;
+  };
+  
 }

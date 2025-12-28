@@ -27,7 +27,7 @@
             </a>
             <ul class="submenu">
                 <li><a href="<?php echo BASE_URL; ?>/views/matter/MtMatter.php?action=listarMATTER">Maestro Materias</a></li>
-                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listarGRPS">Materias Por Grado</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/matter/MatterXGrade.php?action=listarMATTER">Materias Por Grado</a></li>
             </ul>
         </li>
 

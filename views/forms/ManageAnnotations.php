@@ -1,4 +1,5 @@
 <?php
+define("PAGE_CSS", "Annotation");
 // 👇 Incluimos el archivo central de configuración
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
@@ -15,12 +16,9 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
         <div>
           <!-- Aquí usamos BASE_URL -->
           <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
-
-            
           </a>
         </div>
       </div>
-      <div id="contenido"></div>
       <div class="Container1">
         <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post" class="formulario">
           <fieldset>
@@ -88,4 +86,4 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
   </div>
   </div>
 </main>
-<?php include(ROOT_PATH."/templates/HomeFooter.php"); ?>
+<?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>
