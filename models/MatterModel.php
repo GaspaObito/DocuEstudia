@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; 
+$IdMateria = ''; $NomGrado = ''; $Descripcion = '';
 // Recolecion ID
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 // $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
@@ -26,6 +26,10 @@ function goToMatterList()
 {
   redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
 }
+function goToMatterxGradeList()
+{
+  redirectTo("/views/matter/MatterXGrade.php");
+}
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarGrade"])) {
   $IdMateria = $_POST['IdMateria']?? $_POST['IdMateria_Actual'];
@@ -34,7 +38,7 @@ if (isset($_POST["EnviarGrade"])) {
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $action = $_POST['action'];
+  $action = $_POST['action']?? [];
 
   switch ($action) {
     case 'deleteMatter':
@@ -52,10 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'readMatterXGrade':
       $MatterxGradeData = readMatterXGrade($conexion, $IdMateria);
-      $IdMateria = $MatterxGradeData['IdMatGrado'];$IdGrado = $MatterxGradeData['IdGrado'];$IdMateria = $MatterxGradeData['IdMateria'];$NomGrado = $MatterxGradeData['NomGrado'];
       
+    if ($MatterxGradeData) {
+        $IdGrado  = $MatterxGradeData['IdGrado'];
+        $NomGrado = $MatterxGradeData['NomGrado'];
+    } else {
+        $IdGrado = $IdMateria; // el grado consultado
+        $NomGrado = 'SIN MATERIAS ASIGNADAS';
+        $materiasAsignadas = []; // importante
+        $mensaje = 'Este grado no tiene materias asignadas';
+    }
+    
       $resultados = searchMatter($conexion,$IdGrado);
       $materiasAsignadas = $resultados['materiasAsignadas'];
+      break;
+    case 'AsigMultipleMatter':
+      $materias = $_POST['FornIdMateria'] ?? [];
+      AsigMultipleMatter($conexion,$materias,$IdMateria);
       break;
   }
 // ========== SHOW ALL DATA ==========
@@ -155,4 +172,21 @@ function readMatterXGrade($conexion, $IdMateria)
     return null;
   };
   
+}
+// ========== LEER READ FUNCTION MATTER GRADE ==========
+function AsigMultipleMatter($conexion,$materias,$IdMateria)
+{
+  $stmt = $conexion->prepare("DELETE FROM materias_x_grado WHERE IdGrado = ?");
+  $stmt->bind_param("i", $IdMateria);
+  $stmt->execute();
+  
+  $stmt = $conexion->prepare("INSERT INTO materias_x_grado (IdGrado, IdMateria) VALUES (?, ?)");
+
+  foreach ($materias as $materia) {
+      $materia = intval($materia);
+      $stmt->bind_param("ii", $IdMateria, $materia);
+      $stmt->execute();
+  }
+  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdMateria . "');</script>";
+  goToMatterxGradeList();
 }
