@@ -14,6 +14,15 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
+function redirectTo($path)
+{
+  echo "<script>location.href='" . BASE_URL . "$path'</script>";
+  exit;
+}
+function goToTeacherList()
+{
+  redirectTo("/controllers/admin/ManageUsers.php?action=listar");
+}
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
   $IdUser = $_POST['id_profesor'];$Nombre = $_POST["Nombre"];$Apellido = $_POST["Apellido"];$TipoDcto = $_POST["TipoDcto"];$NumDocumento = $_POST["NumDocumento"];$Telefono = $_POST["Telefono"];$Fecha_Nacimiento = $_POST["Fecha_Nacimiento"];$Direccion = $_POST["Direccion"];$AsigAcadeProf = $_POST["AsigAcadeProf"];$AreaProf = $_POST["Area"];$Email = $_POST["Correo"];$Password = $_POST["Contrasena"];$IdGrupo =$_POST['FornIdGrupo'];$IdMateria =$_POST['FornIdMateria'];
@@ -53,9 +62,8 @@ function deleteTeacher($conexion, $IdUser)
 {
   mysqli_query($conexion, "delete from profesor where IdProf='$IdUser'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
-  echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
-  exit;
+  $_SESSION['alerts'][] = ['type' => 'info','text' => 'Se elimino Correctamente #'.$IdUser];
+  goToTeacherList();
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
@@ -100,10 +108,9 @@ if (!empty($IdGrupo) && $IdGrupo !== 'mantener') {
     $actgrupos->execute();
     $actgrupos->close();
 }
-  
   mysqli_close($conexion);
-  echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Los Datos del Profesor Fueron Correctamente Creados #'.$ultimoIdProf];
+  goToTeacherList();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,$TipoDcto,$NumDocumento,$Telefono,$Fecha_Nacimiento,$Direccion, 
@@ -191,8 +198,8 @@ function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,
   $actgrupos->execute();
   $actgrupos->close();
   }
-echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdUser,$IdProf . "');</script>";
-echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente los datos del Profesor #'.$IdProf];
+  goToTeacherList();
 }
 // ========== LEER READ FUNCTION ==========
 function readTeacher($conexion, $IdUser)

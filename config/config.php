@@ -19,3 +19,5 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     define("DB_PASS", "tu_password");
     define("DB_NAME", "epiz_12345678_docuestudia");
 }
+
+$alerts = [];

@@ -24,10 +24,8 @@ require_once(ROOT_PATH . "/templates/HomeHeader.php");
             <i><input class="ShowPass" type="checkbox" onclick="ShowPassword()"></i>
           </div>
         </div>
-        <?php if (isset($_SESSION['error'])): ?>
-          <div class="alert alert-danger"><?= $_SESSION['error']; ?></div>
-          <?php unset($_SESSION['error']); ?>
-        <?php endif; ?>
+        <!-- ALERTAS -->
+        <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
         <div class="alinear-boton">
           <button class="boton" type="submit" name='button_Auth'>INICIAR SESION</button>
         </div>

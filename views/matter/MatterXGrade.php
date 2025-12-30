@@ -7,11 +7,8 @@ require_once(ROOT_PATH . "/models/MatterModel.php");
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">MATERIAS POR GRADO <?php echo $IdMateria ?> <i class="fa-solid fa-book"></i></h1>
-    <?php if (isset($mensaje)): ?>
-      <div class="alerta alerta-info">
-        <?= $mensaje ?>
-      </div>
-    <?php endif; ?>
+    <!-- ALERTAS -->
+    <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
     <div class="Container1">
       <form action="<?php echo BASE_URL; ?>/views/matter/MatterXGrade.php" method="POST" class="formulario">
         <fieldset>
@@ -56,7 +53,8 @@ require_once(ROOT_PATH . "/models/MatterModel.php");
         <div class="alinear-boton">
           <?php if ($isUpdate) { ?>
             <button class="boton" name="IdGrado" value="0"><i class="fa-solid fa-xmark"></i></i> CANCELAR</button>
-            <button class="boton" name="action" value="AsigMultipleMatter" type="submit"><i class="fa-solid fa-floppy-disk"></i></i> ASIGNAR MATERIAS</button>
+            <button class="boton" name="action" value="AsigMultipleMatter" type="submit"><i
+                class="fa-solid fa-floppy-disk"></i></i> ASIGNAR MATERIAS</button>
           <?php } else { ?>
             <button class="boton" name="action" value="readMatterXGrade" type="submit"><i class="fas fa-search"></i>
               CONSULTAR GRADO</button>

@@ -45,14 +45,14 @@ if (isset($_POST["button_Auth"])) {
     </script>
     ";
     } else {
-      $_SESSION['error'] = "Usuario o contraseña incorrectos";
-      header("Location: " . BASE_URL . "/views/login/GuardianLogin.php");
-      exit();
+      $_SESSION['alerts'][] = ['type' => 'danger','text' => 'Usuario o contraseña incorrectos'];
+      header("Location: " . BASE_URL . "/views/login/TeacherAdminLogin.php");
+      exit;
     }
   } else {
-    $_SESSION['error'] = "Usuario no encontrado";
+    $_SESSION['alerts'][] = ['type' => 'warning','text' => 'Usuario no encontrado'];
     header("Location: " . BASE_URL . "/views/login/TeacherAdminLogin.php");
-    exit();
+    exit;
   }
   $sentencia->close();
   $conexion->close();

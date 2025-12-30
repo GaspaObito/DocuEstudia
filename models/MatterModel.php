@@ -17,17 +17,14 @@ $mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreComplet
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
-function redirectTo($path)
-{
+function redirectTo($path){
   echo "<script>location.href='" . BASE_URL . "$path'</script>";
   exit;
 }
-function goToMatterList()
-{
+function goToMatterList(){
   redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
 }
-function goToMatterxGradeList()
-{
+function goToMatterxGradeList(){
   redirectTo("/views/matter/MatterXGrade.php");
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
@@ -56,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'readMatterXGrade':
       $MatterxGradeData = readMatterXGrade($conexion, $IdMateria);
-      
     if ($MatterxGradeData) {
         $IdGrado  = $MatterxGradeData['IdGrado'];
         $NomGrado = $MatterxGradeData['NomGrado'];
@@ -64,9 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $IdGrado = $IdMateria; // el grado consultado
         $NomGrado = 'SIN MATERIAS ASIGNADAS';
         $materiasAsignadas = []; // importante
-        $mensaje = 'Este grado no tiene materias asignadas';
+        $_SESSION['alerts'][] = ['type' => 'danger','text' => 'Este grado no tiene materias asignadas'];
     }
-    
       $resultados = searchMatter($conexion,$IdGrado);
       $materiasAsignadas = $resultados['materiasAsignadas'];
       break;
@@ -97,11 +92,9 @@ function createMatter($conexion,$NomMateria, $Descripcion)
   $creagrupo->bind_param('ss', $NomMateria, $Descripcion);
   $creagrupo->execute();
   $creagrupo->close();
-
   echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
   goToMatterList();
 }
-
 // ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
 function updateMatter($conexion, $IdMateria,$NomMateria,$Descripcion)
 {
@@ -113,7 +106,6 @@ function updateMatter($conexion, $IdMateria,$NomMateria,$Descripcion)
   $actgrupo->bind_param('ssi', $NomMateria, $Descripcion, $IdMateria);
   $actgrupo->execute();
   $actgrupo->close();
-
   echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdMateria . "');</script>";
   goToMatterList();
 }
@@ -187,6 +179,6 @@ function AsigMultipleMatter($conexion,$materias,$IdMateria)
       $stmt->bind_param("ii", $IdMateria, $materia);
       $stmt->execute();
   }
-  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdMateria . "');</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente #'.$IdMateria];
   goToMatterxGradeList();
 }
