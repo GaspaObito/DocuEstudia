@@ -50,7 +50,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                     <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
                       <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                       <input type="hidden" name="action" value="delete">
-                      <button class="custom-button" type="submit">
+                      <button class="custom-button" type="submit" onclick="return confirm('¿Está seguro de eliminar esta anotacion?')">
                         <svg class="navbar-icon" style="margin:0">
                           <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                         </svg>

@@ -44,7 +44,6 @@
       </div>
       <ul class="navbar-menu" id="navbarMenu">
         <?php
-        session_start();
         if (isset($_SESSION['Id_Estu']) || isset($_SESSION['Id_Profe'])) { ?>
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
           <a href="#">Acerca de</a>

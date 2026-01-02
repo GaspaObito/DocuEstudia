@@ -7,6 +7,8 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart">GRADOS ACADEMICOS <i class="fa-solid fa-chalkboard-user"></i></h1>
+    <!-- ALERTAS -->
+    <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
     <div class="Container1">
       <label>Resultados Obtenidos: (<?php echo $totalFilas ?>)</label>
       <table class="Custom_Table">
@@ -28,7 +30,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado']; ?>">
                   <input type="hidden" name="action" value="deleteGrade">
-                  <button type="submit" class="custom-button">
+                  <button type="submit" class="custom-button" onclick="return confirm('¿Está seguro de eliminar este grado?')">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                     </svg>

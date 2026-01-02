@@ -21,6 +21,10 @@ $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $totalSangre = "SELECT * FROM mt_tsangre";
 $totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
+function goToAnnotatSearchList()
+{
+  redirectTo("/controllers/teacher/AnnotationsSearch.php");
+}
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
   // Guardian
@@ -81,8 +85,8 @@ function deleteStudent($conexion, $IdObs)
   WHERE o.IdGrado = c.IdGrado)";
   mysqli_query($conexion, $sql_curso) or die ("ERROR EN LA INSERCION" . $IdObs);
   mysqli_close($conexion);
-  echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se elimino Correctamente el Estudiante #'.$IdObs];
+  goToAnnotatSearchList();
   exit;
 }
 // ========== CREAR CREATE FUNCTION ==========
@@ -143,8 +147,8 @@ function createStudent($conexion,$NombreGua,$ApellidoGua,$OcupacionGua,$Telefono
   $sql_curso->execute();
   $sql_curso->close();
   mysqli_close($conexion);
-  echo "<script>alert('LOS REGISTROS SE CREARON CORRECTAMENTE')</script>";
-  echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se creo Correctamente el Estudiante #'.$ultimoId_Usuario];
+  goToAnnotatSearchList();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateStudent($conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionGua,$TelefonoGua,$EmailGua,$ParentescoGua,$ViveAcudienteGua,
@@ -249,20 +253,16 @@ function updateStudent($conexion,$IdDatAcudi,$NombreGua,$ApellidoGua,$OcupacionG
   $sql_curso->execute();
   $sql_curso->close();
   mysqli_close($conexion);
-  echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>";
-  echo "<script>location.href = '" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente el Estudiante #'.$IdUser];
+  goToAnnotatSearchList();
 }
 // ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
 function readStudent($conexion, $IdObs)
 {
   $stmt = $conexion->prepare("SELECT *,t.GrupoSanguineo,c.NomGrado,p.NomImg FROM observador o 
-  JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi 
-  JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc 
-  LEFT JOIN info_medica i ON o.IdMed  = i.IdMed 
-  LEFT JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed
-  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado 
-  JOIN usuarios s ON s.IdUser = o.IdUser
-  LEFT JOIN imagenes p ON p.IdImg = s.IdImg  WHERE IdObs = ?");
+  JOIN datos_familiar d ON o.IdDatAcudi  = d.IdDatAcudi  JOIN historial_escolar h ON o.IdHistEsc  = h.IdHistEsc  LEFT JOIN info_medica i ON o.IdMed  = i.IdMed 
+  LEFT JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado JOIN usuarios s ON s.IdUser = o.IdUser LEFT JOIN imagenes p ON p.IdImg = s.IdImg  
+  WHERE IdObs = ?");
   $stmt->bind_param('i', $IdObs);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -277,9 +277,7 @@ function searchStudent($conexion,$dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
   $consultaSQL = "SELECT u.IdUser,o.IdObs,NumDcto,u.Nombre,u.Apellido,o.IdGrupo, c.NomGrado FROM observador o
-  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
-  LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo
-  LEFT JOIN usuarios u ON u.IdUser = o.IdUser";
+  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser";
 
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
@@ -288,17 +286,14 @@ function searchStudent($conexion,$dni = null)
       $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
       $conditions[] = "u.NumDcto = '$dni'";
   }
-
   if (!empty($_GET['Nombre'])) {
       $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
       $conditions[] = "u.Nombre LIKE '%$nombre%'";
   }
-
    if (!empty($_GET['Apellido'])) {
       $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
        $conditions[] = "u.Apellido LIKE '%$apellido%'";
    }
-
    if (!empty($_GET['Grado'])) {
        $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
        $conditions[] = "c.IdGrado = $Grado";
@@ -311,10 +306,7 @@ function searchStudent($conexion,$dni = null)
   }
     // Consulta para contar el total
     $consultaCount = "SELECT COUNT(*) AS total
-                  FROM observador o
-                  LEFT JOIN usuarios u ON u.IdUser = o.IdUser 
-                  LEFT JOIN mt_grupos c ON o.IdGrupo = c.IdGrupo
-                  LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+                  FROM observador o LEFT JOIN usuarios u ON u.IdUser = o.IdUser  LEFT JOIN mt_grupos c ON o.IdGrupo = c.IdGrupo LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
                   $whereSQL";
   // Realiza la consulta
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");

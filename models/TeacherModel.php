@@ -14,11 +14,6 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
-function redirectTo($path)
-{
-  echo "<script>location.href='" . BASE_URL . "$path'</script>";
-  exit;
-}
 function goToTeacherList()
 {
   redirectTo("/controllers/admin/ManageUsers.php?action=listar");

@@ -7,6 +7,9 @@ $Nombre = '';$Apellido = '';$DescFalta = '';
 // Recolecion ID Annotation 
 $idAnot = isset($_POST['NumIdAnnotation']) ? intval($_POST['NumIdAnnotation']) : 0;
 $isUpdate = $idAnot > 0;
+function goToAnnotationsList(){
+  redirectTo("/views/forms/ManageAnnotations.php");
+}
 //RECIBIMOS DATOS CREAR
 if (isset($_POST["SendAnnotation"])) {
   $nameTeacher = $_POST["Nom_Prof"];
@@ -19,21 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'];
   if ($action === 'delete') {
     deleteAnnotation($conexion, $idAnot);
-
   } elseif ($action === 'create') {
     createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion);
-
   } elseif ($action === 'update') {
     $idAnot = $_POST["NumIdAnnotation"];
     updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion);
-
   } elseif ($action === 'read') { //History Annotations
     $IdObs = $_POST["IdObs"];
     $contador = 1;
     $resultados = readAnnotation($conexion, $IdObs);
     $anotacionesConsulta = $resultados['consultar'];
     $totalFilas = $resultados['totalFilas'];
-
   } elseif ($action === 'readespecefy') {
     $idAnot = $_POST["NumIdAnnotation"];
     $annotationsData = searchAnnotation($conexion, $idAnot);
@@ -53,8 +52,8 @@ function deleteAnnotation($conexion, $idAnot)
 {
   mysqli_query($conexion, "delete from anotacion where IdAnot='$idAnot'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
-  echo "<script>alert('LA ANOTACION SE ELIMINO CORRECTAMENTE')</script>
-  <script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsHistory.php'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se elimino Correctamente la anotacion #'.$idAnot];
+  goToAnnotationsList();
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion)
@@ -63,8 +62,8 @@ function createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripc
   /* Validar insercion */
   mysqli_query($conexion, $sql_detalle) or die("ERROR EN LA INSERCION");
   mysqli_close($conexion);
-  echo "<script>alert('LA ANOTACION SE INSERTO CORRECTAMENTE')</script>
-  <script>location.href = '" . BASE_URL . "/views/forms/ManageAnnotations.php'</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se creo Correctamente la anotacion #'.$IdObs];
+  goToAnnotationsList();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion)
@@ -78,8 +77,8 @@ function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descrip
   /* Validar insercion */
   mysqli_query($conexion, $sql_detalle) or die("ERROR EN LA INSERCION");
   mysqli_close($conexion);
-  echo "<script>alert('LOS REGISTROS SE ACTUALIZARON CORRECTAMENTE')</script>
-    <script>location.href = '" . BASE_URL . "/views/forms/ManageAnnotations.php  '</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente la anotacion #'.$idAnot];
+  goToAnnotationsList();
 }
 // ========== LEER READ FUNCTION ==========
 function readAnnotation($conexion, $IdObs)

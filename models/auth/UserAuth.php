@@ -1,7 +1,6 @@
 <?php
 require_once(__DIR__ . "/../../config/config.php");
 include(ROOT_PATH . "/models/DatabaseConnection.php");
-session_start();
 /* Inicio Sesion PROFESOR,ADMIN*/
 if (isset($_POST["button_Auth"])) {
   $Correo = $_POST['Correo'];

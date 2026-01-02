@@ -91,7 +91,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf']; ?>">
                   <input type="hidden" name="action" value="delete">
-                  <button type="submit" class="custom-button">
+                  <button type="submit" class="custom-button" onclick="return confirm('¿Está seguro de eliminar este profesor?')">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                     </svg>

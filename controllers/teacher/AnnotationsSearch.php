@@ -11,7 +11,8 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
     <?php include(ROOT_PATH . "/controllers/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
       <h1 id="TitleStart">OBSERVADOR <i class="fa-solid fa-eye"></i></h1>
-
+      <!-- ALERTAS -->
+      <?php include(ROOT_PATH . "/templates/alerts.php");?>
       <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
           <legend>Filtrar Estudiante</legend>
@@ -89,7 +90,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
                     <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action" value="delete">
-                    <button class="custom-button" type="submit">
+                    <button class="custom-button" type="submit" onclick="return confirm('¿Está seguro de eliminar este estudiante?')">
                       <svg class="navbar-icon" style="margin:0">
                         <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                       </svg>

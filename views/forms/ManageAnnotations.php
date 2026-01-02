@@ -1,6 +1,5 @@
 <?php
 define("PAGE_CSS", "Annotation");
-// 👇 Incluimos el archivo central de configuración
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
@@ -14,23 +13,33 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
         <a></a>
         <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ANOTACION <i class="fa-solid fa-book"></i></h1>
         <div>
-          <!-- Aquí usamos BASE_URL -->
           <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
+            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+              <div class="botonAtras">
+                <div class="margen__boton">
+                  <svg class="navbar-icon" style="margin:0;">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
+                  </svg>
+                </div>
+              </div>
+            <?php endif; ?>
           </a>
         </div>
       </div>
+      <!-- ALERTAS -->
+      <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
       <div class="Container1">
-        <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post" class="formulario">
+        <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="POST" class="formulario">
           <fieldset>
             <input type="hidden" name="NumIdAnnotation" value="<?php echo $idAnot; ?>">
             <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
             <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
-            <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
+              <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
             <?php endif; ?>
             <div>
               <div class="Add_Anotacion">
                 <label>TIPO DE FALTA</label>
-                <input type="hidden" name="tipoFaltaActual" value="<?php echo htmlspecialchars($TipoFalta)?>">
+                <input type="hidden" name="tipoFaltaActual" value="<?php echo htmlspecialchars($TipoFalta) ?>">
                 <select name="tipoFalta" class="Input_Text">
                   <?php if ($isUpdate) { ?>
                     <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($TipoFalta) ?></option>
@@ -44,7 +53,8 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
               </div>
               <div class="Add_Anotacion">
                 <label>DESCRIPCION DE LA ANOTACIÓN</label>
-                <textarea required maxlength="255" name="descripcion" class="Input_Text"><?php echo htmlspecialchars($DescFalta) ?></textarea>
+                <textarea required maxlength="255" name="descripcion"
+                  class="Input_Text"><?php echo htmlspecialchars($DescFalta) ?></textarea>
               </div>
             </div>
             <?php if ($isUpdate): ?>
@@ -65,13 +75,13 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                 <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecModif); ?>">
               </div>
             <?php endif; ?>
-
           </fieldset>
           <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
-          <div class="alinear-boton">
-            <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
-            <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR ANOTACION</button>
-          </div>
+            <div class="alinear-boton">
+              <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
+              <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR
+                ANOTACION</button>
+            </div>
           <?php endif; ?>
         </form>
       </div>

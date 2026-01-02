@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // Inicializar variables con valores por defecto
-$IdMateria = ''; $NomGrado = ''; $Descripcion = '';
+$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado= ''; $NomMateria = '';
 // Recolecion ID
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 // $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
@@ -17,10 +17,6 @@ $mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreComplet
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
-function redirectTo($path){
-  echo "<script>location.href='" . BASE_URL . "$path'</script>";
-  exit;
-}
 function goToMatterList(){
   redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
 }
@@ -82,7 +78,7 @@ function deleteMatter($conexion, $IdMateria)
 {
   mysqli_query($conexion, "delete from mt_materias where IdMateria='$IdMateria'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
   mysqli_close($conexion);
-  echo "<script>alert('SE ELIMINO CORRECTAMENTE')</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se elimino Correctamente la Materia #'.$IdMateria];
   goToMatterList();
 }
 // ========== CREAR CREATE FUNCTION GROUP ==========
@@ -92,7 +88,7 @@ function createMatter($conexion,$NomMateria, $Descripcion)
   $creagrupo->bind_param('ss', $NomMateria, $Descripcion);
   $creagrupo->execute();
   $creagrupo->close();
-  echo "<script>alert('LOS REGISTROS SE INSERTARON CORRECTAMENTE')</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se creo Correctamente la Materia #'.$NomMateria];
   goToMatterList();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
@@ -106,7 +102,7 @@ function updateMatter($conexion, $IdMateria,$NomMateria,$Descripcion)
   $actgrupo->bind_param('ssi', $NomMateria, $Descripcion, $IdMateria);
   $actgrupo->execute();
   $actgrupo->close();
-  echo "<script>alert('SE ACTUALIZARON CORRECTAMENTE " . $IdMateria . "');</script>";
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente la Materia #'.$IdMateria];
   goToMatterList();
 }
 // ========== LEER READ FUNCTION GROUP ==========
@@ -179,6 +175,6 @@ function AsigMultipleMatter($conexion,$materias,$IdMateria)
       $stmt->bind_param("ii", $IdMateria, $materia);
       $stmt->execute();
   }
-  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente #'.$IdMateria];
+  $_SESSION['alerts'][] = ['type' => 'success','text' => 'Se actualizo Correctamente Las Materias para el grado #'.$IdMateria];
   goToMatterxGradeList();
 }

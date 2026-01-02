@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Detectar si estamos en local o en producción
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     // 💻 Configuración LOCAL
@@ -20,4 +21,9 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     define("DB_NAME", "epiz_12345678_docuestudia");
 }
 
-$alerts = [];
+$_SESSION['alerts'] ??= [];
+function redirectTo($path)
+{
+  echo "<script>location.href='" . BASE_URL . "$path'</script>";
+  exit;
+}
