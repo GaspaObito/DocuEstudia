@@ -3,7 +3,7 @@ define("PAGE_CSS", "Annotation");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/models/AnnotationsModel.php");
+require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
@@ -47,7 +47,7 @@ require_once(ROOT_PATH . "/models/AnnotationsModel.php");
                 <td><?php echo $extraido['FecModif'] ?></td>
                 <td class="td_Actions">
                   <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
-                    <form action="<?php echo BASE_URL; ?>/models/AnnotationsModel.php" method="post">
+                    <form action="<?php echo BASE_URL; ?>/controllers/AnnotationsController.php" method="post">
                       <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                       <input type="hidden" name="action" value="delete">
                       <button class="custom-button" type="submit" onclick="return confirm('¿Está seguro de eliminar esta anotacion?')">

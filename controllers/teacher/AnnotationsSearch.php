@@ -4,7 +4,7 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
 require_once(ROOT_PATH . "/models/StudentModel.php");
-require_once(ROOT_PATH . "/models/AnnotationsModel.php");
+require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">

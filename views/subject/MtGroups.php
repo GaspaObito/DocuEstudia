@@ -2,7 +2,7 @@
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
+require_once(ROOT_PATH . "/controllers/Group_GradeController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
@@ -29,7 +29,7 @@ require_once(ROOT_PATH . "/models/TeacherGroup_Grade.php");
               <td><?php echo $extraido['NombreCompleto']; ?></td>
               <td><?php echo $extraido['NomGrupo']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php" method="post">
+                <form action="<?php echo BASE_URL; ?>/controllers/Group_GradeController.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
                   <input type="hidden" name="action" value="deleteGroup">
                   <button type="submit" class="custom-button" onclick="return confirm('¿Está seguro de eliminar este grupo?')">
