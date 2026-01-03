@@ -7,7 +7,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php require_once(ROOT_PATH . "/controllers/teacher/StudentInfo.php"); ?>
+    <?php require_once(ROOT_PATH . "/views/teacher/StudentInfo.php"); ?>
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>

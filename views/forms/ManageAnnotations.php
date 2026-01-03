@@ -7,13 +7,13 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php include(ROOT_PATH . "/controllers/teacher/StudentInfo.php"); ?>
+    <?php include(ROOT_PATH . "/views/teacher/StudentInfo.php"); ?>
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
         <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ANOTACION <i class="fa-solid fa-book"></i></h1>
         <div>
-          <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
+          <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
             <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
@@ -86,7 +86,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
         </form>
       </div>
       <div class="alinear-boton">
-        <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php" method="post">
+        <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php" method="post">
           <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
           <input type="hidden" name="action" value="read">
           <button type="submit" class="boton"><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL</button>

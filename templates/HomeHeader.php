@@ -48,10 +48,10 @@
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
           <a href="#">Acerca de</a>
           <?php if (isset($_SESSION['Id_Profe'])) { ?>
-            <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">Observadores</a>
+            <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">Observadores</a>
           <?php } ?>
           <?php if (isset($_SESSION['IdRol']) && ($_SESSION['IdRol'] == 3)) { ?>
-            <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a>
+            <a href="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar">Maestros</a>
           <?php } ?>
            <!-- <?php if (isset($_SESSION['Id_Estu'])) { ?>
             <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php">Anotaciones</a>

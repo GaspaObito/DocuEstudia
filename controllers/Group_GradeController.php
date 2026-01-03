@@ -1,13 +1,9 @@
 <!-- ================ CRUD PARA Group ================ -->
 <?php
 require_once(__DIR__ . "/../config/config.php");
-require_once(__DIR__ . "/../models/Group_GradeModel.php");
+require_once(ROOT_PATH . "/models/Group_GradeModel.php");
 // Inicializar variables con valores por defecto
-$IdGrupo = '';
-$IdGrado = '';
-$IdProf = '';
-$NomGrupo = '';
-$NomGrado = '';
+$IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = '';
 // Recolecion ID
 $IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrupo > 0;

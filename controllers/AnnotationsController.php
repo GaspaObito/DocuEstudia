@@ -1,11 +1,9 @@
 <!-- ================ CRUD PARA ANNOTATION ================ -->
 <?php
 require_once(__DIR__ . "/../config/config.php");
-require_once(__DIR__ . "/../models/AnnotationsModel.php");
+require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 // Inicializar variables con valores por defecto
-$Nombre = '';
-$Apellido = '';
-$DescFalta = '';
+$Nombre = ''; $Apellido = ''; $DescFalta = '';
 // Recolecion ID Annotation 
 $idAnot = isset($_POST['NumIdAnnotation']) ? intval($_POST['NumIdAnnotation']) : 0;
 $isUpdate = $idAnot > 0;

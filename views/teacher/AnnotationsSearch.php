@@ -3,17 +3,17 @@ define("PAGE_CSS", "Annotation");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/models/StudentModel.php");
+require_once(ROOT_PATH . "/controllers/StudentController.php");
 require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
-    <?php include(ROOT_PATH . "/controllers/teacher/TeacherInfo.php"); ?>
+    <?php include(ROOT_PATH . "/views/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
       <h1 id="TitleStart">OBSERVADOR <i class="fa-solid fa-eye"></i></h1>
       <!-- ALERTAS -->
       <?php include(ROOT_PATH . "/templates/alerts.php");?>
-      <form action="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php" method="GET">
+      <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
           <legend>Filtrar Estudiante</legend>
           <div class="formulario__campos1">
