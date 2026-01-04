@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/Group_GradeModel.php");
 // Inicializar variables con valores por defecto
-$IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = '';
+$IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = ''; $IdMateria = '';
 // Recolecion ID
 $IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrupo > 0;
@@ -43,18 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   switch ($action) {
     case 'deleteGroup':
-      deleteGroup($conexion, $IdGrupo);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grupo #' . $IdGrupo];
+      if (deleteGroup($conexion, $IdGrupo)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grupo #' . $IdGrupo];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToGroupList();
       break;
     case 'createGroup':
-      createGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Grupo #' . $IdGrupo];
+      if (createGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Grupo #' . $IdGrupo];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToGroupList();
       break;
     case 'updateGroup':
-      updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Grupo #' . $IdGrupo];
+      if (updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Grupo #' . $IdGrupo];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToGroupList();
       break;
     case 'readGroup':
@@ -68,18 +77,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     // GRADE OPTIONS
     case 'deleteGrade':
-      deleteGrade($conexion, $IdGrado);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grado #' . $IdGrado];
+      if (deleteGrade($conexion, $IdGrado)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grado #' . $IdGrado];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrado];
+      }
       goToGradeList();
       break;
     case 'createGrade':
-      createGrade($conexion, $IdGrado, $NomGrado);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Grado #' . $IdGrado];
+      if (createGrade($conexion, $IdGrado, $NomGrado)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Grado #' . $IdGrado];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrado];
+      }
       goToGradeList();
       break;
     case 'updateGrade':
-      updateGrade($conexion, $IdGrado, $NomGrado);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Grado #' . $IdGrado];
+      if (updateGrade($conexion, $IdGrado, $NomGrado)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Grado #' . $IdGrado];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrado];
+      }
       goToGradeList();
       break;
     case 'readGrade':

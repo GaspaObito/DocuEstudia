@@ -37,18 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   switch ($action) {
     case 'deleteMatter':
-      deleteMatter($conexion, $IdMateria);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Materia #' . $IdMateria];
+      if (deleteMatter($conexion, $IdMateria)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Materia #' . $IdMateria];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToMatterList();
       break;
     case 'createMatter':
-      createMatter($conexion, $NomMateria, $Descripcion);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Materia #' . $NomMateria];
+      if (createMatter($conexion, $NomMateria, $Descripcion)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Materia #' . $NomMateria];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToMatterList();
       break;
     case 'updateMatter':
-      updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Materia #' . $IdMateria];
+      if (updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Materia #' . $IdMateria];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       goToMatterList();
       break;
     case 'readMatter':
@@ -73,9 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'AsigMultipleMatter':
       $materias = $_POST['FornIdMateria'] ?? [];
-      AsigMultipleMatter($conexion, $materias, $IdMateria);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente Las Materias para el grado #' . $IdMateria];
-      goToMatterxGradeList();
+      if (AsigMultipleMatter($conexion, $materias, $IdMateria)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grupo #' . $IdGrupo];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
       break;
   }
   // ========== SHOW ALL DATA ==========

@@ -47,39 +47,44 @@ if (isset($_POST["SendDataStudent"])) {
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'];
-  if ($action === 'delete') {
-    deleteStudent($conexion, $IdObs);
-  } elseif ($action === 'create') {
-    createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu,$FechaNacimientoStu,$Direccion,$Email,$Password,$IdRol,$NombreImagenOriginal,$Imagen_temporal);
-    $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Estudiante #' . $ultimoId_Usuario];
-    goToAnnotatSearchList();
-  } elseif ($action === 'update') {
-    updateStudent( $conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces,$PracticaDeporte,$NombreDeporte,$IdMed,$Eps,$RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal);
-    $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Estudiante #' . $IdUser];
-    goToAnnotatSearchList();
-  } elseif ($action === 'read') {
-    $StudentData = readStudent($conexion, $IdObs);
-    // Asignar las variables desde el array devuelto
-    // Guardian
-    $IdDatAcudi = $StudentData['IdDatAcudi']; $NombreGua = $StudentData['NomAcudi']; $ApellidoGua = $StudentData['ApeAcudi']; $OcupacionGua = $StudentData['OcupacionAcudi'];
-    $TelefonoGua = $StudentData['TelAcudi']; $EmailGua = $StudentData['EmailAcudi']; $ParentescoGua = $StudentData['ParentesAcudi']; $ViveAcudienteGua = $StudentData['ViveEstAcudi'];
-    // Historial_escolar
-    $IdHistEsc = $StudentData['IdHistEsc']; $ColegioAnterior = $StudentData["AnteriorEsc"]; $UltCursoCursado = $StudentData["CursoEsc"]; $Jornada = $StudentData["JornadaEsc"];
-    $EsRepitente = $StudentData["RepitenteEsc"]; $CuantasVeces = $StudentData["CantRepiEsc"]; $PracticaDeporte = $StudentData["PracDeportEsc"]; $NombreDeporte = $StudentData["NomDeportEsc"];
-    // info_medica
-    $IdMed = $StudentData['IdMed']; $Eps = $StudentData["NomEPSMed"]; $RestSanitaMed = $StudentData["RestSanitaMed"]; $DiscapMed = $StudentData["DiscapMed"];
-    $EnferMed = $StudentData["EnferMed"]; $Recomendaciones = $StudentData["RecomMed"]; $Antecendentes = $StudentData["AnteceMed"]; 
-    $IdTipoSanMed = $StudentData["IdTipoSanMed"]; $NomTipoSangre = $StudentData["GrupoSanguineo"];
-    // Student
-    $IdObs = $StudentData['IdObs']; $IdUser = $StudentData['IdUser']; $IdImg = $StudentData['IdImg']; $NombreImagen = $StudentData['NomImg']; 
-    $NombreStu = $StudentData["Nombre"]; $ApellidoStu = $StudentData["Apellido"]; $TipoDcto = $StudentData["TipoDcto"]; 
-    $NumDcto = $StudentData["NumDcto"]; $IdGrado = $StudentData["IdGrado"]; $IdGrupo = $StudentData["IdGrupo"]; $NomGrado = $StudentData["NomGrado"]; 
-    $TelefonoStu = $StudentData["Telefono"]; $FechaNacimientoStu = $StudentData["FechNacimiento"]; $Direccion = $StudentData["Direccion"]; 
-    $Email = $StudentData["Email"]; $Password = $StudentData["Password"];
-  } else {
-    echo 'error';
+  switch ($action) {
+    case 'delete':
+      if (deleteStudent($conexion, $IdObs)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Estudiante #' . $IdObs];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
+      }
+      goToAnnotatSearchList();
+      break;
+    case 'create':
+      if (createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Estudiante #' . $ultimoId_Usuario];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #'];
+      }
+      goToAnnotatSearchList();
+      break;
+    case 'update':
+      if (updateStudent( $conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces,$PracticaDeporte,$NombreDeporte,$IdMed,$Eps,$RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Estudiante #' . $IdUser];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #'. $IdUser];
+      }
+      goToAnnotatSearchList();
+      break;
+    case 'read':
+      $StudentData = readStudent($conexion, $IdObs);
+      // Guardian
+      $IdDatAcudi = $StudentData['IdDatAcudi']; $NombreGua = $StudentData['NomAcudi']; $ApellidoGua = $StudentData['ApeAcudi']; $OcupacionGua = $StudentData['OcupacionAcudi']; $TelefonoGua = $StudentData['TelAcudi']; $EmailGua = $StudentData['EmailAcudi']; $ParentescoGua = $StudentData['ParentesAcudi']; $ViveAcudienteGua = $StudentData['ViveEstAcudi'];
+      // Historial_escolar
+      $IdHistEsc = $StudentData['IdHistEsc']; $ColegioAnterior = $StudentData["AnteriorEsc"]; $UltCursoCursado = $StudentData["CursoEsc"]; $Jornada = $StudentData["JornadaEsc"]; $EsRepitente = $StudentData["RepitenteEsc"]; $CuantasVeces = $StudentData["CantRepiEsc"]; $PracticaDeporte = $StudentData["PracDeportEsc"]; $NombreDeporte = $StudentData["NomDeportEsc"];
+      // info_medica
+      $IdMed = $StudentData['IdMed']; $Eps = $StudentData["NomEPSMed"]; $RestSanitaMed = $StudentData["RestSanitaMed"]; $DiscapMed = $StudentData["DiscapMed"]; $EnferMed = $StudentData["EnferMed"]; $Recomendaciones = $StudentData["RecomMed"]; $Antecendentes = $StudentData["AnteceMed"]; $IdTipoSanMed = $StudentData["IdTipoSanMed"]; $NomTipoSangre = $StudentData["GrupoSanguineo"];
+      // Student
+      $IdObs = $StudentData['IdObs']; $IdUser = $StudentData['IdUser']; $IdImg = $StudentData['IdImg']; $NombreImagen = $StudentData['NomImg']; $NombreStu = $StudentData["Nombre"]; $ApellidoStu = $StudentData["Apellido"]; $TipoDcto = $StudentData["TipoDcto"]; $NumDcto = $StudentData["NumDcto"]; $IdGrado = $StudentData["IdGrado"]; $IdGrupo = $StudentData["IdGrupo"]; $NomGrado = $StudentData["NomGrado"]; $TelefonoStu = $StudentData["Telefono"]; $FechaNacimientoStu = $StudentData["FechNacimiento"]; $Direccion = $StudentData["Direccion"]; $Email = $StudentData["Email"]; $Password = $StudentData["Password"];
+      break;
+    // Se inicia la busqueda automatica de los estudiantes
   }
-  // Se inicia la busqueda automatica de los estudiantes
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $resultados = searchStudent($conexion);
   // Accede a las variables retornadas desde el array de resultados

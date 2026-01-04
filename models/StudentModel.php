@@ -4,12 +4,12 @@ require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // ========== ELIMINAR DELETE FUNCTION ==========
 function deleteStudent($conexion, $IdObs)
 {
-  mysqli_query($conexion, "delete from observador where IdObs='$IdObs'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
+  $stmt = $conexion->prepare("DELETE FROM observador WHERE IdObs = ?");
+  $stmt->bind_param("i", $IdObs);
+  $stmt->execute();
   // ---StartCurso
-  $sql_curso = "UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o 
-  WHERE o.IdGrado = c.IdGrado)";
-  mysqli_query($conexion, $sql_curso) or die("ERROR EN LA INSERCION" . $IdObs);
-  mysqli_close($conexion);
+  $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
+  return $sql_curso->execute();
 }
 // ========== CREAR CREATE FUNCTION ==========
 function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)
@@ -62,9 +62,7 @@ function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $Tele
   $insert_observador->close();
   // ---StartCurso
   $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
-  $sql_curso->execute();
-  $sql_curso->close();
-  mysqli_close($conexion);
+  return $sql_curso->execute();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION ==========
 function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $IdMed, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)
@@ -162,9 +160,7 @@ function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $Ocupac
   $stmt->close();
   // ---StartCurso
   $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
-  $sql_curso->execute();
-  $sql_curso->close();
-  mysqli_close($conexion);
+  return $sql_curso->execute();
 }
 // ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
 function readStudent($conexion, $IdObs)

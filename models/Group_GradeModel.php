@@ -4,16 +4,16 @@ require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // ========== ELIMINAR DELETE FUNCTION GROUP ==========
 function deleteGroup($conexion, $IdGrupo)
 {
-  mysqli_query($conexion, "delete from mt_grupos where IdGrupo='$IdGrupo'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
-  mysqli_close($conexion);
+  $stmt = $conexion->prepare("DELETE FROM mt_grupos WHERE IdGrupo = ?");
+  $stmt->bind_param("i", $IdGrupo);
+  return $stmt->execute();
 }
 // ========== CREAR CREATE FUNCTION GROUP ==========
 function createGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
 {
   $creagrupo = $conexion->prepare("INSERT INTO mt_grupos (IdGrupo,IdGrado,IdProf,NomGrupo) VALUES (?,?,?,?)");
   $creagrupo->bind_param('isss', $IdGrupo, $IdGrado, $IdProf, $NomGrupo);
-  $creagrupo->execute();
-  $creagrupo->close();
+  return $creagrupo->execute();
 }
 
 // ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
@@ -32,8 +32,7 @@ function updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
   // 1. Actualizar tabla usuarios 
   $actgrupo = $conexion->prepare("UPDATE mt_grupos SET  IdGrado = ?, IdProf = ?, NomGrupo = ? WHERE IdGrupo = ?");
   $actgrupo->bind_param('iisi', $IdGrado, $IdProf, $NomGrupo, $IdGrupo);
-  $actgrupo->execute();
-  $actgrupo->close();
+  return $actgrupo->execute();
 }
 // ========== LEER READ FUNCTION GROUP ==========
 function readGroup($conexion, $IdGrupo)
@@ -68,16 +67,16 @@ function searchGroup($conexion)
 // ========== ELIMINAR DELETE FUNCTION GRADE==========
 function deleteGrade($conexion, $IdGrado)
 {
-  mysqli_query($conexion, "delete from mt_grados where IdGrado='$IdGrado'") or die("<script>alert('ERROR AL ELIMINAR')</script>");
-  mysqli_close($conexion);
+  $stmt = $conexion->prepare("DELETE FROM mt_grados WHERE IdGrado = ?");
+  $stmt->bind_param("i", $IdGrado);
+  return $stmt->execute();
 }
 // ========== CREAR CREATE FUNCTION GRADE==========
 function createGrade($conexion, $IdGrado, $NomGrado)
 {
   $creargrado = $conexion->prepare("INSERT INTO mt_grados (IdGrado,NomGrado) VALUES (?,?)");
   $creargrado->bind_param('is', $IdGrado, $NomGrado);
-  $creargrado->execute();
-  $creargrado->close();
+  return $creargrado->execute();
 }
 
 // ========== ACTUALIZAR UPDATE FUNCTION GRADE==========
@@ -85,8 +84,7 @@ function updateGrade($conexion, $IdGrado, $NomGrado)
 {
   $actgrado = $conexion->prepare("UPDATE mt_grados SET  NomGrado = ? WHERE IdGrado = ?");
   $actgrado->bind_param('si', $NomGrado, $IdGrado);
-  $actgrado->execute();
-  $actgrado->close();
+  return $actgrado->execute();
 }
 // ========== LEER READ FUNCTION GROUP ==========
 function readGrade($conexion, $IdGrado)
