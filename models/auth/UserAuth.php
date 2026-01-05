@@ -15,13 +15,13 @@ if (isset($_POST["button_Auth"])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       $_SESSION['IdRol'] = $fila['IdRol'];
       echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/controllers/admin/ManageUsers.php?action=listar'</script>";
+      echo "<script>location.href='" . BASE_URL . "/views/admin/ManageUsers.php?action=listar'</script>";
       //------ USUARIO TEACHER ------
     } elseif ($fila['IdRol'] == '2' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Profe'] = $fila['IdUser'];
       $_SESSION['IdRol'] = $fila['IdRol'];
       echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/controllers/teacher/AnnotationsSearch.php'</script>";
+      echo "<script>location.href='" . BASE_URL . "/views/teacher/AnnotationsSearch.php'</script>";
       //------ USUARIO STUDENT ------
     } elseif ($fila['IdRol'] == '1' && password_verify($Contrasena, $fila['Password'])) {
       $_SESSION['Id_Estu'] = $fila['IdUser'];
@@ -35,7 +35,7 @@ if (isset($_POST["button_Auth"])) {
       // Generar formulario oculto y enviarlo automáticamente
       echo "<script>alert('USUARIO ESTUDIANTE CORRECTO')</script>";
       echo "
-    <form id='autoForm' action='" . BASE_URL . "/controllers/teacher/AnnotationsHistory.php' method='post'>
+    <form id='autoForm' action='" . BASE_URL . "/views/teacher/AnnotationsHistory.php' method='post'>
         <input type='hidden' name='IdObs' value='{$IdObs}'>
         <input type='hidden' name='action' value='read'>
     </form>

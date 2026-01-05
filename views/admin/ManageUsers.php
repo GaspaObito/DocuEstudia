@@ -7,10 +7,10 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
-    <h1 id="TitleStart">MAESTROS <i class="fa-solid fa-chalkboard-user"></i></h1>
+    <h1 id="TitleStart">DOCENTES <i class="fa-solid fa-chalkboard-user"></i></h1>
     <!-- ALERTAS -->
     <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
-    <form action="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar" method="GET">
+    <form action="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar" method="GET">
       <fieldset>
         <legend>Filtrar Docentes</legend>
         <div class="formulario__campos1">

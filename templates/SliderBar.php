@@ -38,9 +38,21 @@
                 <i class="fa-solid fa-chevron-down arrow"></i>
             </a>
             <ul class="submenu">
-                <li><a href="#">Registrar Nota</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/score/MtScore.php?action=listar">Maestro Notas</a></li>
                 <li><a href="#">Boletines</a></li>
                 <li><a href="#">Histórico</a></li>
+            </ul>
+        </li>
+
+        <li class="menu-item has-submenu">
+            <a class="submenu-btn">
+                <i class="fa-solid fa-list-ol"></i>
+                <span>Grados y Grupos</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGrades.php?action=listarGRDS">Maestro Grados</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listarGRPS">Maestro Grupos</a></li>
             </ul>
         </li>
 
@@ -53,9 +65,7 @@
                 <i class="fa-solid fa-chevron-down arrow"></i>
             </a>
             <ul class="submenu">
-                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGroups.php?action=listarGRPS">Maestro Grupos</a></li>
-                <li><a href="<?php echo BASE_URL; ?>/views/subject/MtGrades.php?action=listarGRDS">Maestro Grados</a></li>
-                <li><a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar">Docentes</a></li>
             </ul>
         </li>
 

@@ -190,7 +190,7 @@ function searchStudent($conexion, $dni = null)
   // Filtros dinámicos
   if (!empty($_GET['DNI'])) {
     $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
-    $conditions[] = "u.NumDcto = '$dni'";
+    $conditions[] = "u.NumDcto LIKE '%$dni%'";
   }
   if (!empty($_GET['Nombre'])) {
     $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
@@ -218,7 +218,6 @@ function searchStudent($conexion, $dni = null)
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);
   $datos = mysqli_fetch_assoc($resultCount);
-  $totalFilas = $datos['total'];
   // Retorna las variables como un array
-  return ['sql_observador' => $sql_observador, 'totalFilas' => $totalFilas];
+  return ['sql_observador' => $sql_observador,  'totalFilas' => $datos['total']];
 }
