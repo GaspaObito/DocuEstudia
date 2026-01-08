@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/MatterModel.php");
 // Inicializar variables con valores por defecto
-$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';
+$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';$IdGrupo = '';
 // Recolecion ID
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 // $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
@@ -83,10 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     case 'AsigMultipleMatter':
       $materias = $_POST['FornIdMateria'] ?? [];
       if (AsigMultipleMatter($conexion, $materias, $IdMateria)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Grupo #' . $IdGrupo];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se añadio Correctamente las Materias #' . $IdMateria];
       } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #'];
       }
+      goToMatterxGradeList();
       break;
   }
   // ========== SHOW ALL DATA ==========

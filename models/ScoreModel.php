@@ -2,10 +2,10 @@
 <?php
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 // ========== ELIMINAR DELETE FUNCTION GROUP ==========
-function deleteMatter($conexion, $IdMateria)
+function deleteScore($conexion, $IdNota)
 {
-  $stmt = $conexion->prepare("DELETE FROM mt_materias WHERE IdMateria = ?");
-  $stmt->bind_param("i", $IdMateria);
+  $stmt = $conexion->prepare("DELETE FROM mt_notas WHERE IdNota = ?");
+  $stmt->bind_param("i", $IdNota);
   return $stmt->execute();
 }
 // ========== CREAR CREATE FUNCTION GROUP ==========
@@ -27,10 +27,11 @@ function updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)
   return $actgrupo->execute();
 }
 // ========== LEER READ FUNCTION GROUP ==========
-function readMatter($conexion, $IdMateria)
+function readScore($conexion, $IdNota)
 {
-  $stmt = $conexion->prepare("SELECT * FROM mt_materias WHERE IdMateria = ?");
-  $stmt->bind_param('i', $IdMateria);
+  $stmt = $conexion->prepare("SELECT mn.*,o.IdGrupo,c.NomGrado,u.NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS full_name,mm.NomMateria,mn.FechCreado,mn.FechActualizado FROM mt_notas mn
+  LEFT JOIN mt_materias mm ON mm.IdMateria = mn.IdMateria LEFT JOIN observador o ON o.IdObs = mn.IdObs LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE mn.IdNota= ?");
+  $stmt->bind_param('i', $IdNota);
   $stmt->execute();
   $result = $stmt->get_result();
   if ($row = $result->fetch_assoc()) {

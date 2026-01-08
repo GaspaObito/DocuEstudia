@@ -145,7 +145,7 @@ footer p {
   margin: 3rem 1rem 3rem 1rem;
   padding: 1.5rem;
   border: none;
-  height: 45rem;
+  height: auto;
   border-radius: 1em;
   box-shadow: inset -2px -2px 4px rgba(255, 255, 255, 0.5),inset 2px 2px 4px rgba(170, 170, 204, 0.25),inset 5px 5px 10px rgba(170, 170, 204, 0.5), inset -5px -5px 10px #ffffff;
 }

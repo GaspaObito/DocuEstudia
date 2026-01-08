@@ -5,8 +5,7 @@ require_once(ROOT_PATH . "/models/ScoreModel.php");
 // Inicializar variables con valores por defecto
 $IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';
 // Recolecion ID
-$IdNota = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
-// $IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdNota > 0;
 // Consulta para Tipo de Sangre, mt_grados,MatterxGrade
 $mt_grados = "SELECT * FROM mt_grados";
@@ -15,16 +14,12 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
-function goToMatterList()
+function goToScoreList()
 {
-  redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
-}
-function goToMatterxGradeList()
-{
-  redirectTo("/views/matter/MatterXGrade.php");
+  redirectTo("/views/score/MtScore.php?action=listar");
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
-if (isset($_POST["EnviarGrade"])) {
+if (isset($_POST["EnviarScore"])) {
   $IdNota = $_POST['IdNota'] ?? $_POST['IdNota_Actual'];
   $NomMateria = $_POST['NomMateria'];
   $Descripcion = $_POST['Descripcion'];
@@ -34,39 +29,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $action = $_POST['action'] ?? [];
 
   switch ($action) {
-    case 'deleteMatter':
-      if (deleteMatter($conexion, $IdNota)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Materia #' . $IdNota];
+    case 'deleteScore':
+      if (deleteScore($conexion, $IdNota)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Nota #' . $IdNota];
       } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdNota];
       }
-      goToMatterList();
+      goToScoreList();
       break;
-    case 'createMatter':
+    case 'createScore':
       if (createMatter($conexion, $NomMateria, $Descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Materia #' . $NomMateria];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
       }
-      goToMatterList();
+      goToScoreList();
       break;
-    case 'updateMatter':
+    case 'updateScore':
       if (updateMatter($conexion, $IdNota, $NomMateria, $Descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Materia #' . $IdNota];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
       }
-      goToMatterList();
+      goToScoreList();
       break;
-    case 'readMatter':
-      $groupData = readMatter($conexion, $IdNota);
+    case 'readScore':
+      $groupData = readScore($conexion, $IdNota);
       $IdNota = $groupData['IdNota'];
+      $IdObs = $groupData['IdObs'];
+      $full_name = $groupData['full_name'];
       $NomMateria = $groupData['NomMateria'];
-      $Descripcion = $groupData['Descripcion'];
+      $Periodo = $groupData['Periodo'];
+      $Nota = $groupData['Nota'];
+      $Observacion = $groupData['Observacion'];
+      $FechCreado = $groupData['FechCreado'];
+      $FechActualizado = $groupData['FechActualizado'];
       break;
   }
   // ========== SHOW ALL DATA ==========
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {//CONSULTA TODO GROUP
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listar')  {//CONSULTA TODO GROUP
   $resultados = searchScore($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];

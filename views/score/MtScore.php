@@ -25,7 +25,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
           </div>
           <!-- Filtro por Nombre -->
           <div>
-            <label for="Nombre">Nombre Estudiante:</label>
+            <label for="Nombre">Nombre:</label>
             <div class="setting">
               <input class="Input_Text" type="text" id="Nombre" name="Nombre"
                 value="<?php echo isset($_GET['Nombre']) ? htmlspecialchars($_GET['Nombre']) : ''; ?>"
@@ -87,6 +87,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
   </div>
   <!-- Botón -->
   <div class="alinear-boton">
+    <input type="hidden" name="action" value="listar">
     <button class="boton" type="submit"><i class="fas fa-search"></i> FILTRAR</button>
   </div>
   </fieldset>
@@ -127,19 +128,19 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
             <td><?php echo $extraido['FechCreado']; ?></td>
             <td><?php echo $extraido['FechActualizado']; ?></td>
             <td class="td_Actions">
-              <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+              <form action="<?php echo BASE_URL; ?>/views/score/MtScore.php" method="post">
                 <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdNota']; ?>">
-                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="action" value="deleteScore">
                 <button type="submit" class="custom-button"
-                  onclick="return confirm('¿Está seguro de eliminar este profesor?')">
+                  onclick="return confirm('¿Está seguro de eliminar esta nota?')">
                   <svg class="navbar-icon" style="margin:0">
                     <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                   </svg>
                 </button>
               </form>
-              <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
+              <form action="<?php echo BASE_URL; ?>/views/forms/ManageScore.php" method="post">
                 <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdNota']; ?>">
-                <input type="hidden" name="action" value="read">
+                <input type="hidden" name="action" value="readScore">
                 <button type="submit" class="custom-button">
                   <svg class="navbar-icon" style="margin:0">
                     <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
@@ -154,7 +155,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
   </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php?action=crear">
+    <a href="<?php echo BASE_URL; ?>/views/forms/ManageScore.php">
       <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR NOTA</button>
     </a>
     <button class="boton" onclick="exportarExcel()">

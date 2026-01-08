@@ -82,15 +82,29 @@ function readMatterXGrade($conexion, $IdMateria)
   }
 }
 // ========== LEER READ FUNCTION MATTER GRADE ==========
-function AsigMultipleMatter($conexion, $materias, $IdMateria)
+function AsigMultipleMatter($conexion, $materias, $IdGrado)
 {
-  $stmt = $conexion->prepare("DELETE FROM materias_x_grado WHERE IdGrado = ?");
-  $stmt->bind_param("i", $IdMateria);
-  $stmt->execute();
-  $stmt = $conexion->prepare("INSERT INTO materias_x_grado (IdGrado, IdMateria) VALUES (?, ?)");
-  foreach ($materias as $materia) {
-    $materia = intval($materia);
-    $stmt->bind_param("ii", $IdMateria, $materia);
-    $stmt->execute();
+  try {
+    // Eliminar asignaciones previas
+    $stmt = $conexion->prepare("DELETE FROM materias_x_grado WHERE IdGrado = ?");
+    if (!$stmt) return false;
+    $stmt->bind_param("i", $IdGrado);
+    if (!$stmt->execute()) return false;
+
+    // Insertar nuevas materias
+    $stmt = $conexion->prepare(
+      "INSERT INTO materias_x_grado (IdGrado, IdMateria) VALUES (?, ?)"
+    );
+    if (!$stmt) return false;
+
+    foreach ($materias as $materia) {
+      $materia = intval($materia);
+      $stmt->bind_param("ii", $IdGrado, $materia);
+      if (!$stmt->execute()) return false;
+    }
+
+    return true; // TODO OK
+  } catch (Exception $e) {
+    return false;
   }
 }
