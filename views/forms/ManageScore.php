@@ -7,34 +7,33 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
 <main class="ContainerGeneral">
   <div class="anotaciones">
     <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>NOTAS PARA ESTUDIANTE
-      <?php echo $IdNota ?> <i class="fa-solid fa-book"></i></h1>
+      <?php echo $IdNota ?> <i class="fa-solid fa-book"></i>
+    </h1>
     <!-- ALERTAS -->
     <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
     <div class="Container1">
-      <form action="<?php echo BASE_URL; ?>/views/matter/MatterXGrade.php" method="POST" class="formulario">
+      <form method="POST" class="formulario" enctype="multipart/form-data">
         <fieldset>
           <div class="formulario__campos1">
+            <input type="hidden" name="IdNota_Actual" value="<?php echo htmlspecialchars($IdNota) ?>">
             <?php if ($isUpdate) { ?>
               <div>
                 <label># Documento</label>
                 <div class="setting">
-                  <input type="text" name="Nombre" class="Input_Text" disabled
-                    value="<?php echo htmlspecialchars($IdObs); ?>">
+                  <input type="text" name="Nombre" class="Input_Text" disabled value="<?php echo htmlspecialchars($IdObs); ?>">
                 </div>
               </div>
               <div>
                 <label>Nombre Estudiante</label>
                 <div class="setting">
-                  <input type="text" name="Nombre" class="Input_Text" disabled
-                    value="<?php echo htmlspecialchars($full_name); ?>">
+                  <input type="text" name="Periodo" class="Input_Text" disabled value="<?php echo htmlspecialchars($full_name); ?>">
                 </div>
               </div>
             <?php } ?>
             <div>
               <label>Nombre de la Materia *</label>
               <div class="setting">
-                <input type="text" name="Apellido" class="Input_Text" <?php echo $isUpdate ? 'disabled' : '' ?>
-                  value="<?php echo htmlspecialchars($NomMateria); ?>" placeholder="Apellido del Profesor" required>
+                <input type="text" name="Periodo" class="Input_Text" <?php echo $isUpdate ? 'disabled' : '' ?> value="<?php echo htmlspecialchars($NomMateria); ?>" placeholder="Apellido del Profesor" required>
               </div>
             </div>
             <div>
@@ -57,39 +56,32 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
             <div>
               <label>Observacion</label>
               <div class="setting">
-                <input type="number" name="NumDocumento" class="Input_Text"
-                  value="<?php echo htmlspecialchars($NumDocumento); ?>" placeholder="Digite Numero de documento"
-                  required>
+                <input type="text" name="Observacion" class="Input_Text" value="<?php echo htmlspecialchars($Observacion); ?>" placeholder="Digite la observacion">
               </div>
             </div>
             <div>
               <label>Nota</label>
               <div class="setting">
-                <input type="number" name="NumDocumento" class="Input_Text"
-                  value="<?php echo htmlspecialchars($Nota); ?>" placeholder="Digite Numero de documento" required>
+                <input type="number" name="Nota" class="Input_Text" value="<?php echo htmlspecialchars($Nota); ?>" placeholder="Digite la Nota" required>
               </div>
             </div>
             <?php if ($isUpdate) { ?>
               <div>
                 <label>FechCreado</label>
                 <div class="setting">
-                  <input type="text" name="NumDocumento" class="Input_Text"
-                    value="<?php echo htmlspecialchars($FechCreado); ?>" placeholder="Digite Numero de documento"
-                    required>
+                  <input type="text" class="Input_Text" readonly value="<?php echo htmlspecialchars($FechCreado); ?>">
                 </div>
               </div>
               <div>
                 <label>FechActualizado</label>
                 <div class="setting">
-                  <input type="text" name="NumDocumento" class="Input_Text"
-                    value="<?php echo htmlspecialchars($FechActualizado); ?>" placeholder="Digite Numero de documento"
-                    required>
+                  <input type="text" class="Input_Text" readonly value="<?php echo htmlspecialchars($FechActualizado); ?>">
                 </div>
               </div>
             <?php } ?>
         </fieldset>
         <div class="alinear-boton">
-          <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
+          <input type="hidden" name="action" value="updateScore">
           <input type="submit" name="EnviarScore" class="boton" value="Enviar">
         </div>
       </form>

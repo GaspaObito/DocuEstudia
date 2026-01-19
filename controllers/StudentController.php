@@ -21,9 +21,11 @@ $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $totalSangre = "SELECT * FROM mt_tsangre";
 $totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
+$mt_materias = "SELECT * FROM mt_materias";
+$mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
 function goToAnnotatSearchList()
 {
-  redirectTo("/views/teacher/AnnotationsSearch.php");
+  redirectTo("/views/admin/ManageStudents.php");
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
@@ -90,4 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Accede a las variables retornadas desde el array de resultados
   $sql_observador = $resultados['sql_observador'];
   $totalFilas = $resultados['totalFilas'];
+  $changePage=0;
+}  
+if (($action = $_GET['action'] ?? '') === 'listarNOTAS'){
+    $changePage = 1;
 }

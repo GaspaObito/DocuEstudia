@@ -19,6 +19,13 @@
 
         <li class="menu-title">Gestión Académica</li>
 
+        <li class="menu-item">
+            <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
+                <i class="fa-solid fa-eye"></i>
+                <span>Observador</span>
+            </a>
+        </li>
+
         <li class="menu-item has-submenu">
             <a class="submenu-btn">
                 <i class="fa-solid fa-book"></i>
@@ -39,8 +46,9 @@
             </a>
             <ul class="submenu">
                 <li><a href="<?php echo BASE_URL; ?>/views/score/MtScore.php?action=listar">Maestro Notas</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/matter/MatterxTeacher.php?action=listarMATTERxTEACHER">Materias Docente</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php?action=listarNOTAS">Notas x Estudiante</a></li>
                 <li><a href="#">Boletines</a></li>
-                <li><a href="#">Histórico</a></li>
             </ul>
         </li>
 
@@ -66,14 +74,19 @@
             </a>
             <ul class="submenu">
                 <li><a href="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar">Docentes</a></li>
+                <li><a href="<?php echo BASE_URL; ?>/views/admin/ManageStudents.php">Estudiantes</a></li>
             </ul>
         </li>
 
-        <li class="menu-item">
-            <a href="#">
+        <li class="menu-item has-submenu">
+            <a class="submenu-btn">
                 <i class="fa-solid fa-gear"></i>
                 <span>Configuración</span>
+                <i class="fa-solid fa-chevron-down arrow"></i>
             </a>
+            <ul class="submenu">
+                <li><a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">Historial Anotaciones</a></li>
+            </ul>
         </li>
     </ul>
 </aside>

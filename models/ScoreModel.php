@@ -9,22 +9,21 @@ function deleteScore($conexion, $IdNota)
   return $stmt->execute();
 }
 // ========== CREAR CREATE FUNCTION GROUP ==========
-function createMatter($conexion, $NomMateria, $Descripcion)
+function createScore($conexion, $NomMateria, $Descripcion)
 {
   $creagrupo = $conexion->prepare("INSERT INTO mt_materias (NomMateria,Descripcion) VALUES (?,?)");
   $creagrupo->bind_param('ss', $NomMateria, $Descripcion);
   return $creagrupo->execute();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
-function updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)
+function updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)
 {
-  if ($IdMateria === "mantener") {
-    $IdMateria = $_POST["IdMateria_Actual"];
+  if ($Periodo === "mantener") {
+    $Periodo = $_POST["Periodo_Actual"];
   }
-  // 1. Actualizar tabla usuarios 
-  $actgrupo = $conexion->prepare("UPDATE mt_materias SET  NomMateria = ?, Descripcion = ? WHERE IdMateria = ?");
-  $actgrupo->bind_param('ssi', $NomMateria, $Descripcion, $IdMateria);
-  return $actgrupo->execute();
+  $actScore = $conexion->prepare("UPDATE mt_notas SET  Periodo = ?, Observacion = ?, Nota = ? WHERE IdNota = ?");
+  $actScore->bind_param('sssi', $Periodo, $Observacion, $Nota, $IdNota);
+  return $actScore->execute();
 }
 // ========== LEER READ FUNCTION GROUP ==========
 function readScore($conexion, $IdNota)

@@ -20,9 +20,10 @@ function goToScoreList()
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarScore"])) {
-  $IdNota = $_POST['IdNota'] ?? $_POST['IdNota_Actual'];
-  $NomMateria = $_POST['NomMateria'];
-  $Descripcion = $_POST['Descripcion'];
+  $IdNota = $_POST['IdNota_Actual'];
+  $Periodo = $_POST['Periodo'];
+  $Observacion = $_POST['Observacion'];
+  $Nota = $_POST['Nota'];
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,15 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'createScore':
       if (createMatter($conexion, $NomMateria, $Descripcion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Materia #' . $NomMateria];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $NomMateria];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
       }
       goToScoreList();
       break;
     case 'updateScore':
-      if (updateMatter($conexion, $IdNota, $NomMateria, $Descripcion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Materia #' . $IdNota];
+      if (updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Nota #' . $IdNota];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
       }

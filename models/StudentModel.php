@@ -183,7 +183,7 @@ function searchStudent($conexion, $dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
   $consultaSQL = "SELECT u.IdUser,o.IdObs,NumDcto,u.Nombre,u.Apellido,o.IdGrupo, c.NomGrado FROM observador o
-  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser";
+  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado  LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser";
 
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
@@ -199,6 +199,10 @@ function searchStudent($conexion, $dni = null)
   if (!empty($_GET['Apellido'])) {
     $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
     $conditions[] = "u.Apellido LIKE '%$apellido%'";
+  }
+  if (!empty($_GET['Materia'])) {
+    $Materia = (int) $_GET['Materia']; // entero, no hace falta escapar
+    $conditions[] = "mm.IdMateria = '$Materia'";
   }
   if (!empty($_GET['Grado'])) {
     $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar

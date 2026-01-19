@@ -28,7 +28,6 @@ function goToGradeList()
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarGrade"])) {
   $IdGrado = $_POST['IdGrado'] ?? $_POST['IdGrado_Actual'];
-  ;
   $NomGrado = $_POST['NomGrado'];
 }
 if (isset($_POST["Enviar2"])) {

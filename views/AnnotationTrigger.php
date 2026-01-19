@@ -8,17 +8,6 @@ require_once (ROOT_PATH."/models/DatabaseConnection.php");
   <div class="nav__miniventana">
     <a></a>
     <h1 id="TitleStart">HISTORIAL DE ACCIONES <i class="fa-solid fa-clock-rotate-left"></i></h1>
-    <div>
-      <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">
-        <div class="botonAtras">
-          <div class="margen__boton">
-            <svg class="navbar-icon" style="margin:0;">
-              <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
-            </svg>
-          </div>
-        </div>
-      </a>
-    </div>
   </div>
   <?php
   $sql_triggerOper = mysqli_query($conexion, "SELECT h.*,u.NumDcto FROM historial_operaciones h

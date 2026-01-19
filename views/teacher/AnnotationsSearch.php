@@ -4,15 +4,15 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
 require_once(ROOT_PATH . "/controllers/StudentController.php");
-require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="ContainerUser">
     <?php include(ROOT_PATH . "/views/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
-      <h1 id="TitleStart">OBSERVADOR <i class="fa-solid fa-eye"></i></h1>
+      <h1 id="TitleStart"><?php echo $changePage ? 'NOTAS ' : 'OBSERVADOR '; ?>DEL ESTUDIANTE <i
+          class="fa-solid fa-eye"></i></h1>
       <!-- ALERTAS -->
-      <?php include(ROOT_PATH . "/templates/alerts.php");?>
+      <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
       <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php" method="GET">
         <fieldset>
           <legend>Filtrar Estudiante</legend>
@@ -87,24 +87,6 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
-                  <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                    <input type="hidden" name="action" value="delete">
-                    <button class="custom-button" type="submit" onclick="return confirm('¿Está seguro de eliminar este estudiante?')">
-                      <svg class="navbar-icon" style="margin:0">
-                        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
-                      </svg>
-                    </button>
-                  </form>
-                  <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                    <input type="hidden" name="action" value="read">
-                    <button class="custom-button" type="submit">
-                      <svg class="navbar-icon" style="margin:0">
-                        <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
-                      </svg>
-                    </button>
-                  </form>
                   <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
                     <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action">
@@ -121,13 +103,6 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
         </table>
       </div>
       <div class="alinear-boton">
-        <a href="<?php echo BASE_URL; ?>/views/AnnotationTrigger.php">
-          <button class="boton" type="submit" name='buscarDatos'><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL SERVIDOR</button>
-        </a>
-        <a href="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php">
-          <input type="hidden" name="action" value="create">
-          <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> CREAR ESTUDIANTE</button>
-        </a>
         <button class="boton" onclick="exportarExcel()">
           <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
         </button>

@@ -8,6 +8,7 @@ $IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria =
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 // $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdMateria > 0;
+$Id_Profe=$_SESSION['Id_Profe'];
 // Consulta para Tipo de Sangre, mt_grados,MatterxGrade
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
@@ -17,6 +18,7 @@ $mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreComplet
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
+
 function goToMatterList()
 {
   redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
@@ -96,4 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
-}
+}  elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTERxTEACHER'){
+  $resultados = searchMatter_x_Teacher($conexion, $Id_Profe);
+  // Accede a las variables retornadas desde el array de resultados
+  $consultar = $resultados['consultar'];
+  $totalFilas = $resultados['totalFilas'];
+} 
