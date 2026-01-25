@@ -102,16 +102,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
                     </svg>
                   </button>
-                </form>
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                  <input type="hidden" name="action">
-                  <button class="custom-button" type="submit">
-                    <svg class="navbar-icon" style="margin:0">
-                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
-                    </svg>
-                  </button>
-                </form>
+                </form>              
               </td>
             </tr>
           <?php } ?>

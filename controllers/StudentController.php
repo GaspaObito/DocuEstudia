@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/StudentModel.php");
 // ========== Inicializar variables con valores por defecto ==========
+$changePage = 0;
 // Guardian
 $NombreGua = ''; $ApellidoGua = ''; $OcupacionGua = ''; $TelefonoGua = ''; $EmailGua = ''; $ParentescoGua = ''; $ViveAcudienteGua = '';
 // Historial_escolar
@@ -13,6 +14,7 @@ $Eps = ''; $RestSanitaMed = ''; $DiscapMed = ''; $EnferMed = ''; $Recomendacione
 $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNacimientoStu = ''; $Direccion = ''; $NumDcto = ''; $IdGrado = ''; $Email = ''; $Password = ''; $IdRol = 1;//Estudiante
 // Recolecion ID Observador 
 $IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$IdGrado = $IdObs;
 $isUpdate = $IdObs > 0;
 // Consulta para Tipo de Sangre y mt_grados
 $mt_grupos = "SELECT * FROM mt_grupos";
@@ -85,15 +87,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Student
       $IdObs = $StudentData['IdObs']; $IdUser = $StudentData['IdUser']; $IdImg = $StudentData['IdImg']; $NombreImagen = $StudentData['NomImg']; $NombreStu = $StudentData["Nombre"]; $ApellidoStu = $StudentData["Apellido"]; $TipoDcto = $StudentData["TipoDcto"]; $NumDcto = $StudentData["NumDcto"]; $IdGrado = $StudentData["IdGrado"]; $IdGrupo = $StudentData["IdGrupo"]; $NomGrado = $StudentData["NomGrado"]; $TelefonoStu = $StudentData["Telefono"]; $FechaNacimientoStu = $StudentData["FechNacimiento"]; $Direccion = $StudentData["Direccion"]; $Email = $StudentData["Email"]; $Password = $StudentData["Password"];
       break;
+    case 'listarNOTAS':
+      $changePage = 1;
+      $resultados = getStudentsByGradeAndGroup($conexion, $IdGrado);
+      $sql_observador = $resultados['estudiantes'];
+      $totalFilas = $resultados['totalFilas'];
+      break;
     // Se inicia la busqueda automatica de los estudiantes
   }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+}elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $resultados = searchStudent($conexion);
-  // Accede a las variables retornadas desde el array de resultados
   $sql_observador = $resultados['sql_observador'];
   $totalFilas = $resultados['totalFilas'];
-  $changePage=0;
-}  
-if (($action = $_GET['action'] ?? '') === 'listarNOTAS'){
-    $changePage = 1;
 }

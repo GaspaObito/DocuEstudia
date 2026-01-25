@@ -147,15 +147,6 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
                   </svg>
                 </button>
               </form>
-              <form action="<?php echo BASE_URL; ?>/views/forms/ManageScore.php" method="post">
-                <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdNota']; ?>">
-                <input type="hidden" name="action" value="readScore">
-                <button type="submit" class="custom-button">
-                  <svg class="navbar-icon" style="margin:0">
-                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
-                  </svg>
-                </button>
-              </form>
             </td>
           </tr>
         <?php } ?>

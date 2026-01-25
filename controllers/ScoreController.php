@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/ScoreModel.php");
 // Inicializar variables con valores por defecto
-$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';
+$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';
 // Recolecion ID
 $IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdNota > 0;
@@ -20,7 +20,9 @@ function goToScoreList()
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarScore"])) {
-  $IdNota = $_POST['IdNota_Actual'];
+  $IdObs = $_POST['IdObs'];
+  $IdNota = $_POST['IdNota'] ?? $_POST['IdNota_Actual'];
+  $IdMateria = $_SESSION['IdMateria'];
   $Periodo = $_POST['Periodo'];
   $Observacion = $_POST['Observacion'];
   $Nota = $_POST['Nota'];
@@ -39,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       goToScoreList();
       break;
     case 'createScore':
-      if (createMatter($conexion, $NomMateria, $Descripcion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $NomMateria];
+      if (createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdMateria];
       } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdMateria];
       }
-      goToScoreList();
+      // goToScoreList();
       break;
     case 'updateScore':
       if (updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)) {

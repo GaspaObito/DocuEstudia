@@ -9,10 +9,10 @@ function deleteScore($conexion, $IdNota)
   return $stmt->execute();
 }
 // ========== CREAR CREATE FUNCTION GROUP ==========
-function createScore($conexion, $NomMateria, $Descripcion)
+function createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)
 {
-  $creagrupo = $conexion->prepare("INSERT INTO mt_materias (NomMateria,Descripcion) VALUES (?,?)");
-  $creagrupo->bind_param('ss', $NomMateria, $Descripcion);
+  $creagrupo = $conexion->prepare("INSERT INTO mt_notas (IdObs,IdMateria,Periodo,Nota,Observacion,FechCreado) VALUES (?, ?, ?, ?, ?, NOW())");
+  $creagrupo->bind_param('iisss', $IdObs, $IdMateria, $Periodo, $Nota, $Observacion);
   return $creagrupo->execute();
 }
 // ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========

@@ -9,8 +9,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
   <div class="ContainerUser">
     <?php include(ROOT_PATH . "/views/teacher/TeacherInfo.php"); ?>
     <div class="anotaciones">
-      <h1 id="TitleStart"><?php echo $changePage ? 'NOTAS ' : 'OBSERVADOR '; ?>DEL ESTUDIANTE <i
-          class="fa-solid fa-eye"></i></h1>
+      <h1 id="TitleStart"><?php echo $changePage ? 'NOTAS ' : 'OBSERVADOR '; ?>DEL ESTUDIANTE <i class="fa-solid fa-eye"></i></h1>
       <!-- ALERTAS -->
       <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
       <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php" method="GET">
@@ -87,9 +86,10 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
-                  <form action="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                    <input type="hidden" name="action">
+                  <!-- CHANGE ANNOTATION SCORE STUDENT -->
+                  <form action="<?php echo BASE_URL; ?>/views/forms/<?php echo $changePage ? 'ManageScore' : 'ManageAnnotations'; ?>.php" method="post">
+                    <input type="hidden" name="NumeroEstudiante" value="<?php echo $extraido['IdObs'] ?>">
+                    <input type="hidden" name="action" >
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>

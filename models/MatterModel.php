@@ -111,7 +111,7 @@ function AsigMultipleMatter($conexion, $materias, $IdGrado)
 // ========== LEER READ FUNCTION MATTER GRADE ==========
 function searchMatter_x_Teacher($conexion, $Id_Profe)
 {
-  $consultaSQL = "SELECT m.IdMateria, m.NomMateria, g.NomGrado, gr.IdGrupo FROM profesor_materia_grado dmg JOIN mt_materias m ON m.IdMateria = dmg.IdMateria JOIN mt_grados g ON g.IdGrado = dmg.IdGrado JOIN mt_grupos gr ON gr.IdGrupo = dmg.IdGrupo WHERE dmg.IdDocente = $Id_Profe";
+  $consultaSQL = "SELECT m.IdMateria, m.NomMateria, g.NomGrado, gr.IdGrupo,dmg.IdGrado FROM profesor_materia_grado dmg JOIN mt_materias m ON m.IdMateria = dmg.IdMateria JOIN mt_grados g ON g.IdGrado = dmg.IdGrado JOIN mt_grupos gr ON gr.IdGrupo = dmg.IdGrupo WHERE dmg.IdDocente = $Id_Profe";
 
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total FROM profesor_materia_grado dmg  WHERE dmg.IdDocente = $Id_Profe";

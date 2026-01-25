@@ -225,3 +225,27 @@ function searchStudent($conexion, $dni = null)
   // Retorna las variables como un array
   return ['sql_observador' => $sql_observador,  'totalFilas' => $datos['total']];
 }
+
+function getStudentsByGradeAndGroup($conexion, $IdGrado)
+{
+    // Consulta para contar el total
+    $sql = "SELECT o.IdObs, u.Nombre, u.Apellido, u.NumDcto, gr.NomGrado,o.IdGrupo FROM observador o INNER JOIN usuarios u ON u.IdUser = o.IdUser INNER JOIN mt_grados gr ON gr.IdGrado = o.IdGrado
+    WHERE o.IdGrado = ?";
+    // Conteo
+    $sqlCount = "SELECT COUNT(*) AS total FROM observador WHERE IdGrado = ?";
+
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("i", $IdGrado);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $stmtCount = $conexion->prepare($sqlCount);
+    $stmtCount->bind_param("i", $IdGrado);
+    $stmtCount->execute();
+    $total = $stmtCount->get_result()->fetch_assoc()['total'];
+
+    return [
+        'estudiantes' => $result,
+        'totalFilas' => $total
+    ];
+}

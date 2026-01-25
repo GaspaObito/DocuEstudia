@@ -33,9 +33,10 @@ require_once(ROOT_PATH . "/controllers/MatterController.php");
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
-                  <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php?action=listarNOTAS" method="post">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateria'] ?>">
-                    <input type="hidden" name="action">
+                  <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php" method="POST">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado'] ?>">
+                    <?php $_SESSION['IdMateria'] = $extraido['IdMateria'] ?>
+                    <input type="hidden" name="action" value="listarNOTAS">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>

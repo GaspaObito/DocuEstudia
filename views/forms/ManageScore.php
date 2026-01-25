@@ -1,43 +1,44 @@
 <?php
+define("PAGE_CSS", "Annotation");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
 require_once(ROOT_PATH . "/controllers/ScoreController.php");
 ?>
 <main class="ContainerGeneral">
-  <div class="anotaciones">
-    <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>NOTAS PARA ESTUDIANTE
-      <?php echo $IdNota ?> <i class="fa-solid fa-book"></i>
-    </h1>
-    <!-- ALERTAS -->
-    <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
-    <div class="Container1">
-      <form method="POST" class="formulario" enctype="multipart/form-data">
-        <fieldset>
-          <div class="formulario__campos1">
+  <div class="ContainerUser">
+    <?php include(ROOT_PATH . "/views/teacher/StudentInfo.php"); ?>
+    <div class="anotaciones">
+      <div class="nav__miniventana">
+        <a></a>
+        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>NOTA <i class="fa-solid fa-book"></i>
+        </h1>
+        <div>
+          <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
+            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+              <div class="botonAtras">
+                <div class="margen__boton">
+                  <svg class="navbar-icon" style="margin:0;">
+                    <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Arrow_Back"></use>
+                  </svg>
+                </div>
+              </div>
+            <?php endif; ?>
+          </a>
+        </div>
+      </div>
+      <!-- ALERTAS -->
+      <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
+      <div class="Container1">
+        <form action="<?php echo BASE_URL; ?>/views/forms/ManageScore.php" method="POST" class="formulario">
+          <fieldset>
             <input type="hidden" name="IdNota_Actual" value="<?php echo htmlspecialchars($IdNota) ?>">
-            <?php if ($isUpdate) { ?>
-              <div>
-                <label># Documento</label>
-                <div class="setting">
-                  <input type="text" name="Nombre" class="Input_Text" disabled value="<?php echo htmlspecialchars($IdObs); ?>">
-                </div>
-              </div>
-              <div>
-                <label>Nombre Estudiante</label>
-                <div class="setting">
-                  <input type="text" name="Periodo" class="Input_Text" disabled value="<?php echo htmlspecialchars($full_name); ?>">
-                </div>
-              </div>
-            <?php } ?>
+            <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
+            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+              <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
+            <?php endif; ?>
             <div>
-              <label>Nombre de la Materia *</label>
-              <div class="setting">
-                <input type="text" name="Periodo" class="Input_Text" <?php echo $isUpdate ? 'disabled' : '' ?> value="<?php echo htmlspecialchars($NomMateria); ?>" placeholder="Apellido del Profesor" required>
-              </div>
-            </div>
-            <div>
-              <label>Periodo *</label>
+              <label>PERIODO *</label>
               <div class="setting">
                 <input type="hidden" name="Periodo_Actual" value="<?php echo htmlspecialchars($Periodo) ?>">
                 <select type="text" name="Periodo" class="Input_Text">
@@ -54,38 +55,48 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
               </div>
             </div>
             <div>
-              <label>Observacion</label>
+              <label>NOTA *</label>
               <div class="setting">
-                <input type="text" name="Observacion" class="Input_Text" value="<?php echo htmlspecialchars($Observacion); ?>" placeholder="Digite la observacion">
+                <input type="number" name="Nota" class="Input_Text" value="<?php echo htmlspecialchars($Nota); ?>"
+                  placeholder="Digite la Nota" required>
               </div>
             </div>
             <div>
-              <label>Nota</label>
+              <label>OBSERVACIONES</label>
               <div class="setting">
-                <input type="number" name="Nota" class="Input_Text" value="<?php echo htmlspecialchars($Nota); ?>" placeholder="Digite la Nota" required>
+                <input type="text" name="Observacion" class="Input_Text"
+                  value="<?php echo htmlspecialchars($Observacion); ?>" placeholder="Digite la observacion">
               </div>
             </div>
-            <?php if ($isUpdate) { ?>
+            <?php if ($isUpdate): ?>
               <div>
-                <label>FechCreado</label>
-                <div class="setting">
-                  <input type="text" class="Input_Text" readonly value="<?php echo htmlspecialchars($FechCreado); ?>">
-                </div>
+                <label>FECHA DE CREACION</label>
+                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecCreacion); ?>">
               </div>
-              <div>
-                <label>FechActualizado</label>
-                <div class="setting">
-                  <input type="text" class="Input_Text" readonly value="<?php echo htmlspecialchars($FechActualizado); ?>">
-                </div>
+              <div class="Add_Anotacion">
+                <label>FECHA DE MODIFICACION</label>
+                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecModif); ?>">
               </div>
-            <?php } ?>
-        </fieldset>
-        <div class="alinear-boton">
-          <input type="hidden" name="action" value="updateScore">
-          <input type="submit" name="EnviarScore" class="boton" value="Enviar">
-        </div>
-      </form>
+            <?php endif; ?>
+          </fieldset>
+          <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+            <div class="alinear-boton">
+              <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateScore' : 'createScore'; ?>">
+              <button type="submit" name="EnviarScore" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR
+                NOTA</button>
+            </div>
+          <?php endif; ?>
+        </form>
+      </div>
+      <div class="alinear-boton">
+        <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php" method="post">
+          <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
+          <input type="hidden" name="action" value="read">
+          <button type="submit" class="boton"><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL</button>
+        </form>
+      </div>
     </div>
+  </div>
   </div>
 </main>
 <?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>
