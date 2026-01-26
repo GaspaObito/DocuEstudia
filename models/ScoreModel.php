@@ -90,3 +90,28 @@ function searchScore($conexion, $dni = null)
   // Retorna las variables como un array
   return ['consultar' => $consultar, 'totalFilas' => $datos['total']];
 }
+
+// ========== HISTORY FUNCTION ==========
+function viewHistory($conexion, $IdObs)
+{
+  // Inicializa la variable de consulta con la búsqueda de todos los profesores
+  $consultaSQL = "SELECT * from mt_notas WHERE IdObs= ?";
+  // Consulta para contar el total
+  $sqlCount = "SELECT COUNT(*) AS total FROM mt_notas WHERE IdObs= ?";
+
+  $stmt = $conexion->prepare($consultaSQL);
+  $stmt->bind_param("i", $IdObs);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  $stmtCount = $conexion->prepare($sqlCount);
+  $stmtCount->bind_param("i", $IdObs);
+  $stmtCount->execute();
+  $total = $stmtCount->get_result()->fetch_assoc()['total'];
+
+  // Retorna las variables como un array
+    return [
+        'notasEstudiante' => $result,
+        'totalFilas' => $total
+    ];
+}

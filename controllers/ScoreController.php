@@ -3,10 +3,14 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/ScoreModel.php");
 // Inicializar variables con valores por defecto
-$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';
+$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';$isUpdate = 0;
 // Recolecion ID
 $IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $IdNota > 0;
+// SCORE READ ID 
+if (isset($_POST['NumIdScore']) ) {
+  $IdNota = isset($_POST['NumIdScore']) ? intval($_POST['NumIdScore']) : 0;
+  $isUpdate = $IdNota > 0;
+}
 // Consulta para Tipo de Sangre, mt_grados,MatterxGrade
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
@@ -14,10 +18,16 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
+
 function goToScoreList()
 {
-  redirectTo("/views/score/MtScore.php?action=listar");
+  if ($_SESSION['IdRol'] == 2) { // Profesor
+    redirectTo("/views/score/ScoreHistory.php");
+  } else { // Admin
+    redirectTo("/views/score/MtScore.php?action=listar");
+  }
 }
+
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarScore"])) {
   $IdObs = $_POST['IdObs'];
@@ -42,9 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     case 'createScore':
       if (createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdMateria];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdObs];
       } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdMateria];
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
       }
       // goToScoreList();
       break;
@@ -68,8 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $FechCreado = $groupData['FechCreado'];
       $FechActualizado = $groupData['FechActualizado'];
       break;
-  }
+    case 'viewHistory': //History Annotations
+      $IdObs = $_POST["IdObs"];
+      $resultados = viewHistory($conexion, $IdObs);
+      $ScoreHistory = $resultados['notasEstudiante'];
+      $totalFilas = $resultados['totalFilas'];
+    break;
   // ========== SHOW ALL DATA ==========
+  }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listar')  {//CONSULTA TODO GROUP
   $resultados = searchScore($conexion);
   // Accede a las variables retornadas desde el array de resultados

@@ -88,7 +88,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
                 <td class="td_Actions">
                   <!-- CHANGE ANNOTATION SCORE STUDENT -->
                   <form action="<?php echo BASE_URL; ?>/views/forms/<?php echo $changePage ? 'ManageScore' : 'ManageAnnotations'; ?>.php" method="post">
-                    <input type="hidden" name="NumeroEstudiante" value="<?php echo $extraido['IdObs'] ?>">
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                     <input type="hidden" name="action" >
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">

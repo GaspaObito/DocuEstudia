@@ -171,7 +171,7 @@ function searchTeacher($conexion)
   // Filtros dinámicos
   if (!empty($_GET['DNI'])) {
     $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
-    $conditions[] = "u.NumDcto = '$dni'";
+    $conditions[] = "u.NumDcto LIKE '%$dni%'";
   }
 
   if (!empty($_GET['Nombre'])) {

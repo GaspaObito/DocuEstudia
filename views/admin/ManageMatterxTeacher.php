@@ -7,10 +7,10 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
-    <h1 id="TitleStart">DOCENTES <i class="fa-solid fa-chalkboard-user"></i></h1>
+    <h1 id="TitleStart">MATERIAS X DOCENTE <i class="fa-solid fa-chalkboard-user"></i></h1>
     <!-- ALERTAS -->
     <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
-    <form action="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar" method="GET">
+    <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="GET">
       <fieldset>
         <legend>Filtrar Docentes</legend>
         <div class="formulario__campos1">
@@ -89,24 +89,15 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
               <td><?php echo $extraido['NomGrado']; ?></td>
               <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf']; ?>">
-                  <input type="hidden" name="action" value="delete">
-                  <button type="submit" class="custom-button" onclick="return confirm('¿Está seguro de eliminar este profesor?')">
-                    <svg class="navbar-icon" style="margin:0">
-                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
-                    </svg>
-                  </button>
-                </form>
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf']; ?>">
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
+                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf'] ?>">
                   <input type="hidden" name="action" value="read">
-                  <button type="submit" class="custom-button">
+                  <button class="custom-button" type="submit">
                     <svg class="navbar-icon" style="margin:0">
-                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
                     </svg>
                   </button>
-                </form>
+                </form>   
               </td>
             </tr>
           <?php } ?>

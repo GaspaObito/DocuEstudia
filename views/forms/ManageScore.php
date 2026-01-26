@@ -11,7 +11,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
-        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>NOTA <i class="fa-solid fa-book"></i>
+        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR ';?>NOTA <?php echo $IdNota ?> <i class="fa-solid fa-book"></i>
         </h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
@@ -71,11 +71,16 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
             <?php if ($isUpdate): ?>
               <div>
                 <label>FECHA DE CREACION</label>
-                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecCreacion); ?>">
+                <div class="setting">
+                  <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FechCreado); ?>">
+                </div>
               </div>
               <div class="Add_Anotacion">
                 <label>FECHA DE MODIFICACION</label>
-                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecModif); ?>">
+                <div class="setting">
+                  <input readonly class="Input_Text" type="text"
+                    value="<?php echo htmlspecialchars($FechActualizado); ?>">
+                </div>
               </div>
             <?php endif; ?>
           </fieldset>
@@ -89,9 +94,9 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
         </form>
       </div>
       <div class="alinear-boton">
-        <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php" method="post">
+        <form action="<?php echo BASE_URL; ?>/views/score/ScoreHistory.php" method="post">
           <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
-          <input type="hidden" name="action" value="read">
+          <input type="hidden" name="action" value="viewHistory">
           <button type="submit" class="boton"><i class="fa-solid fa-clock-rotate-left"></i> VER HISTORIAL</button>
         </form>
       </div>
