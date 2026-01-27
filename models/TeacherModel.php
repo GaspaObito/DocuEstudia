@@ -243,8 +243,7 @@ function gruposTeacher($conexion)
 function searchMatterTeacher($conexion)
 {
   $consultaSQL = "SELECT  p.IdMateriasProf,p.IdUser, u.Nombre, u.Apellido, u.NumDcto, mg.NomGrado, p.IdGrupo, mm.NomMateria FROM profesor_materia_grado p
-  INNER JOIN usuarios u ON u.IdUser = p.IdUser INNER JOIN mt_grados mg ON mg.IdGrado = p.IdGrado INNER JOIN mt_materias mm ON mm.IdMateria = p.IdMateria;
-";
+  INNER JOIN usuarios u ON u.IdUser = p.IdUser INNER JOIN mt_grados mg ON mg.IdGrado = p.IdGrado INNER JOIN mt_materias mm ON mm.IdMateria = p.IdMateria";
 
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
@@ -276,8 +275,8 @@ function searchMatterTeacher($conexion)
     $whereSQL = ""; // Para reutilizar en el COUNT
   }
   // Consulta para contar el total
-  $consultaCount = "SELECT COUNT(*) AS total FROM profesor p 
-  LEFT JOIN usuarios u ON u.IdUser = p.IdUser  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+  $consultaCount = "SELECT COUNT(*) AS total FROM profesor_materia_grado p
+  INNER JOIN usuarios u ON u.IdUser = p.IdUser INNER JOIN mt_grados mg ON mg.IdGrado = p.IdGrado INNER JOIN mt_materias mm ON mm.IdMateria = p.IdMateria
   $whereSQL";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
