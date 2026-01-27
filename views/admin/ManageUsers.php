@@ -43,17 +43,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           </div>
           <!-- Filtro por Grado -->
           <div>
-            <label for="Grado">Grado:</label>
-            <div class="setting">
-              <select id="Grado" name="Grado" class="Input_Text">
-                <option value="">-- TODOS --</option>
-                <?php foreach ($mt_grados as $opciones): ?>
-                  <option value="<?php echo $opciones['IdGrado']; ?>" <?php echo (isset($_GET['Grado']) && $_GET['Grado'] == $opciones['IdGrado']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($opciones['NomGrado']); ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
+          
           </div>
         </div>
         <!-- Botón -->
@@ -73,8 +63,6 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Materia</th>
-            <th>Grado</th>
-            <th>Grupo</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -86,8 +74,6 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
               <td><?php echo $extraido['Nombre']; ?></td>
               <td><?php echo $extraido['Apellido']; ?></td>
               <td><?php echo $extraido['NomMateria']; ?></td>
-              <td><?php echo $extraido['NomGrado']; ?></td>
-              <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf']; ?>">

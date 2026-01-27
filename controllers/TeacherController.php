@@ -89,3 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 }
+// MATERIAS X DOCENTES
+elseif ($_GET['action'] === 'listarMATTERxTEACHER') {//CONSULTA TODO
+  $resultados = searchMatterTeacher($conexion);
+  // Accede a las variables retornadas desde el array de resultados
+  $consultar = $resultados['consultar'];
+  $totalFilas = $resultados['totalFilas'];
+}

@@ -159,11 +159,9 @@ function readTeacher($conexion, $IdUser)
 // ========== BUSCAR SEARCH FUNCTION ==========
 function searchTeacher($conexion)
 {
-  $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto, c.IdGrupo, g.NomGrado ,mm.NomMateria
+  $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto ,mm.NomMateria
                     FROM profesor p
                     LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
-                    LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf
-                    LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
                     LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria";
 
   $conditions = []; // Aquí guardamos los filtros dinámicos
@@ -197,7 +195,7 @@ function searchTeacher($conexion)
   }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total FROM profesor p 
-  LEFT JOIN usuarios u ON u.IdUser = p.IdUser  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+  LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
   $whereSQL";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
@@ -209,7 +207,7 @@ function searchTeacher($conexion)
     'totalFilas' => $datos['total']
   ];
 }
-// ========== GROUP TEAHCER FUNCTION ==========
+// ========== GROUP TEACHER FUNCTION ==========
 function gruposTeacher($conexion)
 {
   $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
@@ -230,6 +228,57 @@ function gruposTeacher($conexion)
   }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total FROM mt_grupos mg $whereSQL";
+
+  $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
+  $resultCount = mysqli_query($conexion, $consultaCount);
+  $datos = mysqli_fetch_assoc($resultCount);
+
+  return [
+    'consultar' => $consultar,
+    'totalFilas' => $datos['total']
+  ];
+}
+
+// ========== SEARCH MATTER X TEACHER FUNCTION ==========
+function searchMatterTeacher($conexion)
+{
+  $consultaSQL = "SELECT  p.IdMateriasProf,p.IdUser, u.Nombre, u.Apellido, u.NumDcto, mg.NomGrado, p.IdGrupo, mm.NomMateria FROM profesor_materia_grado p
+  INNER JOIN usuarios u ON u.IdUser = p.IdUser INNER JOIN mt_grados mg ON mg.IdGrado = p.IdGrado INNER JOIN mt_materias mm ON mm.IdMateria = p.IdMateria;
+";
+
+  $conditions = []; // Aquí guardamos los filtros dinámicos
+
+  // Filtros dinámicos
+  if (!empty($_GET['DNI'])) {
+    $dni = mysqli_real_escape_string($conexion, $_GET['DNI']);
+    $conditions[] = "u.NumDcto LIKE '%$dni%'";
+  }
+
+  if (!empty($_GET['Nombre'])) {
+    $nombre = mysqli_real_escape_string($conexion, $_GET['Nombre']);
+    $conditions[] = "u.Nombre LIKE '%$nombre%'";
+  }
+
+  if (!empty($_GET['Apellido'])) {
+    $apellido = mysqli_real_escape_string($conexion, $_GET['Apellido']);
+    $conditions[] = "u.Apellido LIKE '%$apellido%'";
+  }
+
+  if (!empty($_GET['Grado'])) {
+    $Grado = (int) $_GET['Grado']; // entero, no hace falta escapar
+    $conditions[] = "mg.IdGrado = $Grado";
+  }
+
+  if (!empty($conditions)) {
+    $whereSQL = " WHERE " . implode(" AND ", $conditions);
+    $consultaSQL .= $whereSQL;
+  } else {
+    $whereSQL = ""; // Para reutilizar en el COUNT
+  }
+  // Consulta para contar el total
+  $consultaCount = "SELECT COUNT(*) AS total FROM profesor p 
+  LEFT JOIN usuarios u ON u.IdUser = p.IdUser  LEFT JOIN mt_grupos c ON p.IdProf = c.IdProf LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+  $whereSQL";
 
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);

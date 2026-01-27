@@ -7,7 +7,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">
-    <h1 id="TitleStart">MATERIAS X DOCENTE <i class="fa-solid fa-chalkboard-user"></i></h1>
+    <h1 id="TitleStart">MAESTRO DE MATERIAS X DOCENTE <i class="fa-solid fa-chalkboard-user"></i></h1>
     <!-- ALERTAS -->
     <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
     <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="GET">
@@ -58,7 +58,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
         </div>
         <!-- Botón -->
         <div class="alinear-boton">
-          <input type="hidden" name="action" value="listar">
+          <input type="hidden" name="action" value="listarMATTERxTEACHER">
           <button class="boton" type="submit"><i class="fas fa-search"></i> FILTRAR</button>
         </div>
       </fieldset>
@@ -68,7 +68,6 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
       <table class="Custom_Table">
         <thead>
           <tr>
-            <th>Rol</th>
             <th># Documento</th>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -81,7 +80,6 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
         <tbody>
           <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
             <tr>
-              <td><?php echo $extraido['IdRol']; ?></td>
               <td><?php echo $extraido['NumDcto']; ?></td>
               <td><?php echo $extraido['Nombre']; ?></td>
               <td><?php echo $extraido['Apellido']; ?></td>
@@ -89,15 +87,25 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
               <td><?php echo $extraido['NomGrado']; ?></td>
               <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/forms/ManageStudent.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdProf'] ?>">
+                <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="post">
+                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateriasProf'] ?>">
+                  <input type="hidden" name="action" value="delete">
+                  <button class="custom-button" type="submit"
+                    onclick="return confirm('¿Está seguro de eliminar esta asignacion?')">
+                    <svg class="navbar-icon" style="margin:0">
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
+                    </svg>
+                  </button>
+                </form>
+                <form action="<?php echo BASE_URL; ?>/views/forms/ManageMatterxTeacher.php" method="post">
+                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateriasProf'] ?>">
                   <input type="hidden" name="action" value="read">
                   <button class="custom-button" type="submit">
                     <svg class="navbar-icon" style="margin:0">
-                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-arrow_next"></use>
+                      <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
                     </svg>
                   </button>
-                </form>   
+                </form>
               </td>
             </tr>
           <?php } ?>
