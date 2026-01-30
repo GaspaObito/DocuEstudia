@@ -7,11 +7,14 @@ $Nombre = ''; $Apellido = ''; $TipoDcto = ''; $NumDocumento = ''; $Telefono = ''
 // Recolecion ID Profesor 
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
+$IdMateriasxProf = isset($_POST['MateriasxProf']) ? intval($_POST['MateriasxProf']) : 0;
 // Consulta para Tipo de Sangre y mt_grados
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
 $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
+$mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
+$mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 $mt_materias = "SELECT * FROM mt_materias";
 $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
 function goToTeacherList()
@@ -75,7 +78,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $IdGrupo = $profesorData['IdGrupo'];
     $IdMateria = $profesorData['IdMateria'];
     $NomMateria = $profesorData['NomMateria'];
-  } else {
+    // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
+    } elseif ($action === 'readMatterxTeacher') {
+    $profesorData = readMatterxTeacher($conexion, $IdMateriasxProf);
+    // Asignar las variables desde el array devuelto
+    $NombreImagen = $profesorData['NomImg'];
+    $IdGrupo = $profesorData['IdGrupo'];
+    $IdMateria = $profesorData['IdMateria'];
+    $NomMateria = $profesorData['NomMateria'];
+    // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
+    } elseif ($action === 'updateMatterxTeacher') {
+      $IdUser = $_POST['FornIdUser'];
+      updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo, $IdMateriasxProf);
+      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la materia asignada del Profesor #' . $IdUser];
+      goToTeacherList();
+    }  elseif ($action === 'createMatterxTeacher') {
+      $IdUser = $_POST['FornIdUser'];
+      $IdMateria= $_POST['FornIdMateria'];
+      $IdGrado= $_POST['FornIdGrado'];
+      $IdGrupo = $_POST['FornIdGrupo'];
+      createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo);
+      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la materia asignada del Profesor #' . $IdUser];
+      goToTeacherList();
+  }
+  else {
     echo 'error';
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listar') {//CONSULTA TODO

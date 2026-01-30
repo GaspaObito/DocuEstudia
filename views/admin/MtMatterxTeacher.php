@@ -10,7 +10,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
     <h1 id="TitleStart">MAESTRO DE MATERIAS X DOCENTE <i class="fa-solid fa-chalkboard-user"></i></h1>
     <!-- ALERTAS -->
     <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
-    <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="GET">
+    <form action="<?php echo BASE_URL; ?>/views/admin/MtMatterxTeacher.php" method="GET">
       <fieldset>
         <legend>Filtrar Docentes</legend>
         <div class="formulario__campos1">
@@ -88,7 +88,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
               <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
                 <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateriasProf'] ?>">
+                  <input type="hidden" name="MateriasxProf" value="<?php echo $extraido['IdMateriasProf'] ?>">
                   <input type="hidden" name="action" value="delete">
                   <button class="custom-button" type="submit"
                     onclick="return confirm('¿Está seguro de eliminar esta asignacion?')">
@@ -98,8 +98,8 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
                   </button>
                 </form>
                 <form action="<?php echo BASE_URL; ?>/views/forms/ManageMatterxTeacher.php" method="post">
-                  <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateriasProf'] ?>">
-                  <input type="hidden" name="action" value="read">
+                  <input type="hidden" name="MateriasxProf" value="<?php echo $extraido['IdMateriasProf'] ?>">
+                  <input type="hidden" name="action" value="readMatterxTeacher">
                   <button class="custom-button" type="submit">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-edit"></use>
@@ -114,7 +114,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php?action=crear">
+    <a href="<?php echo BASE_URL; ?>/views/forms/ManageMatterxTeacher.php?action=crear">
       <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR PROFESOR</button>
     </a>
     <button class="boton" onclick="exportarExcel()">

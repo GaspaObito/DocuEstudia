@@ -288,3 +288,29 @@ function searchMatterTeacher($conexion)
     'totalFilas' => $datos['total']
   ];
 }
+
+// CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
+function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo)
+{
+  $creaMateriaProf = $conexion->prepare("INSERT INTO profesor_materia_grado (IdUser,IdMateria,IdGrado,IdGrupo) VALUES (?, ?, ?, ?)");
+  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo);
+  return $creaMateriaProf->execute();
+}
+function readMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
+{
+  if ($Periodo === "mantener") {
+    $Periodo = $_POST["Periodo_Actual"];
+  }
+  $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
+  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
+  return $creaMateriaProf->execute();
+}
+function updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
+{
+  if ($Periodo === "mantener") {
+    $Periodo = $_POST["Periodo_Actual"];
+  }
+  $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
+  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
+  return $creaMateriaProf->execute();
+}
