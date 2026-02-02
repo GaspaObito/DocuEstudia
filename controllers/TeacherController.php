@@ -80,11 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $NomMateria = $profesorData['NomMateria'];
     // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
     } elseif ($action === 'readMatterxTeacher') {
-    $profesorData = readMatterxTeacher($conexion, $IdMateriasxProf);
+    $IdMateriasProf = $_POST['MateriasxProf'];
+    $profesorData = readMatterxTeacher($conexion, $IdMateriasProf);
     // Asignar las variables desde el array devuelto
-    $NombreImagen = $profesorData['NomImg'];
-    $IdGrupo = $profesorData['IdGrupo'];
-    $IdMateria = $profesorData['IdMateria'];
     $NomMateria = $profesorData['NomMateria'];
     // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
     } elseif ($action === 'updateMatterxTeacher') {
@@ -99,6 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $IdGrupo = $_POST['FornIdGrupo'];
       createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo);
       $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la materia asignada del Profesor #' . $IdUser];
+      goToTeacherList();
+  }  elseif ($action === 'deleteMatterxTeacher') {
+      $IdMateriasProf = $_POST['MateriasxProf'];
+      deleteMatterxTeacher($conexion, $IdMateriasProf);
+      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se Elimino Correctamente la asignacion del Profesor #' . $IdMateriasProf];
       goToTeacherList();
   }
   else {

@@ -87,9 +87,9 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
               <td><?php echo $extraido['NomGrado']; ?></td>
               <td><?php echo $extraido['IdGrupo']; ?></td>
               <td class="td_Actions">
-                <form action="<?php echo BASE_URL; ?>/views/admin/ManageMatterxTeacher.php" method="post">
+                <form action="<?php echo BASE_URL; ?>/views/admin/MtMatterxTeacher.php" method="post">
                   <input type="hidden" name="MateriasxProf" value="<?php echo $extraido['IdMateriasProf'] ?>">
-                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="action" value="deleteMatterxTeacher">
                   <button class="custom-button" type="submit"
                     onclick="return confirm('¿Está seguro de eliminar esta asignacion?')">
                     <svg class="navbar-icon" style="margin:0">
@@ -115,7 +115,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
   </div>
   <div class="alinear-boton">
     <a href="<?php echo BASE_URL; ?>/views/forms/ManageMatterxTeacher.php?action=crear">
-      <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR PROFESOR</button>
+      <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR MATEARIA A DOCENTE</button>
     </a>
     <button class="boton" onclick="exportarExcel()">
       <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX

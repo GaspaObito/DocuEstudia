@@ -290,19 +290,24 @@ function searchMatterTeacher($conexion)
 }
 
 // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
+function deleteMatterxTeacher($conexion, $IdMateriasProf)
+{
+  $stmt = $conexion->prepare("DELETE FROM profesor_materia_grado WHERE IdMateriasProf = ?");
+  $stmt->bind_param("i", $IdMateriasProf);
+  return $stmt->execute();
+}
 function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo)
 {
   $creaMateriaProf = $conexion->prepare("INSERT INTO profesor_materia_grado (IdUser,IdMateria,IdGrado,IdGrupo) VALUES (?, ?, ?, ?)");
   $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo);
   return $creaMateriaProf->execute();
 }
-function readMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
+function readMatterxTeacher($conexion, $IdMateriasProf)
 {
-  if ($Periodo === "mantener") {
-    $Periodo = $_POST["Periodo_Actual"];
-  }
-  $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
-  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
+  $creaMateriaProf = $conexion->prepare("SELECT mp.*,mm.NomMateria FROM profesor_materia_grado mp
+  INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
+  WHERE IdMateriasProf = ?");
+  $creaMateriaProf->bind_param('i',$IdMateriasProf);
   return $creaMateriaProf->execute();
 }
 function updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
