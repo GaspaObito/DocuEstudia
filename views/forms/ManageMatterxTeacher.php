@@ -5,11 +5,12 @@ require_once(ROOT_PATH . "/config/ProtectPages.php");
 require_once(ROOT_PATH . "/controllers/TeacherController.php");
 ?>
 <main class="ContainerGeneral">
-  <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE <?php echo $IdProf ?> <i
+  <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE <?php echo $IdMateriasProf ?> <i
       class="fa-solid fa-pen"></i></h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
     <fieldset>
       <div class="formulario__campos1">
+        <input type="hidden" name="IdMateriasProf_Actual" value="<?php echo htmlspecialchars($IdMateriasProf) ?>">
         <!-- Selección Profesores -->
         <div>
           <label>Profesores</label>
@@ -18,7 +19,6 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
             <select name="FornIdUser" class="Input_Text">
               <?php if ($isUpdate) { ?>
                 <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NombreCompleto) ?></option>
-                <option value="quitar">Sin Profesor</option>
               <?php } else { ?>
                 <option disabled selected>...</option>
               <?php } ?>
@@ -99,7 +99,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
       </div>
       <div class="alinear-boton">
         <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateMatterxTeacher' : 'createMatterxTeacher'; ?>">
-        <input type="submit" class="boton" value="Enviar">
+        <input type="submit" name="EnviarMatterxTeacher" class="boton" value="Enviar">
       </div>
     </fieldset>
   </form>

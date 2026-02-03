@@ -304,18 +304,36 @@ function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo
 }
 function readMatterxTeacher($conexion, $IdMateriasProf)
 {
-  $creaMateriaProf = $conexion->prepare("SELECT mp.*,mm.NomMateria FROM profesor_materia_grado mp
-  INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
+  $stmt = $conexion->prepare("SELECT mp.*,mm.NomMateria,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor_materia_grado mp INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
+  LEFT JOIN mt_grados mg ON mg.IdGrado = mp.IdGrado
+  LEFT JOIN usuarios us ON us.IdUser = mp.IdUser
   WHERE IdMateriasProf = ?");
-  $creaMateriaProf->bind_param('i',$IdMateriasProf);
-  return $creaMateriaProf->execute();
+  $stmt->bind_param('i', $IdMateriasProf);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($row = $result->fetch_assoc()) {
+    return $row;
+  } else {
+    return null;
+  }
+
 }
 function updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
 {
-  if ($Periodo === "mantener") {
-    $Periodo = $_POST["Periodo_Actual"];
+  if ($IdUser === "mantener") {
+    $IdUser = $_POST["IdUser_Actual"];
+  }
+  if ($IdMateria === "mantener") {
+    $IdMateria = $_POST["IdMateria_Actual"];
+  }
+  if ($IdGrado === "mantener") {
+    $IdGrado = $_POST["IdGrado_Actual"];
+  }
+  if ($IdGrupo === "mantener") {
+    $IdGrupo = $_POST["IdGrupo_Actual"];
   }
   $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
-  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
+  $creaMateriaProf->bind_param('iiiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
   return $creaMateriaProf->execute();
+  
 }

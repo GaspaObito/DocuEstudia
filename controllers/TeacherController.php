@@ -7,7 +7,8 @@ $Nombre = ''; $Apellido = ''; $TipoDcto = ''; $NumDocumento = ''; $Telefono = ''
 // Recolecion ID Profesor 
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
-$IdMateriasxProf = isset($_POST['MateriasxProf']) ? intval($_POST['MateriasxProf']) : 0;
+$IdMateriasProf = isset($_POST['MateriasxProf']) ? intval($_POST['MateriasxProf']) : 0;
+$isUpdate = $IdMateriasProf > 0;
 // Consulta para Tipo de Sangre y mt_grados
 $mt_grados = "SELECT * FROM mt_grados";
 $mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
@@ -20,6 +21,10 @@ $mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexi
 function goToTeacherList()
 {
   redirectTo("/views/admin/ManageUsers.php?action=listar");
+}
+function goToMtMatterxTeacherList()
+{
+  redirectTo("/views/admin/MtMatterxTeacher.php?action=listarMATTERxTEACHER");
 }
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
@@ -41,6 +46,14 @@ if (isset($_POST["Enviar2"])) {
   $ultimoId_Imagen = $_POST['id_lastImg'];
   $NombreImagenOriginal = $_FILES['Imagen']['name'];
   $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
+}
+//RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
+if (isset($_POST["EnviarMatterxTeacher"])) {
+  $IdMateriasProf = $_POST['IdMateriasProf_Actual'];
+  $IdUser = $_POST['IdUser_Actual'];
+  $IdMateria = $_POST['IdMateria_Actual'];
+  $IdGrado = $_POST['FornIdGrado'];
+  $IdGrupo = $_POST['FornIdGrupo'];
 }
 // ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -80,16 +93,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $NomMateria = $profesorData['NomMateria'];
     // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
     } elseif ($action === 'readMatterxTeacher') {
-    $IdMateriasProf = $_POST['MateriasxProf'];
-    $profesorData = readMatterxTeacher($conexion, $IdMateriasProf);
-    // Asignar las variables desde el array devuelto
-    $NomMateria = $profesorData['NomMateria'];
+    $profesorData2 = readMatterxTeacher($conexion, $IdMateriasProf);
+    $IdUser = $profesorData2['IdUser'];
+    $IdMateriasProf = $profesorData2['IdMateriasProf'];
+    $IdMateria = $profesorData2['IdMateria'];
+    $IdGrado = $profesorData2['IdGrado'];
+    $IdGrupo = $profesorData2['IdGrupo'];
+    $NombreCompleto = $profesorData2['NombreCompleto'];
+    $NomMateria = $profesorData2['NomMateria'];
+    $NomGrado = $profesorData2['NomGrado'];
     // CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
     } elseif ($action === 'updateMatterxTeacher') {
       $IdUser = $_POST['FornIdUser'];
-      updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo, $IdMateriasxProf);
-      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la materia asignada del Profesor #' . $IdUser];
-      goToTeacherList();
+      updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo, $IdMateriasProf);
+      $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la materia asignada del Profesor #' . $IdMateriasProf];
+      goToMtMatterxTeacherList();
     }  elseif ($action === 'createMatterxTeacher') {
       $IdUser = $_POST['FornIdUser'];
       $IdMateria= $_POST['FornIdMateria'];
@@ -97,12 +115,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $IdGrupo = $_POST['FornIdGrupo'];
       createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo);
       $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la materia asignada del Profesor #' . $IdUser];
-      goToTeacherList();
+      goToMtMatterxTeacherList();
   }  elseif ($action === 'deleteMatterxTeacher') {
       $IdMateriasProf = $_POST['MateriasxProf'];
       deleteMatterxTeacher($conexion, $IdMateriasProf);
       $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se Elimino Correctamente la asignacion del Profesor #' . $IdMateriasProf];
-      goToTeacherList();
+      goToMtMatterxTeacherList();
   }
   else {
     echo 'error';
