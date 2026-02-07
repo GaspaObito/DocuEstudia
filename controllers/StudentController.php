@@ -2,6 +2,7 @@
 <?php
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/StudentModel.php");
+require_once(ROOT_PATH . "/models/CommonModel.php");
 // ========== Inicializar variables con valores por defecto ==========
 $changePage = 0;
 // Guardian
@@ -16,15 +17,7 @@ $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNac
 $IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $IdGrado = $IdObs;
 $isUpdate = $IdObs > 0;
-// Consulta para Tipo de Sangre y mt_grados
-$mt_grupos = "SELECT * FROM mt_grupos";
-$mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
-$mt_grados = "SELECT * FROM mt_grados";
-$mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
-$totalSangre = "SELECT * FROM mt_tsangre";
-$totalSangre = mysqli_query($conexion, $totalSangre) or die(mysqli_error($conexion));
-$mt_materias = "SELECT * FROM mt_materias";
-$mt_materias = mysqli_query($conexion, $mt_materias) or die(mysqli_error($conexion));
+
 function goToAnnotatSearchList()
 {
   redirectTo("/views/admin/ManageStudents.php");

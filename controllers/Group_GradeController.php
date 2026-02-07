@@ -2,6 +2,7 @@
 <?php
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/Group_GradeModel.php");
+require_once(ROOT_PATH . "/models/CommonModel.php");
 // Inicializar variables con valores por defecto
 $IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = ''; $IdMateria = '';
 // Recolecion ID
@@ -10,13 +11,7 @@ $isUpdate = $IdGrupo > 0;
 
 $IdGrado = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrado > 0;
-// Consulta para Tipo de Sangre y mt_grados
-$mt_grados = "SELECT * FROM mt_grados";
-$mt_grados = mysqli_query($conexion, $mt_grados) or die(mysqli_error($conexion));
-$mt_grupos = "SELECT * FROM mt_grupos";
-$mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
-$mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
-$mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
+
 function goToGroupList()
 {
   redirectTo("/views/subject/MtGroups.php?action=listarGRPS");

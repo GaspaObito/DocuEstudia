@@ -5,7 +5,7 @@ require_once(ROOT_PATH . "/config/ProtectPages.php");
 require_once(ROOT_PATH . "/controllers/TeacherController.php");
 ?>
 <main class="ContainerGeneral">
-  <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE <?php echo $IdMateriasProf ?> <i
+  <h1 id="TitleStart"><?php echo $isUpdateMateriasProf ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE <?php echo $IdMateriasProf ?> <i
       class="fa-solid fa-pen"></i></h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
     <fieldset>
@@ -17,7 +17,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           <div class="setting">
             <input type="hidden" name="IdUser_Actual" value="<?php echo htmlspecialchars($IdUser) ?>">
             <select name="FornIdUser" class="Input_Text">
-              <?php if ($isUpdate) { ?>
+              <?php if ($isUpdateMateriasProf) { ?>
                 <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NombreCompleto) ?></option>
               <?php } else { ?>
                 <option disabled selected>...</option>
@@ -37,7 +37,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           <div class="setting">
             <input type="hidden" name="IdMateria_Actual" value="<?php echo htmlspecialchars($IdMateria) ?>">
             <select name="FornIdMateria" class="Input_Text">
-              <?php if ($isUpdate) { ?>
+              <?php if ($isUpdateMateriasProf) { ?>
                 <option value="mantener" selected>Asignado: <?php echo htmlspecialchars($NomMateria) ?></option>
                 <option value="quitar">Sin Materia</option>
               <?php } else { ?>
@@ -58,7 +58,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           <div class="setting">
             <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
             <select name="FornIdGrado" class="Input_Text">
-              <?php if ($isUpdate) { ?>
+              <?php if ($isUpdateMateriasProf) { ?>
                 <option value="mantener" selected>Asignado: <?php echo htmlspecialchars($NomGrado) ?></option>
                 <option value="quitar">Sin Grado</option>
               <?php } else { ?>
@@ -79,7 +79,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
                 <div class="setting">
                   <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
                   <select name="FornIdGrupo" class="Input_Text">
-                    <?php if ($isUpdate) { ?>
+                    <?php if ($isUpdateMateriasProf) { ?>
                       <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
                       <option value="quitar">
                         Sin grupo
@@ -98,7 +98,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           </div>
       </div>
       <div class="alinear-boton">
-        <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateMatterxTeacher' : 'createMatterxTeacher'; ?>">
+        <input type="hidden" name="action" value="<?php echo $isUpdateMateriasProf ? 'updateMatterxTeacher' : 'createMatterxTeacher'; ?>">
         <input type="submit" name="EnviarMatterxTeacher" class="boton" value="Enviar">
       </div>
     </fieldset>
