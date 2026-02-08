@@ -3,7 +3,7 @@ define("PAGE_CSS", "Annotation");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/controllers/TeacherController.php");
+require_once(ROOT_PATH . "/controllers/MatterxTeacherController.php");
 ?>
 <main class="ContainerGeneral">
   <div class="anotaciones">

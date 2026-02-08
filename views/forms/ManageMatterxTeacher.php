@@ -2,11 +2,11 @@
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
-require_once(ROOT_PATH . "/controllers/TeacherController.php");
+require_once(ROOT_PATH . "/controllers/MatterxTeacherController.php");
 ?>
 <main class="ContainerGeneral">
-  <h1 id="TitleStart"><?php echo $isUpdateMateriasProf ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE <?php echo $IdMateriasProf ?> <i
-      class="fa-solid fa-pen"></i></h1>
+  <h1 id="TitleStart"><?php echo $isUpdateMateriasProf ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>MAESTRO DE MATERIAS X DOCENTE
+    <?php echo $IdMateriasProf ?> <i class="fa-solid fa-pen"></i></h1>
   <form method="post" class="formulario" enctype="multipart/form-data">
     <fieldset>
       <div class="formulario__campos1">
@@ -74,31 +74,32 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
           </div>
         </div>
         <!-- Selección Grupo -->
-          <div>
-            <label>Seleccione Grupo<label>
-                <div class="setting">
-                  <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
-                  <select name="FornIdGrupo" class="Input_Text">
+        <div>
+          <label>Seleccione Grupo<label>
+              <div class="setting">
+                <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
+                <select name="FornIdGrupo" class="Input_Text">
                     <?php if ($isUpdateMateriasProf) { ?>
-                      <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
-                      <option value="quitar">
-                        Sin grupo
-                      </option>
+                    <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>
+                    <option value="quitar">
+                      Sin grupo
+                    </option>
                     <?php } else { ?>
-                      <option disabled selected>...</option>
+                    <option disabled selected>...</option>
                     <?php } ?>
                     <?php
                     foreach ($mt_grupos as $opciones): ?>
                       <option value="<?php echo $opciones['IdGrupo'] ?>">
-                        <?php echo $opciones['IdGrupo'] ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+                      <?php echo $opciones['IdGrupo'] ?>
+                        </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
           </div>
       </div>
       <div class="alinear-boton">
-        <input type="hidden" name="action" value="<?php echo $isUpdateMateriasProf ? 'updateMatterxTeacher' : 'createMatterxTeacher'; ?>">
+
+                 <input type="hidden" name="action" value="<?php echo $isUpdateMateriasProf ? 'updateMatterxTeacher' : 'createMatterxTeacher'; ?>">
         <input type="submit" name="EnviarMatterxTeacher" class="boton" value="Enviar">
       </div>
     </fieldset>
