@@ -1,16 +1,22 @@
-<!-- ================ CRUD PARA Group ================ -->
 <?php
+/* ==========================================
+   CONTROLLER: MatterController.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/MatterModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
-// Inicializar variables con valores por defecto
-$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';$IdGrupo = '';
-// Recolecion ID
+
+/* ---------- 2. ESTADO INICIAL ---------- */
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
-// $IdMateria = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdMateria > 0;
 $Id_Profe=$_SESSION['Id_Profe'];
 
+/* Variables del formulario */
+$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';$IdGrupo = '';
+
+/* ---------- 3. HELPERS ---------- */
 function goToMatterList()
 {
   redirectTo("/views/matter/MtMatter.php?action=listarMATTER");
@@ -25,19 +31,18 @@ if (isset($_POST["EnviarGrade"])) {
   $NomMateria = $_POST['NomMateria'];
   $Descripcion = $_POST['Descripcion'];
 }
-// ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $action = $_POST['action'] ?? [];
+
+/* ---------- 4. ROUTING ---------- */
+$method = $_SERVER['REQUEST_METHOD'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
+
+/* ---------- 5. POST ACTIONS ---------- */
+if ($method === 'POST') {
+  $action = $_POST['action'];
 
   switch ($action) {
-    case 'deleteMatter':
-      if (deleteMatter($conexion, $IdMateria)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Materia #' . $IdMateria];
-      } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
-      }
-      goToMatterList();
-      break;
+
+    /* -------- CREATE -------- */
     case 'createMatter':
       if (createMatter($conexion, $NomMateria, $Descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Materia #' . $NomMateria];
@@ -46,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       goToMatterList();
       break;
+
+    /* -------- UPDATE -------- */
     case 'updateMatter':
       if (updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Materia #' . $IdMateria];
@@ -54,12 +61,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       goToMatterList();
       break;
+
+    /* -------- DELETE -------- */
+    case 'deleteMatter':
+      if (deleteMatter($conexion, $IdMateria)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Materia #' . $IdMateria];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdGrupo];
+      }
+      goToMatterList();
+      break;
+
+    /* -------- READ -------- */
     case 'readMatter':
       $groupData = readMatter($conexion, $IdMateria);
       $IdMateria = $groupData['IdMateria'];
       $NomMateria = $groupData['NomMateria'];
       $Descripcion = $groupData['Descripcion'];
       break;
+
     case 'readMatterXGrade':
       $MatterxGradeData = readMatterXGrade($conexion, $IdMateria);
       if ($MatterxGradeData) {
@@ -74,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $resultados = searchMatter($conexion, $IdGrado);
       $materiasAsignadas = $resultados['materiasAsignadas'];
       break;
+      
     case 'AsigMultipleMatter':
       $materias = $_POST['FornIdMateria'] ?? [];
       if (AsigMultipleMatter($conexion, $materias, $IdMateria)) {
@@ -84,15 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       goToMatterxGradeList();
       break;
   }
-  // ========== SHOW ALL DATA ==========
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTER') {//CONSULTA TODO GROUP
+} 
+
+/* ---------- 6. GET ACTIONS ---------- */
+elseif ($method === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTER') {//CONSULTA TODO GROUP
   $resultados = searchMatter($conexion, $IdGrado);
-  // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
-}  elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTERxTEACHER'){
+
+}  elseif ($action = $_GET['action'] === 'listarMATTERxTEACHER'){
   $resultados = searchMatter_x_Teacher($conexion, $Id_Profe);
-  // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 } 

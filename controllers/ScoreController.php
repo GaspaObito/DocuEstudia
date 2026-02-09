@@ -1,17 +1,25 @@
-<!-- ================ CRUD PARA Group ================ -->
 <?php
+/* ==========================================
+   CONTROLLER: ScoreController.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/ScoreModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
-// Inicializar variables con valores por defecto
-$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';$isUpdate = 0;
-// Recolecion ID
+
+/* ---------- 2. ESTADO INICIAL ---------- */
 $IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 // SCORE READ ID 
 if (isset($_POST['NumIdScore']) ) {
   $IdNota = isset($_POST['NumIdScore']) ? intval($_POST['NumIdScore']) : 0;
   $isUpdate = $IdNota > 0;
 }
+
+/* Variables del formulario */
+$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';$isUpdate = 0;
+
+/* ---------- 3. HELPERS ---------- */
 function goToScoreList()
 {
   if ($_SESSION['IdRol'] == 2) { // Profesor
@@ -21,6 +29,9 @@ function goToScoreList()
   }
 }
 
+/* ---------- 4. ROUTING ---------- */
+$method = $_SERVER['REQUEST_METHOD'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["EnviarScore"])) {
   $IdObs = $_POST['IdObs'];
@@ -30,27 +41,24 @@ if (isset($_POST["EnviarScore"])) {
   $Observacion = $_POST['Observacion'];
   $Nota = $_POST['Nota'];
 }
-// ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $action = $_POST['action'] ?? [];
+
+/* ---------- 5. POST ACTIONS ---------- */
+if ($method === 'POST') {
+  $action = $_POST['action'];
 
   switch ($action) {
-    case 'deleteScore':
-      if (deleteScore($conexion, $IdNota)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Nota #' . $IdNota];
-      } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdNota];
-      }
-      goToScoreList();
-      break;
+
+    /* -------- CREATE -------- */
     case 'createScore':
       if (createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdObs];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
       }
-      // goToScoreList();
+      goToScoreList();
       break;
+      
+    /* -------- UPDATE -------- */
     case 'updateScore':
       if (updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la Nota #' . $IdNota];
@@ -59,6 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       goToScoreList();
       break;
+
+    /* -------- DELETE -------- */
+    case 'deleteScore':
+      if (deleteScore($conexion, $IdNota)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente la Nota #' . $IdNota];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdNota];
+      }
+      goToScoreList();
+      break;
+
+    /* -------- READ -------- */
     case 'readScore':
       $groupData = readScore($conexion, $IdNota);
       $IdNota = $groupData['IdNota'];
@@ -71,15 +91,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $FechCreado = $groupData['FechCreado'];
       $FechActualizado = $groupData['FechActualizado'];
       break;
+
+    /* -------- READ HISTORY -------- */
     case 'viewHistory': //History Annotations
       $IdObs = $_POST["IdObs"];
       $resultados = viewHistory($conexion, $IdObs);
       $ScoreHistory = $resultados['notasEstudiante'];
       $totalFilas = $resultados['totalFilas'];
     break;
-  // ========== SHOW ALL DATA ==========
   }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listar')  {//CONSULTA TODO GROUP
+} 
+
+/* ---------- 6. GET ACTIONS ---------- */
+elseif ($method === 'GET' && $_GET['action'] === 'listar') {
   $resultados = searchScore($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];

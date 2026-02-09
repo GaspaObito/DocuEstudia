@@ -1,14 +1,25 @@
-<!-- ================ CRUD PARA TEACHER ================ -->
 <?php
+/* ==========================================
+   CONTROLLER: TeacherController.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/TeacherModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
-// Inicializar variables con valores por defecto
-$Nombre = ''; $Apellido = ''; $TipoDcto = ''; $NumDocumento = ''; $Telefono = ''; $Fecha_Nacimiento = ''; $Direccion = ''; $AsigAcadeProf = ''; $IdMateria = ''; $AreaProf = ''; $Email = ''; $Password = ''; $IdRol = 2; $IdProf = 2; $ultimoId_Imagen = ''; $NomMateria = '';//Profesor
-// Recolecion ID Profesor 
+
+/* ---------- 2. ESTADO INICIAL ---------- */
 $IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdUser > 0;
 
+/* Variables del formulario */
+$Nombre = ''; $Apellido = ''; $TipoDcto = ''; $NumDocumento = ''; $Telefono = ''; $Fecha_Nacimiento = ''; $Direccion = ''; $AsigAcadeProf = ''; $IdMateria = ''; $AreaProf = ''; $Email = ''; $Password = ''; $IdRol = 2; $IdProf = 2; $ultimoId_Imagen = ''; $NomMateria = '';//Profesor
+
+/* Variables de vista */
+$consultar = [];
+$totalFilas = 0;
+
+/* ---------- 3. HELPERS ---------- */
 function goToTeacherList()
 {
   redirectTo("/views/admin/ManageUsers.php?action=listar");
@@ -17,6 +28,10 @@ function goToMtMatterxTeacherList()
 {
   redirectTo("/views/admin/MtMatterxTeacher.php?action=listarMATTERxTEACHER");
 }
+
+/* ---------- 4. ROUTING ---------- */
+$method = $_SERVER['REQUEST_METHOD'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["Enviar2"])) {
   $IdUser = $_POST['id_profesor'];
@@ -38,25 +53,35 @@ if (isset($_POST["Enviar2"])) {
   $NombreImagenOriginal = $_FILES['Imagen']['name'];
   $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
-// ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+/* ---------- 5. POST ACTIONS ---------- */
+if ($method === 'POST') {
   $action = $_POST['action'];
+
   switch ($action) {
-    case 'delete':
-      deleteTeacher($conexion, $IdUser);
-      $_SESSION['alerts'][] = ['type' => 'info', 'text' => 'Se elimino Correctamente #' . $IdUser];
-      goToTeacherList();
-      break;
+
+    /* -------- CREATE -------- */
     case 'create':
       createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $AsigAcadeProf, $IdMateria, $AreaProf, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal, $IdGrupo);
       $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Los Datos del Profesor Fueron Correctamente Creados #' . $ultimoIdProf];
       goToTeacherList();
       break;
+
+    /* -------- UPDATE -------- */
     case 'update':
       updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $AsigAcadeProf, $IdMateria, $AreaProf, $Email, $Password, $NombreImagenOriginal, $Imagen_temporal, $IdGrupo, $IdProf);
       $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente los datos del Profesor #' . $IdProf];
       goToTeacherList();
+      break;    
+
+    /* -------- DELETE -------- */
+    case 'delete':
+      deleteTeacher($conexion, $IdUser);
+      $_SESSION['alerts'][] = ['type' => 'info', 'text' => 'Se elimino Correctamente #' . $IdUser];
+      goToTeacherList();
       break;
+
+    /* -------- READ -------- */
     case 'read':
       $profesorData = readTeacher($conexion, $IdUser);
       // Asignar las variables desde el array devuelto
@@ -80,14 +105,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $NomMateria = $profesorData['NomMateria'];
       break;
   }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'listar') {//CONSULTA TODO
+} 
+
+/* ---------- 6. GET ACTIONS ---------- */
+elseif ($method === 'GET' && $_GET['action'] === 'listar') {
   $resultados = searchTeacher($conexion);
-  // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
-} elseif ($_GET['action'] === 'grupos') {//CONSULTA TODO
+
+} elseif ($_GET['action'] === 'grupos') {
   $resultados = gruposteacher($conexion);
-  // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 }

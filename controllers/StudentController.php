@@ -1,9 +1,19 @@
-<!-- ================ CRUD PARA STUDENT ================ -->
 <?php
+/* ==========================================
+   CONTROLLER: StudenController.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/StudentModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
-// ========== Inicializar variables con valores por defecto ==========
+
+/* ---------- 2. ESTADO INICIAL ---------- */
+$IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$IdGrado = $IdObs;
+$isUpdate = $IdObs > 0;
+
+/* Variables del formulario */
 $changePage = 0;
 // Guardian
 $NombreGua = ''; $ApellidoGua = ''; $OcupacionGua = ''; $TelefonoGua = ''; $EmailGua = ''; $ParentescoGua = ''; $ViveAcudienteGua = '';
@@ -13,15 +23,16 @@ $ColegioAnterior = '';$UltCursoCursado = ''; $Jornada = ''; $EsRepitente = ''; $
 $Eps = ''; $RestSanitaMed = ''; $DiscapMed = ''; $EnferMed = ''; $Recomendaciones = ''; $Antecendentes = ''; $FornTipoSangre = '';
 // Student
 $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNacimientoStu = ''; $Direccion = ''; $NumDcto = ''; $IdGrado = ''; $Email = ''; $Password = ''; $IdRol = 1;//Estudiante
-// Recolecion ID Observador 
-$IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$IdGrado = $IdObs;
-$isUpdate = $IdObs > 0;
 
+/* ---------- 3. HELPERS ---------- */
 function goToAnnotatSearchList()
 {
   redirectTo("/views/admin/ManageStudents.php");
 }
+
+/* ---------- 4. ROUTING ---------- */
+$method = $_SERVER['REQUEST_METHOD'];
+$action = $_POST['action'] ?? $_GET['action'] ?? '';
 //RECIBIMOS DATOS TANTO PARA ACTUALIZAR COMO PARA CREAR
 if (isset($_POST["SendDataStudent"])) {
   // Guardian
@@ -41,18 +52,13 @@ if (isset($_POST["SendDataStudent"])) {
   //Recibimos Imagen POST
   $IdImg = $_POST['IdImg']; $TipoImagen = $_FILES['Imagen']['type']; $NombreImagenOriginal = $_FILES['Imagen']['name']; $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
 }
-// ========== Se maneja la logica de las operaciones Delete,Create,Update,Read,Search ==========
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+/* ---------- 5. POST ACTIONS ---------- */
+if ($method === 'POST') {
   $action = $_POST['action'];
+
   switch ($action) {
-    case 'delete':
-      if (deleteStudent($conexion, $IdObs)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Estudiante #' . $IdObs];
-      } else {
-        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
-      }
-      goToAnnotatSearchList();
-      break;
+    
+    /* -------- CREATE -------- */
     case 'create':
       if (createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Estudiante #' . $ultimoId_Usuario];
@@ -61,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       goToAnnotatSearchList();
       break;
+
+    /* -------- UPDATE -------- */
     case 'update':
       if (updateStudent( $conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces,$PracticaDeporte,$NombreDeporte,$IdMed,$Eps,$RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Estudiante #' . $IdUser];
@@ -69,6 +77,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       goToAnnotatSearchList();
       break;
+
+    /* -------- DELETE -------- */
+    case 'delete':
+      if (deleteStudent($conexion, $IdObs)) {
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se elimino Correctamente el Estudiante #' . $IdObs];
+      } else {
+        $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
+      }
+      goToAnnotatSearchList();
+      break;
+
+    /* -------- READ -------- */
     case 'read':
       $StudentData = readStudent($conexion, $IdObs);
       // Guardian
@@ -80,6 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Student
       $IdObs = $StudentData['IdObs']; $IdUser = $StudentData['IdUser']; $IdImg = $StudentData['IdImg']; $NombreImagen = $StudentData['NomImg']; $NombreStu = $StudentData["Nombre"]; $ApellidoStu = $StudentData["Apellido"]; $TipoDcto = $StudentData["TipoDcto"]; $NumDcto = $StudentData["NumDcto"]; $IdGrado = $StudentData["IdGrado"]; $IdGrupo = $StudentData["IdGrupo"]; $NomGrado = $StudentData["NomGrado"]; $TelefonoStu = $StudentData["Telefono"]; $FechaNacimientoStu = $StudentData["FechNacimiento"]; $Direccion = $StudentData["Direccion"]; $Email = $StudentData["Email"]; $Password = $StudentData["Password"];
       break;
+     
+    /* -------- READ BY STUDENTS -------- */
     case 'listarNOTAS':
       $changePage = 1;
       $resultados = getStudentsByGradeAndGroup($conexion, $IdGrado);
@@ -88,7 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       break;
     // Se inicia la busqueda automatica de los estudiantes
   }
-}elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+}
+
+/* ---------- 6. GET ACTIONS ---------- */
+elseif ($method === 'GET') {
   $resultados = searchStudent($conexion);
   $sql_observador = $resultados['sql_observador'];
   $totalFilas = $resultados['totalFilas'];

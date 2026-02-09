@@ -133,7 +133,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
         <div>
           <label>Imagen Usuario Nueva</label>
           <div class="setting">
-            <input type="file" name="Imagen" class="Input_Text" <?php if ($isUpdate) echo 'required'; ?>>
+            <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
             <i class="fa-solid fa-download fa-2xl"></i>
           </div>
         </div>
