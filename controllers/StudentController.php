@@ -9,11 +9,6 @@ require_once(ROOT_PATH . "/models/StudentModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$IdGrado = $IdObs;
-$isUpdate = $IdObs > 0;
-
-/* Variables del formulario */
 $changePage = 0;
 // Guardian
 $NombreGua = ''; $ApellidoGua = ''; $OcupacionGua = ''; $TelefonoGua = ''; $EmailGua = ''; $ParentescoGua = ''; $ViveAcudienteGua = '';
@@ -23,6 +18,11 @@ $ColegioAnterior = '';$UltCursoCursado = ''; $Jornada = ''; $EsRepitente = ''; $
 $Eps = ''; $RestSanitaMed = ''; $DiscapMed = ''; $EnferMed = ''; $Recomendaciones = ''; $Antecendentes = ''; $FornTipoSangre = '';
 // Student
 $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNacimientoStu = ''; $Direccion = ''; $NumDcto = ''; $IdGrado = ''; $Email = ''; $Password = ''; $IdRol = 1;//Estudiante
+
+/* Variables del formulario */
+$IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$IdGrado = $IdObs;
+$isUpdate = $IdObs > 0;
 
 /* ---------- 3. HELPERS ---------- */
 function goToAnnotatSearchList()
@@ -54,7 +54,6 @@ if (isset($_POST["SendDataStudent"])) {
 }
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
     

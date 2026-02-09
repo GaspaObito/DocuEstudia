@@ -9,18 +9,18 @@ require_once(ROOT_PATH . "/models/Group_GradeModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $IdGrupo > 0;
-
-$IdGrado = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $IdGrado > 0;
-
-/* Variables del formulario */
 $IdGrupo = ''; $IdGrado = ''; $IdProf = ''; $NomGrupo = ''; $NomGrado = ''; $IdMateria = '';
 
 /* Variables de vista */
 $consultar = [];
 $totalFilas = 0;
+
+/* Variables del formulario */
+$IdGrupo = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$isUpdate = $IdGrupo > 0;
+$IdGrado = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$isUpdate = $IdGrado > 0;
+
 
 /* ---------- 3. HELPERS ---------- */
 function goToGroupList()
@@ -49,7 +49,6 @@ if (isset($_POST["Enviar2"])) {
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
 
@@ -134,12 +133,12 @@ if ($method === 'POST') {
 } 
 
 /* ---------- 6. GET ACTIONS ---------- */
-elseif ($method === 'GET' && $_GET['action'] === 'listarGRPS') {
+elseif ($method === 'GET' && $action === 'listarGRPS') {
   $resultados = searchGroup($conexion);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && ($action = $_GET['action'] ?? '') === 'listarGRDS') {//CONSULTA TODO GRADE
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'listarGRDS') {//CONSULTA TODO GRADE
   $resultados = searchGrades($conexion);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];

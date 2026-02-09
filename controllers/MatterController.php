@@ -9,12 +9,12 @@ require_once(ROOT_PATH . "/models/MatterModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
+$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';$IdGrupo = '';
+
+/* Variables del formulario */
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 $isUpdate = $IdMateria > 0;
 $Id_Profe=$_SESSION['Id_Profe'];
-
-/* Variables del formulario */
-$IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = '';$IdGrupo = '';
 
 /* ---------- 3. HELPERS ---------- */
 function goToMatterList()
@@ -38,7 +38,6 @@ $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
 
@@ -108,12 +107,12 @@ if ($method === 'POST') {
 } 
 
 /* ---------- 6. GET ACTIONS ---------- */
-elseif ($method === 'GET' && ($action = $_GET['action'] ?? '') === 'listarMATTER') {//CONSULTA TODO GROUP
+elseif ($method === 'GET' && $action === 'listarMATTER') {//CONSULTA TODO GROUP
   $resultados = searchMatter($conexion, $IdGrado);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 
-}  elseif ($action = $_GET['action'] === 'listarMATTERxTEACHER'){
+}  elseif ($action === 'listarMATTERxTEACHER'){
   $resultados = searchMatter_x_Teacher($conexion, $Id_Profe);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];

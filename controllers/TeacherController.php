@@ -9,15 +9,15 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-$isUpdate = $IdUser > 0;
-
-/* Variables del formulario */
 $Nombre = ''; $Apellido = ''; $TipoDcto = ''; $NumDocumento = ''; $Telefono = ''; $Fecha_Nacimiento = ''; $Direccion = ''; $AsigAcadeProf = ''; $IdMateria = ''; $AreaProf = ''; $Email = ''; $Password = ''; $IdRol = 2; $IdProf = 2; $ultimoId_Imagen = ''; $NomMateria = '';//Profesor
 
 /* Variables de vista */
 $consultar = [];
 $totalFilas = 0;
+
+/* Variables del formulario */
+$IdUser = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$isUpdate = $IdUser > 0;
 
 /* ---------- 3. HELPERS ---------- */
 function goToTeacherList()
@@ -56,7 +56,6 @@ if (isset($_POST["Enviar2"])) {
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
 
@@ -108,12 +107,12 @@ if ($method === 'POST') {
 } 
 
 /* ---------- 6. GET ACTIONS ---------- */
-elseif ($method === 'GET' && $_GET['action'] === 'listar') {
+elseif ($method === 'GET' && $action === 'listar') {
   $resultados = searchTeacher($conexion);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];
 
-} elseif ($_GET['action'] === 'grupos') {
+} elseif ($action === 'grupos') {
   $resultados = gruposteacher($conexion);
   $consultar = $resultados['consultar'];
   $totalFilas = $resultados['totalFilas'];

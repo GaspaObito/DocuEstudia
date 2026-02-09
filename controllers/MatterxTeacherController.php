@@ -32,7 +32,6 @@ if (isset($_POST["EnviarMatterxTeacher"])) {
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
     
@@ -79,7 +78,7 @@ if ($method === 'POST') {
 } 
 
 /* ---------- 6. GET ACTIONS ---------- */
-elseif ($method === 'GET' && $_GET['action'] === 'listarMATTERxTEACHER') {//CONSULTA TODO
+elseif ($action === 'listarMATTERxTEACHER') {//CONSULTA TODO
   $resultados = searchMatterTeacher($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];

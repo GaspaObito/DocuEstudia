@@ -9,15 +9,14 @@ require_once(ROOT_PATH . "/models/ScoreModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
+$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';$isUpdate = 0;
+
+/* Variables del formulario */
 $IdNota = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
-// SCORE READ ID 
 if (isset($_POST['NumIdScore']) ) {
   $IdNota = isset($_POST['NumIdScore']) ? intval($_POST['NumIdScore']) : 0;
   $isUpdate = $IdNota > 0;
 }
-
-/* Variables del formulario */
-$IdNota = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria = ''; $Observacion = '';$isUpdate = 0;
 
 /* ---------- 3. HELPERS ---------- */
 function goToScoreList()
@@ -44,7 +43,6 @@ if (isset($_POST["EnviarScore"])) {
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
   switch ($action) {
 
@@ -103,7 +101,7 @@ if ($method === 'POST') {
 } 
 
 /* ---------- 6. GET ACTIONS ---------- */
-elseif ($method === 'GET' && $_GET['action'] === 'listar') {
+elseif ($method === 'GET' && $action === 'listar') {
   $resultados = searchScore($conexion);
   // Accede a las variables retornadas desde el array de resultados
   $consultar = $resultados['consultar'];

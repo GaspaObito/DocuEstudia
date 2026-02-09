@@ -8,14 +8,15 @@ require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$idAnot = isset($_POST['NumIdAnnotation']) ? intval($_POST['NumIdAnnotation']) : 0;
-$isUpdate = $idAnot > 0;
-
-/* Variables del formulario */
 $Nombre = ''; $Apellido = ''; $DescFalta = '';
 
 /* Variables de vista */
 $totalFilas = 0;
+
+/* Variables del formulario */
+$idAnot = isset($_POST['NumIdAnnotation']) ? intval($_POST['NumIdAnnotation']) : 0;
+$isUpdate = $idAnot > 0;
+
 
 /* ---------- 3. HELPERS ---------- */
 function goToAnnotationsList()
@@ -36,9 +37,8 @@ if (isset($_POST["SendAnnotation"])) {
 
 /* ---------- 5. POST ACTIONS ---------- */
 if ($method === 'POST') {
-  $action = $_POST['action'];
 
-  switch ($action) {
+switch ($action) {
       
     /* -------- CREATE -------- */
     case 'create':
