@@ -1,21 +1,20 @@
-<!-- ================ CRUD PARA ANNOTATION ================ -->
 <?php
+/* ==========================================
+   MODEL: AnnotationsModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION ==========
-function deleteAnnotation($conexion, $idAnot)
-{
-  $stmt = $conexion->prepare("DELETE FROM anotacion WHERE IdAnot = ?");
-  $stmt->bind_param("i", $idAnot);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION ==========
+
+/* -------- CREATE -------- */
 function createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion)
 {
   $stmt = $conexion->prepare("INSERT INTO anotacion (IdObs, NomProfCread, TipoFalta, DescFalta, FecCreacion) VALUES (?, ?, ?, ?, NOW())");
   $stmt->bind_param("isss", $IdObs, $nameTeacher, $tipoFalta, $descripcion);
   return $stmt->execute();
 }
-// ========== ACTUALIZAR UPDATE FUNCTION ==========
+
+/* -------- UPDATE -------- */
 function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion)
 {
   if ($tipoFalta === "mantener") {
@@ -26,7 +25,16 @@ function updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descrip
   $stmt->bind_param("sssi", $nameTeacher, $tipoFalta, $descripcion, $idAnot);
   return $stmt->execute();
 }
-// ========== LEER READ FUNCTION ==========
+
+/* -------- DELETE -------- */
+function deleteAnnotation($conexion, $idAnot)
+{
+  $stmt = $conexion->prepare("DELETE FROM anotacion WHERE IdAnot = ?");
+  $stmt->bind_param("i", $idAnot);
+  return $stmt->execute();
+}
+
+/* -------- READ ALL BY ID -------- */
 function readAnnotation($conexion, $IdObs)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
@@ -47,7 +55,7 @@ function readAnnotation($conexion, $IdObs)
   // Retorna las variables como un array
   return ['consultar' => $consultar, 'totalFilas' => $totalFilas];
 }
-// ========== BUSCAR SEARCH FUNCTION ==========
+/* -------- READ ONE -------- */
 function searchAnnotation($conexion, $idAnot)
 {
   $stmt = $conexion->prepare("SELECT * FROM anotacion WHERE IdAnot = ?");

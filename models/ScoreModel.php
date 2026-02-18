@@ -1,21 +1,20 @@
-<!-- ================ CRUD PARA Group ================ -->
 <?php
+/* ==========================================
+   MODEL: ScoreModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION GROUP ==========
-function deleteScore($conexion, $IdNota)
-{
-  $stmt = $conexion->prepare("DELETE FROM mt_notas WHERE IdNota = ?");
-  $stmt->bind_param("i", $IdNota);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION GROUP ==========
+
+/* -------- CREATE GROUP -------- */
 function createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)
 {
   $creagrupo = $conexion->prepare("INSERT INTO mt_notas (IdObs,IdMateria,Periodo,Nota,Observacion,FechCreado) VALUES (?, ?, ?, ?, ?, NOW())");
   $creagrupo->bind_param('iisss', $IdObs, $IdMateria, $Periodo, $Nota, $Observacion);
   return $creagrupo->execute();
 }
-// ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
+
+/* -------- UPDATE SCORE -------- */
 function updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)
 {
   if ($Periodo === "mantener") {
@@ -25,7 +24,16 @@ function updateScore($conexion, $IdNota, $Periodo, $Observacion,$Nota)
   $actScore->bind_param('sssi', $Periodo, $Observacion, $Nota, $IdNota);
   return $actScore->execute();
 }
-// ========== LEER READ FUNCTION GROUP ==========
+
+/* -------- DELETE SCORE -------- */
+function deleteScore($conexion, $IdNota)
+{
+  $stmt = $conexion->prepare("DELETE FROM mt_notas WHERE IdNota = ?");
+  $stmt->bind_param("i", $IdNota);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE SCORE -------- */
 function readScore($conexion, $IdNota)
 {
   $stmt = $conexion->prepare("SELECT mn.*,o.IdGrupo,c.NomGrado,u.NumDcto,CONCAT(u.Nombre, ' ', u.Apellido) AS full_name,mm.NomMateria,mn.FechCreado,mn.FechActualizado FROM mt_notas mn
@@ -39,7 +47,7 @@ function readScore($conexion, $IdNota)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION GROUP==========
+/* -------- READ SCORE BY FILTER -------- */
 function searchScore($conexion, $dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos
@@ -91,7 +99,7 @@ function searchScore($conexion, $dni = null)
   return ['consultar' => $consultar, 'totalFilas' => $datos['total']];
 }
 
-// ========== HISTORY FUNCTION ==========
+/* -------- READ ALL SCORE HISTORY -------- */
 function viewHistory($conexion, $IdObs)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores

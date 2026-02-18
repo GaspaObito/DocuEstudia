@@ -1,14 +1,12 @@
-<!-- ================ CRUD PARA Group ================ -->
 <?php
+/* ==========================================
+   MODEL: Group_GradeModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION GROUP ==========
-function deleteGroup($conexion, $IdGrupo)
-{
-  $stmt = $conexion->prepare("DELETE FROM mt_grupos WHERE IdGrupo = ?");
-  $stmt->bind_param("i", $IdGrupo);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION GROUP ==========
+
+/* -------- CREATE GROUP -------- */
 function createGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
 {
   $creagrupo = $conexion->prepare("INSERT INTO mt_grupos (IdGrupo,IdGrado,IdProf,NomGrupo) VALUES (?,?,?,?)");
@@ -16,7 +14,7 @@ function createGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
   return $creagrupo->execute();
 }
 
-// ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
+/* -------- UPDATE GROUP -------- */
 function updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
 {
   if ($IdGrado === "mantener") {
@@ -34,7 +32,16 @@ function updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
   $actgrupo->bind_param('iisi', $IdGrado, $IdProf, $NomGrupo, $IdGrupo);
   return $actgrupo->execute();
 }
-// ========== LEER READ FUNCTION GROUP ==========
+
+/* -------- DELETE GROUP -------- */
+function deleteGroup($conexion, $IdGrupo)
+{
+  $stmt = $conexion->prepare("DELETE FROM mt_grupos WHERE IdGrupo = ?");
+  $stmt->bind_param("i", $IdGrupo);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE GROUP -------- */
 function readGroup($conexion, $IdGrupo)
 {
   $stmt = $conexion->prepare("SELECT mt.IdGrupo,mt.IdGrado,mt.IdProf,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
@@ -49,7 +56,8 @@ function readGroup($conexion, $IdGrupo)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION GROUP==========
+
+/* -------- READ ALL GROUP -------- */
 function searchGroup($conexion)
 {
   $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
@@ -64,14 +72,8 @@ function searchGroup($conexion)
     'totalFilas' => $datos['total']
   ];
 }
-// ========== ELIMINAR DELETE FUNCTION GRADE==========
-function deleteGrade($conexion, $IdGrado)
-{
-  $stmt = $conexion->prepare("DELETE FROM mt_grados WHERE IdGrado = ?");
-  $stmt->bind_param("i", $IdGrado);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION GRADE==========
+
+/* -------- CREATE GRADE -------- */
 function createGrade($conexion, $IdGrado, $NomGrado)
 {
   $creargrado = $conexion->prepare("INSERT INTO mt_grados (IdGrado,NomGrado) VALUES (?,?)");
@@ -79,14 +81,23 @@ function createGrade($conexion, $IdGrado, $NomGrado)
   return $creargrado->execute();
 }
 
-// ========== ACTUALIZAR UPDATE FUNCTION GRADE==========
+/* -------- UPDATE GRADE -------- */
 function updateGrade($conexion, $IdGrado, $NomGrado)
 {
   $actgrado = $conexion->prepare("UPDATE mt_grados SET  NomGrado = ? WHERE IdGrado = ?");
   $actgrado->bind_param('si', $NomGrado, $IdGrado);
   return $actgrado->execute();
 }
-// ========== LEER READ FUNCTION GROUP ==========
+
+/* -------- DELETE GRADE -------- */
+function deleteGrade($conexion, $IdGrado)
+{
+  $stmt = $conexion->prepare("DELETE FROM mt_grados WHERE IdGrado = ?");
+  $stmt->bind_param("i", $IdGrado);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE GRADE -------- */
 function readGrade($conexion, $IdGrado)
 {
   $stmt = $conexion->prepare("SELECT * FROM mt_grados mt WHERE mt.IdGrado = ?");
@@ -99,7 +110,7 @@ function readGrade($conexion, $IdGrado)
     return null;
   }
 }
-// ========== SEARCH FUNCTION GRADE ==========
+/* -------- READ ALL GRADE -------- */
 function searchGrades($conexion)
 {
   $consultaSQL = "SELECT * FROM mt_grados";

@@ -1,21 +1,20 @@
-<!-- ================ CRUD PARA Group ================ -->
 <?php
+/* ==========================================
+   MODEL: MatterModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION GROUP ==========
-function deleteMatter($conexion, $IdMateria)
-{
-  $stmt = $conexion->prepare("DELETE FROM mt_materias WHERE IdMateria = ?");
-  $stmt->bind_param("i", $IdMateria);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION GROUP ==========
+
+/* -------- CREATE MATTER -------- */
 function createMatter($conexion, $NomMateria, $Descripcion)
 {
   $creagrupo = $conexion->prepare("INSERT INTO mt_materias (NomMateria,Descripcion) VALUES (?,?)");
   $creagrupo->bind_param('ss', $NomMateria, $Descripcion);
   return $creagrupo->execute();
 }
-// ========== ACTUALIZAR UPDATE FUNCTION GROUP ==========
+
+/* -------- UPDATE MATTER -------- */
 function updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)
 {
   if ($IdMateria === "mantener") {
@@ -26,7 +25,16 @@ function updateMatter($conexion, $IdMateria, $NomMateria, $Descripcion)
   $actgrupo->bind_param('ssi', $NomMateria, $Descripcion, $IdMateria);
   return $actgrupo->execute();
 }
-// ========== LEER READ FUNCTION GROUP ==========
+
+/* -------- DELETE MATTER -------- */
+function deleteMatter($conexion, $IdMateria)
+{
+  $stmt = $conexion->prepare("DELETE FROM mt_materias WHERE IdMateria = ?");
+  $stmt->bind_param("i", $IdMateria);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE MATTER -------- */
 function readMatter($conexion, $IdMateria)
 {
   $stmt = $conexion->prepare("SELECT * FROM mt_materias WHERE IdMateria = ?");
@@ -39,7 +47,7 @@ function readMatter($conexion, $IdMateria)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION GROUP==========
+/* -------- READ ALL MATTER -------- */
 function searchMatter($conexion, $IdGrado)
 {
   $consultaSQL = "SELECT * FROM mt_materias";
@@ -67,7 +75,7 @@ function searchMatter($conexion, $IdGrado)
     'materiasAsignadas' => $materiasAsignadas
   ];
 }
-// ========== LEER READ FUNCTION MATTER GRADE ==========
+/* -------- READ ONE MATTERxGRADE -------- */
 function readMatterXGrade($conexion, $IdMateria)
 {
   $stmt = $conexion->prepare("SELECT mg.*,mm.NomGrado FROM materias_x_grado mg
@@ -81,7 +89,26 @@ function readMatterXGrade($conexion, $IdMateria)
     return null;
   }
 }
-// ========== LEER READ FUNCTION MATTER GRADE ==========
+
+/* -------- READ ALL MATTERxGRADE FOR TEACHER -------- */
+function searchMatter_x_Teacher($conexion, $Id_Profe)
+{
+  $consultaSQL = "SELECT m.IdMateria, m.NomMateria, g.NomGrado, gr.IdGrupo,dmg.IdGrado FROM profesor_materia_grado dmg JOIN mt_materias m ON m.IdMateria = dmg.IdMateria JOIN mt_grados g ON g.IdGrado = dmg.IdGrado JOIN mt_grupos gr ON gr.IdGrupo = dmg.IdGrupo WHERE dmg.IdUser = $Id_Profe";
+
+  // Consulta para contar el total
+  $consultaCount = "SELECT COUNT(*) AS total FROM profesor_materia_grado dmg  WHERE dmg.IdUser = $Id_Profe";
+
+  $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
+  $resultCount = mysqli_query($conexion, $consultaCount);
+  $datos = mysqli_fetch_assoc($resultCount);
+
+  return [
+    'consultar' => $consultar,
+    'totalFilas' => $datos['total']
+  ];
+}
+
+/* -------- CHECKBOX ALL MATTERxGRADE -------- */
 function AsigMultipleMatter($conexion, $materias, $IdGrado)
 {
   try {
@@ -107,21 +134,4 @@ function AsigMultipleMatter($conexion, $materias, $IdGrado)
   } catch (Exception $e) {
     return false;
   }
-}
-// ========== LEER READ FUNCTION MATTER GRADE ==========
-function searchMatter_x_Teacher($conexion, $Id_Profe)
-{
-  $consultaSQL = "SELECT m.IdMateria, m.NomMateria, g.NomGrado, gr.IdGrupo,dmg.IdGrado FROM profesor_materia_grado dmg JOIN mt_materias m ON m.IdMateria = dmg.IdMateria JOIN mt_grados g ON g.IdGrado = dmg.IdGrado JOIN mt_grupos gr ON gr.IdGrupo = dmg.IdGrupo WHERE dmg.IdUser = $Id_Profe";
-
-  // Consulta para contar el total
-  $consultaCount = "SELECT COUNT(*) AS total FROM profesor_materia_grado dmg  WHERE dmg.IdUser = $Id_Profe";
-
-  $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
-  $resultCount = mysqli_query($conexion, $consultaCount);
-  $datos = mysqli_fetch_assoc($resultCount);
-
-  return [
-    'consultar' => $consultar,
-    'totalFilas' => $datos['total']
-  ];
 }

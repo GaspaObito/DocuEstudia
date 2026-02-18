@@ -1,17 +1,12 @@
-<!-- ================ CRUD PARA STUDENT ================ -->
 <?php
+/* ==========================================
+   MODEL: StudentModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION ==========
-function deleteStudent($conexion, $IdObs)
-{
-  $stmt = $conexion->prepare("DELETE FROM observador WHERE IdObs = ?");
-  $stmt->bind_param("i", $IdObs);
-  $stmt->execute();
-  // ---StartCurso
-  $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
-  return $sql_curso->execute();
-}
-// ========== CREAR CREATE FUNCTION ==========
+
+/* -------- CREATE STUDENT -------- */
 function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)
 {
   // ---StartGuardian
@@ -64,7 +59,8 @@ function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $Tele
   $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
   return $sql_curso->execute();
 }
-// ========== ACTUALIZAR UPDATE FUNCTION ==========
+
+/* -------- UPDATE STUDENT -------- */
 function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $IdMed, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)
 {
   // ---StartGuardian
@@ -162,7 +158,19 @@ function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $Ocupac
   $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
   return $sql_curso->execute();
 }
-// ========== SHOW DATA FOR STUDENT UPDATE READ FUNCTION ==========
+
+/* -------- DELETE STUDENT -------- */
+function deleteStudent($conexion, $IdObs)
+{
+  $stmt = $conexion->prepare("DELETE FROM observador WHERE IdObs = ?");
+  $stmt->bind_param("i", $IdObs);
+  $stmt->execute();
+  // ---StartCurso
+  $sql_curso = $conexion->prepare("UPDATE mt_grados c SET NumAlumnos = (SELECT COUNT(*) FROM observador o WHERE o.IdGrado = c.IdGrado)");
+  return $sql_curso->execute();
+}
+
+/* -------- READ ONE STUDENT -------- */
 function readStudent($conexion, $IdObs)
 {
   $stmt = $conexion->prepare("SELECT *,t.GrupoSanguineo,c.NomGrado,p.NomImg FROM observador o 
@@ -178,7 +186,8 @@ function readStudent($conexion, $IdObs)
     return null;
   }
 }
-// ========== SHOW DATA ALL STUDENTS FUNCTION ==========
+
+/* -------- READ STUDENT BY FILTER -------- */
 function searchStudent($conexion, $dni = null)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
@@ -226,6 +235,7 @@ function searchStudent($conexion, $dni = null)
   return ['sql_observador' => $sql_observador,  'totalFilas' => $datos['total']];
 }
 
+/* -------- READ ALL STUDENT BY GRADE -------- */
 function getStudentsByGradeAndGroup($conexion, $IdGrado)
 {
     // Consulta para contar el total

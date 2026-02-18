@@ -1,14 +1,12 @@
-<!-- ================ CRUD PARA TEACHER ================ -->
 <?php
+/* ==========================================
+   MODEL: TeacherModel.php
+========================================== */
+
+/* ---------- 1. REQUIRES ---------- */
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
-// ========== ELIMINAR DELETE FUNCTION ==========
-function deleteTeacher($conexion, $IdUser)
-{
-  $stmt = $conexion->prepare("DELETE FROM profesor WHERE IdProf = ?");
-  $stmt->bind_param("i", $IdUser);
-  return $stmt->execute();
-}
-// ========== CREAR CREATE FUNCTION ==========
+
+/* -------- CREATE TEACHER -------- */
 function createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $AsigAcadeProf, $IdMateria, $AreaProf, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal, $IdGrupo)
 {
   // Obtener la extensión del archivo original
@@ -52,7 +50,8 @@ function createTeacher($conexion, $ultimoId_Imagen, $Nombre, $Apellido, $TipoDct
   }
   mysqli_close($conexion);
 }
-// ========== ACTUALIZAR UPDATE FUNCTION ==========
+
+/* -------- UPDATE TEACHER -------- */
 function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido, $TipoDcto, $NumDocumento, $Telefono, $Fecha_Nacimiento, $Direccion, $AsigAcadeProf, $IdMateria, $AreaProf, $Email, $Password, $NombreImagenOriginal, $Imagen_temporal, $IdGrupo, $IdProf)
 {
   // Validamos si recibio o no imagen
@@ -138,7 +137,16 @@ function updateTeacher($conexion, $IdUser, $ultimoId_Imagen, $Nombre, $Apellido,
     $actgrupos->close();
   }
 }
-// ========== LEER READ FUNCTION ==========
+
+/* -------- DELETE TEACHER -------- */
+function deleteTeacher($conexion, $IdUser)
+{
+  $stmt = $conexion->prepare("DELETE FROM profesor WHERE IdProf = ?");
+  $stmt->bind_param("i", $IdUser);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE TEACHER -------- */
 function readTeacher($conexion, $IdUser)
 {
   $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password,m.IdGrado,m.NomGrado,g.IdGrupo,mm.NomMateria FROM profesor p 
@@ -156,7 +164,8 @@ function readTeacher($conexion, $IdUser)
     return null;
   }
 }
-// ========== BUSCAR SEARCH FUNCTION ==========
+
+/* -------- READ TEACHER BY FILTER -------- */
 function searchTeacher($conexion)
 {
   $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto ,mm.NomMateria
@@ -207,7 +216,8 @@ function searchTeacher($conexion)
     'totalFilas' => $datos['total']
   ];
 }
-// ========== GROUP TEACHER FUNCTION ==========
+
+/* -------- READ TEACHER GROUP -------- */
 function gruposTeacher($conexion)
 {
   $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
@@ -238,8 +248,60 @@ function gruposTeacher($conexion)
     'totalFilas' => $datos['total']
   ];
 }
+/* -------- CREATE MASTER MATTERXTEACHER -------- */
+function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo)
+{
+  $creaMateriaProf = $conexion->prepare("INSERT INTO profesor_materia_grado (IdUser,IdMateria,IdGrado,IdGrupo) VALUES (?, ?, ?, ?)");
+  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo);
+  return $creaMateriaProf->execute();
+}
 
-// ========== SEARCH MATTER X TEACHER FUNCTION ==========
+/* -------- UPDATE MASTER MATTERXTEACHER -------- */
+function updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
+{
+  if ($IdUser === "mantener") {
+    $IdUser = $_POST["IdUser_Actual"];
+  }
+  if ($IdMateria === "mantener") {
+    $IdMateria = $_POST["IdMateria_Actual"];
+  }
+  if ($IdGrado === "mantener") {
+    $IdGrado = $_POST["IdGrado_Actual"];
+  }
+  if ($IdGrupo === "mantener") {
+    $IdGrupo = $_POST["IdGrupo_Actual"];
+  }
+  $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
+  $creaMateriaProf->bind_param('iiiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
+  return $creaMateriaProf->execute();
+}
+
+/* -------- DELETE MASTER MATTERXTEACHER -------- */
+function deleteMatterxTeacher($conexion, $IdMateriasProf)
+{
+  $stmt = $conexion->prepare("DELETE FROM profesor_materia_grado WHERE IdMateriasProf = ?");
+  $stmt->bind_param("i", $IdMateriasProf);
+  return $stmt->execute();
+}
+
+/* -------- READ ONE MASTER MATTERXTEACHER -------- */
+function readMatterxTeacher($conexion, $IdMateriasProf)
+{
+  $stmt = $conexion->prepare("SELECT mp.*,mm.NomMateria,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor_materia_grado mp INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
+  LEFT JOIN mt_grados mg ON mg.IdGrado = mp.IdGrado
+  LEFT JOIN usuarios us ON us.IdUser = mp.IdUser
+  WHERE IdMateriasProf = ?");
+  $stmt->bind_param('i', $IdMateriasProf);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  if ($row = $result->fetch_assoc()) {
+    return $row;
+  } else {
+    return null;
+  }
+}
+
+/* -------- READ MATTERXTEACHER BY FILTER -------- */
 function searchMatterTeacher($conexion)
 {
   $consultaSQL = "SELECT  p.IdMateriasProf,p.IdUser, u.Nombre, u.Apellido, u.NumDcto, mg.NomGrado, p.IdGrupo, mm.NomMateria FROM profesor_materia_grado p
@@ -287,53 +349,4 @@ function searchMatterTeacher($conexion)
     'consultar' => $consultar,
     'totalFilas' => $datos['total']
   ];
-}
-
-// CREA MAESTRO ASIGNACION DE MATERIAS -----------------------
-function deleteMatterxTeacher($conexion, $IdMateriasProf)
-{
-  $stmt = $conexion->prepare("DELETE FROM profesor_materia_grado WHERE IdMateriasProf = ?");
-  $stmt->bind_param("i", $IdMateriasProf);
-  return $stmt->execute();
-}
-function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo)
-{
-  $creaMateriaProf = $conexion->prepare("INSERT INTO profesor_materia_grado (IdUser,IdMateria,IdGrado,IdGrupo) VALUES (?, ?, ?, ?)");
-  $creaMateriaProf->bind_param('iiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo);
-  return $creaMateriaProf->execute();
-}
-function readMatterxTeacher($conexion, $IdMateriasProf)
-{
-  $stmt = $conexion->prepare("SELECT mp.*,mm.NomMateria,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor_materia_grado mp INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
-  LEFT JOIN mt_grados mg ON mg.IdGrado = mp.IdGrado
-  LEFT JOIN usuarios us ON us.IdUser = mp.IdUser
-  WHERE IdMateriasProf = ?");
-  $stmt->bind_param('i', $IdMateriasProf);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  if ($row = $result->fetch_assoc()) {
-    return $row;
-  } else {
-    return null;
-  }
-
-}
-function updateMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf)
-{
-  if ($IdUser === "mantener") {
-    $IdUser = $_POST["IdUser_Actual"];
-  }
-  if ($IdMateria === "mantener") {
-    $IdMateria = $_POST["IdMateria_Actual"];
-  }
-  if ($IdGrado === "mantener") {
-    $IdGrado = $_POST["IdGrado_Actual"];
-  }
-  if ($IdGrupo === "mantener") {
-    $IdGrupo = $_POST["IdGrupo_Actual"];
-  }
-  $creaMateriaProf = $conexion->prepare("UPDATE profesor_materia_grado SET IdUser= ?, IdMateria= ?, IdGrado= ?, IdGrupo= ? WHERE IdMateriasProf = ?");
-  $creaMateriaProf->bind_param('iiiii', $IdUser, $IdMateria, $IdGrado, $IdGrupo,$IdMateriasProf);
-  return $creaMateriaProf->execute();
-  
 }
