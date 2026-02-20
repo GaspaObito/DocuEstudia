@@ -2,24 +2,33 @@
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 require_once(ROOT_PATH . "/config/ProtectPages.php");
+require_once(ROOT_PATH . "/controllers/ScoreController.php");
 ?>
 <main class="ContainerGeneral">
    <h1 id="TitleStart">DASHBOARD <i class="fa-solid fa-chart-line"></i></h1>
  <div id="chart"></div>
+ $data = [];
+
+while($row = mysqli_fetch_assoc($resultado)){
+    $data[] = $row;
+}
+
+echo json_encode($data);
+
 <!-- 1. Línea — (Ventas y Compras) -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 var options = {
     series: [{
         name: 'Ventas',
-        data: [10, 40, 28, 51, 42, 109, 100]
+        data: [10, 40, 28, 51, 42, 109, 100,22]
     }],
     chart: {
         height: 350,
         type: 'line'
     },
     xaxis: {
-        categories: ['Ene','Feb','Mar','Abr','May','Jun','Jul']
+        categories: ['Ene','Feb','Mar','Abr','May','Jun','Jul','{OREUBAJul']
     }
 };
 
