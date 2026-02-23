@@ -29,10 +29,10 @@
   <header>
     <nav class="navbar">
       <div class="LogoHeader">
-        <a href="index.php">
+        <a href="<?php echo BASE_URL; ?>/index.php">
           <img src="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" alt="" width="60px" height="60px">
         </a>
-        <h2>DocuEstudia </h2>
+        <h2> DocuEstudia</h2>
       </div>
       <div class="navbar-align">
         <button class="navbar-toggler" onclick="toggleMenu()">

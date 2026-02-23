@@ -15,9 +15,13 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: 0.3s ease;
   color: var(--blanco);
 }
+button:hover, .boton:hover{
+  transition: 0.3s ease;
+  transform: translateY(-3px);
+  }
 /* Button Logout */
 .botonAtras {
   background: var(--Color_Button);
@@ -115,6 +119,11 @@ input,textarea,select.Input_Text {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-bottom: 3rem;
+}
+.list_Reports a{
+  margin: 0 4rem 0 4rem;
+  text-decoration: none;
+  text-align: center;
 }
 /*Imagen Modificar*/
 .imagenChange {
