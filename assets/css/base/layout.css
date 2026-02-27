@@ -48,7 +48,7 @@ fieldset {
    NAVBAR / HEADER GLOBAL
 ========================================= */
 .navbar {
-  background: var( --bg_linear);
+  background: var(--bg_linear);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 1rem;
@@ -91,7 +91,7 @@ fieldset {
    FOOTER GLOBAL
 ========================================= */
 .navbar-footer {
-  background: var( --bg_linear);
+  background: var(--bg_linear);
   padding: 1rem;
 }
 .navbar-footer p a {

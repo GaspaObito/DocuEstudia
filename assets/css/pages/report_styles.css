@@ -1,0 +1,71 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  margin: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+/* Encabezado institucional */
+.report-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.report-header h1 {
+  font-size: 20px;
+  margin: 0;
+}
+.report-header p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+
+/* Información del estudiante */
+.student-info {
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+.student-info table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.student-info td {
+  padding: 4px 8px;
+}
+
+/* Tabla de notas */
+.Custom_Table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+.Custom_Table th {
+  background: #4CAF50;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 6px;
+  border: 1px solid #ddd;
+}
+.Custom_Table td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+.Custom_Table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Valoración final */
+.valoracion {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: right;
+}
