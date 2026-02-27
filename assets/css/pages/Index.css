@@ -23,8 +23,6 @@
 
 /* Responsivo para móviles */
 @media (max-width: 768px) {
-  /* Si BlockText se usa SOLO en el Home, déjalo aquí.
-     Si es global, esta sección debería moverse a layout.css */
   .BlockText {
     display: block;
     position: relative;
@@ -34,7 +32,6 @@
     border-radius: 30px;
   }
 }
-
 
 /* Contenido de Ficha: Contorno,Texto,Imagen */
 .BlockText {
@@ -55,8 +52,8 @@
 .Image-Style {
   object-position: 50%;
   position:relative;
-  width: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
-  height: 500px; /* Cambia el tamaño de la imagen según tus necesidades */
+  width: 500px;
+  height: 500px;
   object-fit:cover;
   clip-path: circle(100% at 100% 100%); /* Aplica un recorte circular hasta la mitad */
 }

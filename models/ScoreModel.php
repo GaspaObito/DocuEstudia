@@ -89,8 +89,8 @@ function searchScore($conexion, $dni = null)
   }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total
-                  FROM mt_notas mn LEFT JOIN mt_materias mm ON mm.IdMateria = mn.IdMateria LEFT JOIN observador o ON o.IdObs = mn.IdObs LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser
-                  $whereSQL";
+  FROM mt_notas mn LEFT JOIN mt_materias mm ON mm.IdMateria = mn.IdMateria LEFT JOIN observador o ON o.IdObs = mn.IdObs LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos g ON g.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser
+  $whereSQL";
   // Realiza la consulta
   $consultar = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);
@@ -119,7 +119,7 @@ function viewHistory($conexion, $IdObs)
 
   // Retorna las variables como un array
     return [
-        'notasEstudiante' => $result,
-        'totalFilas' => $total
+      'notasEstudiante' => $result,
+      'totalFilas' => $total
     ];
 }
