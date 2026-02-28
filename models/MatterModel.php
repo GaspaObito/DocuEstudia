@@ -119,9 +119,7 @@ function AsigMultipleMatter($conexion, $materias, $IdGrado)
     if (!$stmt->execute()) return false;
 
     // Insertar nuevas materias
-    $stmt = $conexion->prepare(
-      "INSERT INTO materias_x_grado (IdGrado, IdMateria) VALUES (?, ?)"
-    );
+    $stmt = $conexion->prepare("INSERT INTO materias_x_grado (IdGrado, IdMateria) VALUES (?, ?)");
     if (!$stmt) return false;
 
     foreach ($materias as $materia) {

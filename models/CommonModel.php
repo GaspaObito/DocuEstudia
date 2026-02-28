@@ -15,7 +15,7 @@ $mt_grupos = "SELECT * FROM mt_grupos";
 $mt_grupos = mysqli_query($conexion, $mt_grupos) or die(mysqli_error($conexion));
 
 /* -------- TEACHER -------- */
-$mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  ";
+$mt_profesores = "SELECT *,CONCAT(us.Nombre, ' ', us.Apellido) AS NombreCompleto FROM profesor pr LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
 $mt_profesores = mysqli_query($conexion, $mt_profesores) or die(mysqli_error($conexion));
 
 /* -------- MATTERS -------- */

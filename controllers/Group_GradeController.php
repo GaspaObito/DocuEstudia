@@ -21,7 +21,6 @@ $isUpdate = $IdGrupo > 0;
 $IdGrado = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $isUpdate = $IdGrado > 0;
 
-
 /* ---------- 3. HELPERS ---------- */
 function goToGroupList()
 {

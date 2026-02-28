@@ -225,8 +225,8 @@ function searchStudent($conexion, $dni = null)
   }
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total
-                  FROM observador o LEFT JOIN usuarios u ON u.IdUser = o.IdUser  LEFT JOIN mt_grupos c ON o.IdGrupo = c.IdGrupo LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
-                  $whereSQL";
+  FROM observador o LEFT JOIN usuarios u ON u.IdUser = o.IdUser  LEFT JOIN mt_grupos c ON o.IdGrupo = c.IdGrupo LEFT JOIN mt_grados g ON g.IdGrado = c.IdGrado
+  $whereSQL";
   // Realiza la consulta
   $sql_observador = mysqli_query($conexion, $consultaSQL) or die("ERROR AL TRAER LOS DATOS");
   $resultCount = mysqli_query($conexion, $consultaCount);
@@ -255,7 +255,7 @@ function getStudentsByGradeAndGroup($conexion, $IdGrado)
     $total = $stmtCount->get_result()->fetch_assoc()['total'];
 
     return [
-        'estudiantes' => $result,
-        'totalFilas' => $total
+      'estudiantes' => $result,
+      'totalFilas' => $total
     ];
 }

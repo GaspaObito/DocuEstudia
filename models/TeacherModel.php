@@ -150,11 +150,11 @@ function deleteTeacher($conexion, $IdUser)
 function readTeacher($conexion, $IdUser)
 {
   $stmt = $conexion->prepare("SELECT p.*,i.IdImg,i.NomImg,u.Nombre,u.Apellido,u.TipoDcto,u.NumDcto,u.Telefono,u.FechNacimiento,u.Direccion,u.Email,u.Password,m.IdGrado,m.NomGrado,g.IdGrupo,mm.NomMateria FROM profesor p 
-    LEFT JOIN usuarios u ON u.IdUser = p.IdUser
-    LEFT JOIN mt_grupos g ON g.IdProf = p.IdProf
-    LEFT JOIN mt_grados m ON m.IdGrado = g.IdGrado
-    LEFT JOIN imagenes i ON i.IdImg = u.IdImg  
-    LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria WHERE p.IdProf = ?");
+  LEFT JOIN usuarios u ON u.IdUser = p.IdUser
+  LEFT JOIN mt_grupos g ON g.IdProf = p.IdProf
+  LEFT JOIN mt_grados m ON m.IdGrado = g.IdGrado
+  LEFT JOIN imagenes i ON i.IdImg = u.IdImg  
+  LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria WHERE p.IdProf = ?");
   $stmt->bind_param('i', $IdUser);
   $stmt->execute();
   $result = $stmt->get_result();
@@ -169,9 +169,9 @@ function readTeacher($conexion, $IdUser)
 function searchTeacher($conexion)
 {
   $consultaSQL = "SELECT u.IdRol,u.Nombre, u.Apellido,p.*, u.NumDcto ,mm.NomMateria
-                    FROM profesor p
-                    LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
-                    LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria";
+  FROM profesor p
+  LEFT JOIN usuarios u ON u.IdUser = p.IdUser 
+  LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria";
 
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
@@ -221,7 +221,7 @@ function searchTeacher($conexion)
 function gruposTeacher($conexion)
 {
   $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
-                    LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
+  LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
   // Filtros dinámicos
@@ -248,6 +248,7 @@ function gruposTeacher($conexion)
     'totalFilas' => $datos['total']
   ];
 }
+
 /* -------- CREATE MASTER MATTERXTEACHER -------- */
 function createMatterxTeacher($conexion, $IdUser, $IdMateria, $IdGrado, $IdGrupo)
 {
