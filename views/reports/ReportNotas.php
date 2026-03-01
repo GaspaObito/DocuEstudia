@@ -20,26 +20,43 @@ ob_start();
 <head> <?= $styles ?> </head>
 
 <body>
+  <div class="LogoHeader">
+
+  </div>
   <div class="report-header">
-    <h1>Colegio Phidias S.A.S</h1>
-    <p>Valle del Cauca Cali</p>
-    <p>Calle 123 #456 N Tel. 444-44-44</p>
-    <p>Email@colegio.edu.co</p>
+    <img src="<?php echo BASE_URL; ?>/assets/logo/favicon.ico">
+    <div>
+      <h1>DocuEstudia</h1>
+      <p>Soacha,Cundinamarca</p>
+      <p>Calle 123 #456 N Tel. 444-44-44</p>
+      <p>Email@colegio.edu.co</p>
+    </div>
+    <img src="<?php echo BASE_URL; ?>/assets/images/phototeacher/Profesor_411121141.jpg">
   </div>
   <div class="student-info">
-            <table>
-              <tr><td><strong>Nombre:</strong> CORREA OCAMPO GUADALUPE</td><td><strong>Fecha:</strong> 15/08/2023</td></tr>
-              <tr><td><strong>Año:</strong> 2023</td><td><strong>Grado:</strong> 5° 5°B</td></tr>
-              <tr><td><strong>Periodo:</strong> 2</td></tr>
-            </table>
-          </div>
+    <table>
+      <tr>
+        <td><strong>Nombre:</strong> CORREA OCAMPO GUADALUPE</td>
+        <td><strong>Fecha:</strong> 15/08/2023</td>
+      </tr>
+      <tr>
+        <td><strong>Año:</strong> 2023</td>
+        <td><strong>Grado:</strong> 5° 5°B</td>
+      </tr>
+      <tr>
+        <td><strong>Periodo:</strong> 2</td>
+      </tr>
+    </table>
+  </div>
   <h2>Reporte Académico</h2>
   <table class="Custom_Table">
     <thead>
       <tr>
-        <th>Materia</th>
+        <th>Aignatura</th>
         <th>Periodo</th>
         <th>Nota</th>
+        <th>Acumulado</th>
+        <th>Valoracion</th>
       </tr>
     </thead>
     <tbody>
@@ -47,7 +64,27 @@ ob_start();
         <tr>
           <td><?= $row['IdMateria'] ?></td>
           <td><?= $row['Periodo'] ?></td>
-          <td><?= $row['Nota'] ?></td>
+          <?php
+          $nota = $row['Nota'];
+          $valoracion = '';
+
+          if ($nota >= 4.7 && $nota <= 5.0) {
+            $valoracion = 'Superior';
+          } elseif ($nota >= 4.0 && $nota <= 4.6) {
+            $valoracion = 'Alto';
+          } elseif ($nota >= 3.0 && $nota <= 3.9) {
+            $valoracion = 'Básico';
+          } elseif ($nota >= 1.0 && $nota <= 2.9) {
+            $valoracion = 'Bajo';
+          } else {
+            $valoracion = 'Sin valoración';
+          }
+          ?>
+
+          <td><?= number_format($nota, 2) ?></td>
+          <td><?= $row['Periodo'] ?></td>
+          <td><?= $valoracion ?></td>
+
         </tr>
       <?php endwhile; ?>
     </tbody>
@@ -57,6 +94,5 @@ ob_start();
 </html>
 <?php
 $html = ob_get_clean();
-
 // Generar PDF
 PdfGenerator::render($html, "reporte_notas.pdf");

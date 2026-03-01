@@ -30,7 +30,7 @@
     <nav class="navbar">
       <div class="LogoHeader">
         <a href="<?php echo BASE_URL; ?>/index.php">
-          <img src="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" alt="" width="60px" height="60px">
+          <img src="<?php echo BASE_URL; ?>/assets/logo/favicon.ico">
         </a>
         <h2> DocuEstudia</h2>
       </div>
