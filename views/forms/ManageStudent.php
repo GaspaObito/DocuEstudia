@@ -282,7 +282,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
           <div>
             <label>Grado Actual *<label>
                 <div class="setting">
-                  <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>" required>
+                  <input type="hidden" name="IdGrado_Actual" value="<?php echo htmlspecialchars($IdGrado) ?>">
                   <select name="FornIdGrado" class="Input_Text">
                     <?php if ($isUpdate) { ?>
                       <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($NomGrado) ?></option>
@@ -301,6 +301,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
           <div>
             <label>Seleccione Grupo al que va a pertenecer *<label>
                 <div class="setting">
+                  <input type="hidden" name="IdGrupo_Actual" value="<?php echo htmlspecialchars($IdGrupo) ?>">
                   <select name="FornIdGrupo" class="Input_Text">
                     <?php if ($isUpdate) { ?>
                       <option value="mantener" selected>Asignado:<?php echo htmlspecialchars($IdGrupo) ?></option>

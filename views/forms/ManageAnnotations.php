@@ -72,7 +72,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
               </div>
               <div class="Add_Anotacion">
                 <label>FECHA DE MODIFICACION</label>
-                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecModif); ?>">
+                <input readonly class="Input_Text" type="text" value="<?php echo htmlspecialchars($FecModif ?? ''); ?>">
               </div>
             <?php endif; ?>
           </fieldset>

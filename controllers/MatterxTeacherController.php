@@ -9,6 +9,7 @@ require_once(ROOT_PATH . "/models/TeacherModel.php");
 require_once(ROOT_PATH . "/models/CommonModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
+$IdUser='';$IdGrado='';$IdMateria='';$IdGrupo='';
 $IdMateriasProf = isset($_POST['MateriasxProf']) ? intval($_POST['MateriasxProf']) : 0;
 $isUpdateMateriasProf = $IdMateriasProf > 0;
 

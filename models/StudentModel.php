@@ -125,10 +125,6 @@ function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $Ocupac
     }
     $stmt->close();
   }
-  // El usuario ha seleccionado la opción "mantener"
-  if ($IdGrado === "mantener") {
-    $IdGrado = $_POST["IdGrado_Actual"];
-  }
   //Revisa si la contraseña cambia oh sigue igual
   $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
   $sentencia->execute();
@@ -136,12 +132,20 @@ function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $Ocupac
   if ($fila = $resultado->fetch_assoc()) {
     if ($Password == $fila['Password']) {
       $hashedPass = $fila['Password'];
-    } else {
-      $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
-    }
+      } else {
+        $hashedPass = password_hash($Password, PASSWORD_DEFAULT);
+        }
   }
   if ($TipoDcto === "mantener") {
     $TipoDcto = $_POST["TipoDcto_Actual"];
+  }
+  // El usuario ha seleccionado la opción "mantener"
+  if ($IdGrado === "mantener") {
+    $IdGrado = $_POST["IdGrado_Actual"];
+  }
+  // El usuario ha seleccionado la opción "mantener"
+  if ($IdGrupo === "mantener") {
+    $IdGrupo = $_POST["IdGrupo_Actual"];
   }
   // ---StartUsuario
   $act_usuario = $conexion->prepare("UPDATE usuarios SET IdRol = ?, IdImg = ?, Nombre = ?, Apellido = ?, TipoDcto = ?, NumDcto = ?, Telefono = ?, FechNacimiento = ?, Direccion = ?, Email = ?, Password = ? WHERE IdUser = ?");
