@@ -8,8 +8,8 @@ require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$Nombre = ''; $Apellido = ''; $DescFalta = '';
-
+$Nombre = ''; $Apellido = ''; $DescFalta = ''; $TipoFalta ='';
+$FecModif='';
 /* Variables de vista */
 $totalFilas = 0;
 

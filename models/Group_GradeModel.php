@@ -44,7 +44,7 @@ function deleteGroup($conexion, $IdGrupo)
 /* -------- READ ONE GROUP -------- */
 function readGroup($conexion, $IdGrupo)
 {
-  $stmt = $conexion->prepare("SELECT mt.IdGrupo,mt.IdGrado,mt.IdProf,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
+  $stmt = $conexion->prepare("SELECT mt.IdGrupo,mt.IdGrado,mt.IdProf,mg.NomGrado,CONCAT(us.Nombre, ' ', us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
   LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf LEFT JOIN usuarios us ON us.IdUser = pr.IdUser  
   WHERE mt.IdGrupo = ?");
   $stmt->bind_param('i', $IdGrupo);
@@ -60,7 +60,7 @@ function readGroup($conexion, $IdGrupo)
 /* -------- READ ALL GROUP -------- */
 function searchGroup($conexion)
 {
-  $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
+  $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
   LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
   // Consulta para contar el total
   $consultaCount = "SELECT COUNT(*) AS total FROM mt_grupos mg";

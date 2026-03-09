@@ -220,7 +220,7 @@ function searchTeacher($conexion)
 /* -------- READ TEACHER GROUP -------- */
 function gruposTeacher($conexion)
 {
-  $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
+  $consultaSQL = "SELECT mt.IdGrupo,mg.NomGrado,CONCAT(us.Nombre, ' ', us.Apellido) AS NombreCompleto,mt.NomGrupo FROM mt_grupos mt
   LEFT JOIN mt_grados mg ON mt.IdGrado = mg.IdGrado LEFT JOIN profesor pr ON pr.IdProf = mt.IdProf LEFT JOIN usuarios us ON us.IdUser = pr.IdUser";
   $conditions = []; // Aquí guardamos los filtros dinámicos
 
@@ -288,7 +288,7 @@ function deleteMatterxTeacher($conexion, $IdMateriasProf)
 /* -------- READ ONE MASTER MATTERXTEACHER -------- */
 function readMatterxTeacher($conexion, $IdMateriasProf)
 {
-  $stmt = $conexion->prepare("SELECT mp.*,mm.NomMateria,mg.NomGrado,CONCAT(us.Nombre, ' ', .us.Apellido) AS NombreCompleto FROM profesor_materia_grado mp INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
+  $stmt = $conexion->prepare("SELECT mp.*,mm.NomMateria,mg.NomGrado,CONCAT(us.Nombre, ' ', us.Apellido) AS NombreCompleto FROM profesor_materia_grado mp INNER JOIN mt_materias mm ON mm.IdMateria=mp.IdMateria
   LEFT JOIN mt_grados mg ON mg.IdGrado = mp.IdGrado
   LEFT JOIN usuarios us ON us.IdUser = mp.IdUser
   WHERE IdMateriasProf = ?");

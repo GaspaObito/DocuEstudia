@@ -1,9 +1,9 @@
 <?php
 session_start();
 // Detectar si estamos en local o en producción
-if ($_SERVER['HTTP_HOST'] == 'localhost') {
+if ($_SERVER['HTTP_HOST'] == 'localhost:8081') {
     // 💻 Configuración LOCAL
-    define("BASE_URL", "http://localhost/DocuEstudia");
+    define("BASE_URL", "http://localhost:8081/DocuEstudia");
     define("ROOT_PATH", $_SERVER['DOCUMENT_ROOT'] . "/DocuEstudia");
 
     define("DB_HOST", "localhost");
