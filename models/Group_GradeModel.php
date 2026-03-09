@@ -22,11 +22,13 @@ function updateGroup($conexion, $IdGrupo, $IdGrado, $IdProf, $NomGrupo)
   } elseif ($IdGrado === "quitar") {
     $IdGrado = null;
   }
-  if ($IdProf === "mantener") {
-    $IdProf = $_POST["IdProf_Actual"];
-  } elseif ($IdProf === "quitar") {
+if ($IdProf === "mantener") {
+    // Si viene vacío, lo dejamos en null
+    $IdProf = !empty($_POST["IdProf_Actual"]) ? $_POST["IdProf_Actual"] : null;
+} elseif ($IdProf === "quitar") {
     $IdProf = null;
-  }
+}
+
   // 1. Actualizar tabla usuarios 
   $actgrupo = $conexion->prepare("UPDATE mt_grupos SET  IdGrado = ?, IdProf = ?, NomGrupo = ? WHERE IdGrupo = ?");
   $actgrupo->bind_param('iisi', $IdGrado, $IdProf, $NomGrupo, $IdGrupo);

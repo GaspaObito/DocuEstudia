@@ -14,7 +14,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
         <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR ';?>NOTA <?php echo $IdNota ?> <i class="fa-solid fa-book"></i>
         </h1>
         <div>
-          <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
+          <a href="<?php echo BASE_URL; ?>/views/matter/MatterxTeacher.php?action=listarMATTERxTEACHER">
             <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
