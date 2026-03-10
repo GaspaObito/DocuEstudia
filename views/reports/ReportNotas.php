@@ -2,9 +2,14 @@
 require_once(__DIR__ . "/../../config/config.php");
 require_once ROOT_PATH . '/models/DatabaseConnection.php';
 require_once ROOT_PATH . '/views/reports/PdfGenerator.php';
+require_once ROOT_PATH . '/models/StudentInfoModel.php';
 
 // Consulta de notas
-$result = $conexion->query("SELECT IdMateria, Periodo, Nota FROM mt_notas ORDER BY Periodo, IdMateria");
+$result = $conexion->query("SELECT a.IdMateria, b.NomMateria, a.Periodo, a.Nota
+FROM mt_notas a INNER JOIN mt_materias b ON a.IdMateria = b.IdMateria
+WHERE a.IdObs='$IdObs'
+GROUP BY a.IdMateria, b.NomMateria, a.Periodo 
+ORDER BY a.Periodo, a.IdMateria;");
 $html = ''; // inicializar antes de concatenar
 
 $css1 = file_get_contents(ROOT_PATH . '/assets/css/base/Normalize.css');
@@ -29,30 +34,32 @@ ob_start();
       <h1>DocuEstudia</h1>
       <p>Soacha,Cundinamarca</p>
       <p>Calle 123 #456 N Tel. 444-44-44</p>
-      <p>Email@colegio.edu.co</p>
+      <p>docuestudia@colegio.edu.co</p>
     </div>
-    <img src="<?php echo BASE_URL; ?>/assets/images/phototeacher/Profesor_411121141.jpg">
+      <?php foreach ($datos as $fila) { ?>
+    <img width="100" src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo $fila['NomImg'] ?>">
   </div>
   <div class="student-info">
     <table>
       <tr>
-        <td><strong>Nombre:</strong> CORREA OCAMPO GUADALUPE</td>
-        <td><strong>Fecha:</strong> 15/08/2023</td>
+        <td><strong>Nombre:</strong> <?php echo $fila['NombreCompleto'] ?></td>
+        <td><strong>Fecha:</strong> <?php echo date("d/m/Y"); ?></td>
       </tr>
       <tr>
-        <td><strong>Año:</strong> 2023</td>
-        <td><strong>Grado:</strong> 5° 5°B</td>
+        <td><strong>Grado:</strong><?php echo $fila['NomGrado'] ?> </td>
+        <td><strong>Grupo:</strong><?php echo $fila['IdGrupo'] ?></td>
       </tr>
       <tr>
         <td><strong>Periodo:</strong> 2</td>
       </tr>
     </table>
+          <?php } ?>
   </div>
   <h2>Reporte Académico</h2>
   <table class="Custom_Table">
     <thead>
       <tr>
-        <th>Aignatura</th>
+        <th>Asignatura</th>
         <th>Periodo</th>
         <th>Nota</th>
         <th>Acumulado</th>
@@ -62,7 +69,7 @@ ob_start();
     <tbody>
       <?php while ($row = $result->fetch_assoc()): ?>
         <tr>
-          <td><?= $row['IdMateria'] ?></td>
+          <td><?= $row['NomMateria'] ?></td>
           <td><?= $row['Periodo'] ?></td>
           <?php
           $nota = $row['Nota'];

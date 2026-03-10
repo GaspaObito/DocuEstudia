@@ -1,39 +1,32 @@
+<?php
+require_once(ROOT_PATH . "/models/StudentInfoModel.php");
+?>
+<script src="<?php echo BASE_URL; ?>/assets/js/miniventana.js"></script>
+
 <div class="usuario__especifico">
-  <?php
-  
-  if (isset($_POST['NumeroModificar'])) {
-    $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
-  }
-  $IdObs = $_SESSION['Id_Session'];
-  
-  /* Utilizar Join para Ingresar el otro Campos de mt_grados */
-  $DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomGrado, i.NomImg
-      FROM observador o 
-      LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
-      LEFT JOIN usuarios u ON u.IdUser = o.IdUser
-      LEFT JOIN imagenes i ON i.IdImg= u.IdImg  WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
-  while ($extraido = mysqli_fetch_array($DatosUsuario)) { ?>
+  <!-- DATOS GENERALES DEL ESTUDIANTE -->
+  <?php foreach ($datos as $fila) { ?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">
-      <img width="100" src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo $extraido['NomImg'] ?>">
+      <img width="100" src="<?php echo BASE_URL; ?>/assets/images/photostudent/<?php echo $fila['NomImg'] ?>">
     </div>
     <h3 id="DataUser">DATOS DEL ESTUDIANTE</h3>
     <div class="usuario__campo">
       <label>Nombre:</label>
       <div>
-        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NombreCompleto'] ?>">
+        <input readonly class="Input_Text" type="text" value="<?php echo $fila['NombreCompleto'] ?>">
       </div>
     </div>
     <div class="usuario__campo">
       <label>DNI:</label>
       <div>
-        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDcto'] ?>">
+        <input readonly class="Input_Text" type="text" value="<?php echo $fila['NumDcto'] ?>">
       </div>
     </div>
     <div class="usuario__campo">
       <label>mt_grados:</label>
       <div>
-        <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NomGrado'] ?>">
+        <input readonly class="Input_Text" type="text" value="<?php echo $fila['NomGrado'] ?>">
       </div>
     </div>
   <?php } ?>
@@ -42,19 +35,12 @@
   </div>
 </div>
 
-<script src="<?php echo BASE_URL; ?>/assets/js/miniventana.js"></script>
-
 <div class="margen__miniventana">
-  <?php
-  /*DATOS MÉDICOS DEL ESTUDIANTE*/
-  $consultar = mysqli_query($conexion, "SELECT CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto, o.*,u.*, c.NomGrado FROM observador o
-  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado
-  LEFT JOIN usuarios u ON u.IdUser = o.IdUser WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
-  ?>
+  <!-- DATOS ESPECIFICOS DEL ESTUDIANTE -->
   <div class="miniVentana" id="miniVentana">
     <div id="formularioContainer">
       <form id="formulario1">
-        <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+        <?php while ($extraido = mysqli_fetch_array($DatosUsuario2)) { ?>
           <div class="nav__miniventana">
             <a></a>
             <h3 id="DataUser">DATOS DEL ESTUDIANTE</h3>
@@ -116,9 +102,9 @@
             </div>
           </div>
         </form>
-      <?php }
-        /*DATOS MÉDICOS DEL ESTUDIANTE*/
-        $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.NomEPSMed, t.GrupoSanguineo FROM observador o LEFT JOIN info_medica i ON o.IdMed = i.IdMed LEFT JOIN mt_tsangre t ON i.IdTipoSanMed = t.IdTipoSanMed WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS"); ?>
+      <?php } ?>
+
+      <!-- DATOS MEDICOS DEL ESTUDIANTE -->
       <form id="formulario2" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -133,7 +119,7 @@
               </div>
             </a>
           </div>
-          <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+          <?php while ($extraido = mysqli_fetch_array($DatosMedicos)) { ?>
           </div>
           <div class="grid__miniventana">
             <div class="formulario__miniventana">
@@ -190,10 +176,9 @@
             </div>
           </div>
         </form>
-      <?php }
-          /*DATOS DEL ACUDIENTE*/
-          $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.NomAcudi
-                   FROM observador o LEFT JOIN datos_familiar i ON o.IdDatAcudi = i.IdDatAcudi WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS"); ?>
+      <?php } ?>
+
+      <!-- DATOS DEL ACUDIENTE -->
       <form id="formulario3" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -208,7 +193,7 @@
               </div>
             </a>
           </div>
-          <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+          <?php while ($extraido = mysqli_fetch_array($DatosAcudiente)) { ?>
           </div>
           <div class="grid__miniventana">
             <div class="formulario__miniventana">
@@ -265,9 +250,9 @@
             </div>
           </div>
         </form>
-      <?php }
-          /*DATOS HISTORIAL_ESCOLAR*/
-          $consultar = mysqli_query($conexion, "SELECT o.*, i.*, i.AnteriorEsc FROM observador o LEFT JOIN historial_escolar i ON o.IdHistEsc = i.IdHistEsc         WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS"); ?>
+      <?php } ?>
+
+      <!-- DATOS HISTORIAL_ESCOLAR -->
       <form id="formulario4" style="display: none;">
         <div class="nav__miniventana">
           <a></a>
@@ -282,7 +267,7 @@
               </div>
             </a>
           </div>
-          <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
+          <?php while ($extraido = mysqli_fetch_array($DatosHistorialEscolar)) { ?>
           </div>
           <div class="grid__miniventana">
             <div class="formulario__miniventana">

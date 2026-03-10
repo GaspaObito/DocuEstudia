@@ -11,7 +11,8 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
     <div class="anotaciones">
       <div class="nav__miniventana">
         <a></a>
-        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ANOTACION <i class="fa-solid fa-book"></i></h1>
+        <h1 id="TitleStart"><?php echo $isUpdate ? 'ACTUALIZAR ' : 'REGISTRAR '; ?>ANOTACION <i
+            class="fa-solid fa-book"></i></h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
             <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
@@ -30,6 +31,9 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
       <?php include(ROOT_PATH . "/templates/alerts.php"); ?>
       <div class="Container1">
         <form action="<?php echo BASE_URL; ?>/controllers/AnnotationsController.php" method="POST" class="formulario">
+          <?php foreach ($datos as $fila) { ?>
+            <input type="hidden" name="EmailUser" value="<?php echo $fila['Email']; ?>">
+          <?php } ?>
           <fieldset>
             <input type="hidden" name="NumIdAnnotation" value="<?php echo $idAnot; ?>">
             <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
@@ -79,8 +83,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
           <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
             <div class="alinear-boton">
               <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
-              <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR
-                ANOTACION</button>
+              <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR ANOTACION</button>
             </div>
           <?php endif; ?>
         </form>

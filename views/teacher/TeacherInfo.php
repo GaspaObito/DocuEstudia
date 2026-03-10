@@ -1,11 +1,9 @@
+<?php
+require_once(ROOT_PATH . "/models/StudentInfoModel.php");
+?>
 <div class="usuario__especifico">
   <?php
-  $Id_Profe = $_SESSION['Id_Profe'];
-  $consultar2 = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.IdMateria,mm.NomMateria
-        FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser 
-        LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria
-        WHERE u.IdUser='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");
-  while ($extraido = mysqli_fetch_array($consultar2)) {
+  while ($extraido = mysqli_fetch_array($DatosTeacher)) {
     $_SESSION['NombreProfe'] = $extraido['NombreCompleto']; ?>
     <h3 id="DataUser">Perfil</h3>
     <div class="imagen">

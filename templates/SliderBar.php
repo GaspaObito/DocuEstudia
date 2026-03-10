@@ -47,8 +47,7 @@
       <ul class="submenu">
         <li><a href="<?php echo BASE_URL; ?>/views/score/MtScore.php?action=listar">Maestro Notas</a></li>
         <li><a href="<?php echo BASE_URL; ?>/views/matter/MatterxTeacher.php?action=listarMATTERxTEACHER">Materias Docente</a></li>
-        <li><a href="<?php echo BASE_URL; ?>/views/reports/ReportNotas.php">Boletines</a></li>
-        <li><a href="<?php echo BASE_URL; ?>/views/reports/PhpMailer.php">Enviar Correo</a></li>
+        <li><a href="<?php echo BASE_URL; ?>/views/reports/ReportStudent.php">Boletines</a></li>
       </ul>
     </li>
     <!--SIDEBAR USUARIOS-->
