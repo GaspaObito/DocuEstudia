@@ -165,12 +165,6 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
             </div>
           </div>
           <div>
-            <label>Restricciones médicas *</label>
-            <div class="setting">
-              <input type="text" name="RestSanitaMed" class="Input_Text" value="<?php echo htmlspecialchars($RestSanitaMed); ?>" placeholder="Parentesco del acudiente" required>
-            </div>
-          </div>
-          <div>
             <label>Discapacidades *</label>
             <div class="setting">
               <input type="text" name="DiscapMed" class="Input_Text" value="<?php echo htmlspecialchars($DiscapMed); ?>" placeholder="Parentesco del acudiente" required>
@@ -332,7 +326,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
           <div>
             <label>Imagen Usuario Nueva *</label>
             <div class="setting">
-              <input type="file" name="Imagen" class="Input_Text" <?php if (!$isUpdate) echo 'required'; ?>>
+              <input type="file" name="Imagen" class="Input_Text">
               <i class="fa-solid fa-upload fa-2x"></i>
             </div>
           </div>

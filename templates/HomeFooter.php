@@ -4,17 +4,17 @@
       <a href="index.php">
         <img src="<?php echo BASE_URL; ?>/assets/logo/favicon.ico" alt="" width="60px" height="60px">
       </a>
-      <h2>Academic management</h2>
+      <h2>DocuEstudia</h2>
     </div>
     <div class="footer-menu">
       <?php
-      if (isset($_SESSION['Id_Estudiante']) || isset($_SESSION['Id_Profe'])) { ?>
+      if (isset( $_SESSION['user_id'])) { ?>
         <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
         <a href="<?php echo BASE_URL; ?>/EscanearCodigos.php">Acerca de</a>
-        <?php if (isset($_SESSION['Id_Profe'])) { ?>
+        <?php if (($_SESSION['rol'] == 2)) { ?>
           <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">Observadores</a>
         <?php } ?>
-        <?php if (isset($_SESSION['IdRol'])) { ?>
+        <?php if ($_SESSION['rol'] == 3) { ?>
           <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a>
         <?php } ?>
         <form action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="POST">

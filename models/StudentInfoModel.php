@@ -9,8 +9,8 @@ require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 if (isset($_POST['NumeroModificar'])) {
    $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
 }
-$IdObs = $_SESSION['Id_Session'];
-$Id_Profe = $_SESSION['Id_Profe'];
+$IdObs = $_SESSION['Id_Session']??0;
+$Id_Profe = $_SESSION['user_id'];
 
 $datos = [];
 /* -------- DatosUsuario -------- */

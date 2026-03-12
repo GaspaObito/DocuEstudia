@@ -7,7 +7,7 @@
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 
 /* -------- CREATE STUDENT -------- */
-function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)
+function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)
 {
   // ---StartGuardian
   $insert_familiar = $conexion->prepare("INSERT INTO datos_familiar (NomAcudi, ApeAcudi, OcupacionAcudi, TelAcudi, EmailAcudi, ParentesAcudi, ViveEstAcudi) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -22,8 +22,8 @@ function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $Tele
   $insert_historial->close();
   $ultimoId_HistorialEscolar = mysqli_insert_id($conexion);  //  Last Id Insert
   // ---Startinfo_medicaEnferMed
-  $insert_infomedica = $conexion->prepare("INSERT INTO info_medica  (NomEPSMed, DiscapMed, EnferMed, RecomMed, AnteceMed, IdTipoSanMed)  VALUES (?, ?, ?, ?, ?, ?, ?)");
-  $insert_infomedica->bind_param("sssssi", $Eps, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre);
+  $insert_infomedica = $conexion->prepare("INSERT INTO info_medica  (NomEPSMed, RestSanitaMed, DiscapMed, EnferMed, RecomMed, AnteceMed, IdTipoSanMed)  VALUES (?, ?, ?, ?, ?, ?, ?)");
+  $insert_infomedica->bind_param("ssssssi", $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre);
   $insert_infomedica->execute();
   $insert_infomedica->close();
   $ultimoId_InfoMedica = mysqli_insert_id($conexion);  // Last Id Insert 
@@ -61,7 +61,7 @@ function createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $Tele
 }
 
 /* -------- UPDATE STUDENT -------- */
-function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $IdMed, $Eps, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)
+function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $IdMed, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)
 {
   // ---StartGuardian
   // El usuario ha seleccionado la opción "mantener"
@@ -92,41 +92,106 @@ function updateStudent($conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $Ocupac
   if ($FornTipoSangre === "mantener") {
     $FornTipoSangre = $_POST["GrupSangui_Actual"];
   }
-  $act_infomedica = $conexion->prepare("UPDATE info_medica SET NomEPSMed = ?, DiscapMed=?, EnferMed = ?, RecomMed = ?, AnteceMed = ?, IdTipoSanMed = ? WHERE IdMed = ?");
-  $act_infomedica->bind_param("ssssssi", $Eps,  $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdMed);
+  $act_infomedica = $conexion->prepare("UPDATE info_medica SET NomEPSMed = ?, RestSanitaMed = ?, DiscapMed=?, EnferMed = ?, RecomMed = ?, AnteceMed = ?, IdTipoSanMed = ? WHERE IdMed = ?");
+  $act_infomedica->bind_param("sssssssi", $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdMed);
   $act_infomedica->execute();
   $act_infomedica->close();
-  // Validamos si recibio o no imagen
-  if (!empty($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
-    // Comprueba si existe la imagen Anterior para Rename, Change Locate
-    $Before_NameImage = $_POST["Nom_Imagen"];
-    $rutaImagenAnterior = ROOT_PATH . "/assets/images/photostudent/" . $Before_NameImage;
-    if (file_exists($rutaImagenAnterior)) {
-      $New_NameImage = "Obsolete_" . $Before_NameImage;
-      rename($rutaImagenAnterior, ROOT_PATH . "/assets/images/photostudent/photostudentobsolete/" . $New_NameImage);
+  // Validamos si se recibió imagen
+if (isset($_FILES['Imagen']) && $_FILES['Imagen']['error'] === UPLOAD_ERR_OK) {
+
+    $maxSize = 8 * 1024 * 1024; // 8MB
+    $rutaDestino = ROOT_PATH . "/assets/images/photostudent/";
+    $rutaObsolete = ROOT_PATH . "/assets/images/photostudent/photostudentobsolete/";
+
+    // Crear carpeta obsolete si no existe
+    if (!file_exists($rutaObsolete)) {
+        mkdir($rutaObsolete, 0777, true);
     }
-    // Obtener la extensión del archivo original
-    $extension = pathinfo($NombreImagenOriginal, PATHINFO_EXTENSION);
-    // Crear el nuevo nombre del archivo usando el número de documento
+
+    // Datos del archivo
+    $NombreImagenOriginal = $_FILES['Imagen']['name'];
+    $Imagen_temporal = $_FILES['Imagen']['tmp_name'];
+    $size = $_FILES['Imagen']['size'];
+
+    // Validar tamaño
+    if ($size > $maxSize) {
+        die("La imagen supera el tamaño permitido (8MB)");
+    }
+
+    // Validar tipo real de imagen
+    $info = getimagesize($Imagen_temporal);
+
+    if ($info === false) {
+        die("El archivo no es una imagen válida");
+    }
+
+    $mime = $info['mime'];
+
+    $permitidos = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp'
+    ];
+
+    if (!array_key_exists($mime, $permitidos)) {
+        die("Formato de imagen no permitido");
+    }
+
+    $extension = $permitidos[$mime];
+
+    // Nuevo nombre
     $NombreImagen = "Estudiante_" . $NumDcto . "." . $extension;
-    // Leer el contenido binario de la imagen
-    $BinarioImagen = file_get_contents($Imagen_temporal);
-    // Mover la imagen a la carpeta de destino
-    move_uploaded_file($Imagen_temporal, ROOT_PATH . "/assets/images/photostudent/$NombreImagen");
-    // Actualizar en la base de datos utilizando una consulta preparada
-    $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";//MAX FILE SIZE 8MG
-    $stmt = $conexion->prepare($sql_TbImagen);
-    $stmt->bind_param('ssi', $NombreImagen, $BinarioImagen, $IdImg);
-    // Ejecutar la consulta preparada y capturar la excepción en caso de error
-    try {
-      $stmt->execute();
-    } catch (Exception $e) {
-      echo "Error al actualizar la imagen: " . $e->getMessage();
+
+    // Ruta completa
+    $rutaFinal = $rutaDestino . $NombreImagen;
+
+    // ===============================
+    // MOVER IMAGEN ANTERIOR A OBSOLETE
+    // ===============================
+
+    $Before_NameImage = $_POST["Nom_Imagen"] ?? "";
+
+    if (!empty($Before_NameImage)) {
+
+        $rutaImagenAnterior = $rutaDestino . $Before_NameImage;
+
+        if (file_exists($rutaImagenAnterior)) {
+
+            $New_NameImage = "Obsolete_" . $Before_NameImage;
+
+            rename($rutaImagenAnterior, $rutaObsolete . $New_NameImage);
+        }
     }
+
+    // ===============================
+    // GUARDAR NUEVA IMAGEN
+    // ===============================
+
+    if (!move_uploaded_file($Imagen_temporal, $rutaFinal)) {
+        die("Error al mover la imagen");
+    }
+
+    // Leer binario
+    $BinarioImagen = file_get_contents($rutaFinal);
+
+    // Actualizar BD
+    $sql_TbImagen = "UPDATE imagenes SET NomImg=?, BinImg=? WHERE IdImg=?";
+
+    $stmt = $conexion->prepare($sql_TbImagen);
+
+    $stmt->bind_param("ssi", $NombreImagen, $BinarioImagen, $IdImg);
+
+    try {
+        $stmt->execute();
+    } catch (Exception $e) {
+        echo "Error al actualizar imagen: " . $e->getMessage();
+    }
+
     $stmt->close();
-  }
+}
   //Revisa si la contraseña cambia oh sigue igual
-  $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser=$IdUser");
+  $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE IdUser = ?");
+  $sentencia->bind_param("i", $IdUser);
   $sentencia->execute();
   $resultado = $sentencia->get_result();
   if ($fila = $resultado->fetch_assoc()) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <?php require_once(__DIR__ . "/../config/config.php"); ?>
   <meta charset="UTF-8">
@@ -22,9 +23,10 @@
   <script src="<?php echo BASE_URL; ?>/assets/js/Export_Xlsx.js" defer></script>
   <!-- CSS de cada Página (se carga dinámicamente en cada vista) -->
   <?php if (defined("PAGE_CSS")): ?>
-      <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/pages/<?php echo PAGE_CSS; ?>.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/pages/<?php echo PAGE_CSS; ?>.css">
   <?php endif; ?>
 </head>
+
 <body>
   <header>
     <nav class="navbar">
@@ -43,19 +45,24 @@
         </button>
       </div>
       <ul class="navbar-menu" id="navbarMenu">
-        <?php
-        if (isset($_SESSION['Id_Estu']) || isset($_SESSION['Id_Profe'])) { ?>
+
+        <?php if (isset($_SESSION['user_id'])) { ?>
+
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
           <a href="#">Acerca de</a>
-          <?php if (isset($_SESSION['Id_Profe'])) { ?>
+
+          <?php if ($_SESSION['rol'] == 2) { ?>
             <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">Observadores</a>
           <?php } ?>
-          <?php if (isset($_SESSION['IdRol']) && ($_SESSION['IdRol'] == 3)) { ?>
+
+          <?php if ($_SESSION['rol'] == 3) { ?>
             <a href="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar">Maestros</a>
           <?php } ?>
-           <!-- <?php if (isset($_SESSION['Id_Estu'])) { ?>
-            <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsHistory.php">Anotaciones</a>
-          <?php } ?> -->
+
+          <?php if ($_SESSION['rol'] == 1) { ?>
+            <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php">Anotaciones</a>
+          <?php } ?>
+
           <form action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="POST">
             <button class="botonAtras" type="submit" name="Cerrar_Login">
               <div class="margen__boton">
@@ -63,15 +70,18 @@
                   <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-Logout"></use>
                 </svg>
               </div>
-              </div>
             </button>
           </form>
+
         <?php } else { ?>
+
           <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
           <a href="<?php echo BASE_URL; ?>/views/login/GuardianLogin.php">Estudiante</a>
           <a href="<?php echo BASE_URL; ?>/views/login/TeacherAdminLogin.php">Profesor</a>
+
         <?php } ?>
+
       </ul>
     </nav>
   </header>
-<?php require_once(__DIR__."/SliderBar.php");?>
+  <?php require_once(__DIR__ . "/SliderBar.php"); ?>

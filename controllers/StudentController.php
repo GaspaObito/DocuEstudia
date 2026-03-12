@@ -15,7 +15,7 @@ $NombreGua = ''; $ApellidoGua = ''; $OcupacionGua = ''; $TelefonoGua = ''; $Emai
 // Historial_escolar
 $ColegioAnterior = '';$UltCursoCursado = ''; $Jornada = ''; $EsRepitente = ''; $CuantasVeces = ''; $PracticaDeporte = ''; $NombreDeporte = '';
 // info_medica
-$Eps = ''; $RestSanitaMed = ''; $DiscapMed = ''; $EnferMed = ''; $Recomendaciones = ''; $Antecendentes = ''; $FornTipoSangre = '';
+$Eps = ''; $DiscapMed = ''; $EnferMed = ''; $Recomendaciones = ''; $Antecendentes = ''; $FornTipoSangre = '';
 // Student
 $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNacimientoStu = ''; $Direccion = ''; $NumDcto = ''; $IdGrado = ''; $Email = ''; $Password = ''; $IdRol = 1;//Estudiante
 
@@ -43,7 +43,7 @@ if (isset($_POST["SendDataStudent"])) {
   $IdHistEsc = $_POST['IdEscolar']; $ColegioAnterior = $_POST["Colegio_Anterior"]; $UltCursoCursado = $_POST["Ult_Curso_Cursado"];
   $Jornada = $_POST["Jornada"]; $EsRepitente = $_POST["Es_Repitente"]; $CuantasVeces = $_POST["CuantasVeces"]; $PracticaDeporte = $_POST["PracticaDeporte"]; $NombreDeporte = $_POST["Nombre_Deporte"];
   // info_medica
-  $IdMed = $_POST['IdMedica']; $Eps = $_POST["Eps"]; $RestSanitaMed = $_POST["RestSanitaMed"]; $DiscapMed = $_POST["DiscapMed"];
+  $IdMed = $_POST['IdMedica']; $Eps = $_POST["Eps"]; $DiscapMed = $_POST["DiscapMed"];
   $EnferMed = $_POST["EnferMed"]; $Recomendaciones = $_POST["Recomendaciones"]; $Antecendentes = $_POST["Antecendentes"]; $FornTipoSangre = $_POST["FornTipoSangre"];
   // Student
   $IdObs = $_POST['IdObservador']; $IdUser = $_POST['IdUser']; $NombreStu = $_POST["Nombre_Est"];
@@ -59,7 +59,7 @@ if ($method === 'POST') {
     
     /* -------- CREATE -------- */
     case 'create':
-      if (createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)) {
+      if (createStudent($conexion, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $Eps, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $NombreImagenOriginal, $Imagen_temporal)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente el Estudiante #' . $ultimoId_Usuario];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #'];
@@ -69,7 +69,7 @@ if ($method === 'POST') {
 
     /* -------- UPDATE -------- */
     case 'update':
-      if (updateStudent( $conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces,$PracticaDeporte,$NombreDeporte,$IdMed,$Eps,$RestSanitaMed, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)) {
+      if (updateStudent( $conexion, $IdDatAcudi, $NombreGua, $ApellidoGua, $OcupacionGua, $TelefonoGua, $EmailGua, $ParentescoGua, $ViveAcudienteGua, $IdHistEsc, $ColegioAnterior, $UltCursoCursado, $Jornada, $EsRepitente, $CuantasVeces, $PracticaDeporte, $NombreDeporte, $IdMed, $Eps, $DiscapMed, $EnferMed, $Recomendaciones, $Antecendentes, $FornTipoSangre, $IdObs, $IdUser, $NombreStu, $ApellidoStu, $TipoDcto, $NumDcto, $IdGrado, $IdGrupo, $TelefonoStu, $FechaNacimientoStu, $Direccion, $Email, $Password, $IdRol, $IdImg, $NombreImagenOriginal, $Imagen_temporal)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente el Estudiante #' . $IdUser];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #'. $IdUser];
@@ -95,7 +95,7 @@ if ($method === 'POST') {
       // Historial_escolar
       $IdHistEsc = $StudentData['IdHistEsc']; $ColegioAnterior = $StudentData["AnteriorEsc"]; $UltCursoCursado = $StudentData["CursoEsc"]; $Jornada = $StudentData["JornadaEsc"]; $EsRepitente = $StudentData["RepitenteEsc"]; $CuantasVeces = $StudentData["CantRepiEsc"]; $PracticaDeporte = $StudentData["PracDeportEsc"]; $NombreDeporte = $StudentData["NomDeportEsc"];
       // info_medica
-      $IdMed = $StudentData['IdMed']; $Eps = $StudentData["NomEPSMed"]; $RestSanitaMed = $StudentData["RestSanitaMed"]; $DiscapMed = $StudentData["DiscapMed"]; $EnferMed = $StudentData["EnferMed"]; $Recomendaciones = $StudentData["RecomMed"]; $Antecendentes = $StudentData["AnteceMed"]; $IdTipoSanMed = $StudentData["IdTipoSanMed"]; $NomTipoSangre = $StudentData["GrupoSanguineo"];
+      $IdMed = $StudentData['IdMed']; $Eps = $StudentData["NomEPSMed"]; $DiscapMed = $StudentData["DiscapMed"]; $EnferMed = $StudentData["EnferMed"]; $Recomendaciones = $StudentData["RecomMed"]; $Antecendentes = $StudentData["AnteceMed"]; $IdTipoSanMed = $StudentData["IdTipoSanMed"]; $NomTipoSangre = $StudentData["GrupoSanguineo"];
       // Student
       $IdObs = $StudentData['IdObs']; $IdUser = $StudentData['IdUser']; $IdImg = $StudentData['IdImg']; $NombreImagen = $StudentData['NomImg']; $NombreStu = $StudentData["Nombre"]; $ApellidoStu = $StudentData["Apellido"]; $TipoDcto = $StudentData["TipoDcto"]; $NumDcto = $StudentData["NumDcto"]; $IdGrado = $StudentData["IdGrado"]; $IdGrupo = $StudentData["IdGrupo"]; $NomGrado = $StudentData["NomGrado"]; $TelefonoStu = $StudentData["Telefono"]; $FechaNacimientoStu = $StudentData["FechNacimiento"]; $Direccion = $StudentData["Direccion"]; $Email = $StudentData["Email"]; $Password = $StudentData["Password"];
       break;

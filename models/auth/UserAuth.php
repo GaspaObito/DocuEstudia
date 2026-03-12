@@ -10,39 +10,36 @@ if (isset($_POST["button_Auth"])) {
   $sentencia->execute();
   $resultado = $sentencia->get_result();
   if ($fila = $resultado->fetch_assoc()) {
-    //------ USUARIO ADMIN ------
-    if ($fila['IdRol'] == '3' && password_verify($Contrasena, $fila['Password'])) {
-      $_SESSION['Id_Profe'] = $fila['IdUser'];
-      $_SESSION['IdRol'] = $fila['IdRol'];
-      echo "<script>alert('USUARIO ADMINISTRADOR CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/views/admin/ManageUsers.php?action=listar'</script>";
-      //------ USUARIO TEACHER ------
-    } elseif ($fila['IdRol'] == '2' && password_verify($Contrasena, $fila['Password'])) {
-      $_SESSION['Id_Profe'] = $fila['IdUser'];
-      $_SESSION['IdRol'] = $fila['IdRol'];
-      echo "<script>alert('USUARIO PROFESOR CORRECTO')</script>";
-      echo "<script>location.href='" . BASE_URL . "/views/teacher/AnnotationsSearch.php'</script>";
-      //------ USUARIO STUDENT ------
-    } elseif ($fila['IdRol'] == '1' && password_verify($Contrasena, $fila['Password'])) {
-      $_SESSION['Id_Estu'] = $fila['IdUser'];
-      // Consultar IdObs en la tabla observador
-      $idUser = $_SESSION['Id_Estu'];
-      $sqlObs = "SELECT IdObs FROM observador WHERE IdUser = '$idUser' LIMIT 1";
-      $resObs = mysqli_query($conexion, $sqlObs);
-      $filaObs = mysqli_fetch_assoc($resObs);
-      $_SESSION['Id_Session'] = $filaObs['IdObs'];
-      $IdObs = $filaObs['IdObs'];
-      // Generar formulario oculto y enviarlo automáticamente
-      echo "<script>alert('USUARIO ESTUDIANTE CORRECTO')</script>";
-      echo "
-    <form id='autoForm' action='" . BASE_URL . "/views/teacher/AnnotationsHistory.php' method='post'>
-        <input type='hidden' name='IdObs' value='{$IdObs}'>
-        <input type='hidden' name='action' value='read'>
-    </form>
-    <script>
-        document.getElementById('autoForm').submit();
-    </script>
-    ";
+    if ($fila && password_verify($Contrasena, $fila['Password'])) {
+
+      $_SESSION['user_id'] = $fila['IdUser'];
+      $_SESSION['rol'] = $fila['IdRol'];
+
+      // ADMIN
+      if ($fila['IdRol'] == 3) {
+        header("Location: " . BASE_URL . "/views/admin/ManageUsers.php?action=listar");
+        exit;
+      }
+
+      // PROFESOR
+      if ($fila['IdRol'] == 2) {
+        header("Location: " . BASE_URL . "/views/teacher/AnnotationsSearch.php");
+        exit;
+      }
+
+      // ESTUDIANTE
+      if ($fila['IdRol'] == 1) {
+        $idUser = $_SESSION['user_id'];
+        $sqlObs = "SELECT IdObs FROM observador WHERE IdUser = ? LIMIT 1";
+        $stmt = $conexion->prepare($sqlObs);
+        $stmt->bind_param("i", $idUser);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $filaObs = $res->fetch_assoc();
+        $_SESSION['IdObs'] = $filaObs['IdObs'];
+        header("Location: " . BASE_URL . "/views/teacher/AnnotationsHistory.php");
+        exit;
+      }
     } else {
       $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'Usuario o contraseña incorrectos'];
       header("Location: " . BASE_URL . "/views/login/TeacherAdminLogin.php");

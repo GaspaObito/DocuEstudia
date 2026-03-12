@@ -14,7 +14,7 @@ $IdMateria = ''; $NomGrado = ''; $Descripcion = ''; $IdGrado = ''; $NomMateria =
 /* Variables del formulario */
 $IdMateria = intval($_POST['NumeroModificar'] ?? $_POST['IdGrado'] ?? 0);
 $isUpdate = $IdMateria > 0;
-$Id_Profe=$_SESSION['Id_Profe'];
+$Id_Profe= $_SESSION['user_id'];
 
 /* ---------- 3. HELPERS ---------- */
 function goToMatterList()
