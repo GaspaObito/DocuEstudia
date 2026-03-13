@@ -57,7 +57,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
             <div>
               <label>NOTA *</label>
               <div class="setting">
-                <input type="number" name="Nota" class="Input_Text" value="<?php echo htmlspecialchars($Nota); ?>"
+                <input type="number" name="Nota" class="Input_Text"   step="0.1" min="0" max="5" value="<?php echo htmlspecialchars($Nota); ?>"
                   placeholder="Digite la Nota" required>
               </div>
             </div>
@@ -84,11 +84,10 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
               </div>
             <?php endif; ?>
           </fieldset>
-          <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+          <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
             <div class="alinear-boton">
               <input type="hidden" name="action" value="<?php echo $isUpdate ? 'updateScore' : 'createScore'; ?>">
-              <button type="submit" name="EnviarScore" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR
-                NOTA</button>
+              <button type="submit" name="EnviarScore" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR NOTA</button>
             </div>
           <?php endif; ?>
         </form>

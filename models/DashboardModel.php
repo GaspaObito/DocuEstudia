@@ -7,7 +7,7 @@
 require_once(ROOT_PATH . "/models/DatabaseConnection.php");
 
 /* -------- 1. Promedio por Materia | type: bar -------- */
-function Promedio_por_Mater2ia($conexion): array
+function Promedio_por_Materia($conexion): array
 {
   $sql = "SELECT m.NomMateria, AVG(n.Nota) as Promedio
     FROM mt_notas n JOIN mt_materias m ON m.IdMateria = n.IdMateria GROUP BY n.IdMateria";

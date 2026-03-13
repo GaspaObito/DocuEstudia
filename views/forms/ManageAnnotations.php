@@ -15,7 +15,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
             class="fa-solid fa-book"></i></h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+            <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
@@ -37,7 +37,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
           <fieldset>
             <input type="hidden" name="NumIdAnnotation" value="<?php echo $idAnot; ?>">
             <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+            <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
             <?php endif; ?>
             <div>
@@ -80,7 +80,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
               </div>
             <?php endif; ?>
           </fieldset>
-          <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+          <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
             <div class="alinear-boton">
               <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
               <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR ANOTACION</button>

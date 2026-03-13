@@ -55,7 +55,7 @@ require_once(ROOT_PATH . "/controllers/DashboardController.php");
   </script>
   
 <!-- 4. Donut — Distribución por categoría -->
-<div id="chart4"></div>
+<div id="chart4 "></div>
 <script>
 var options4 = {
   chart: {
@@ -69,7 +69,7 @@ new ApexCharts(document.querySelector("#chart4"), options4).render();
 </script>
 
 <!-- 5. Mixto (Barras + Línea) — Ideal para ventas vs margen -->
- <div id="chart5"></div>
+ <div id="chart5 "></div>
 <script>
 var options5 = {
   chart: {
@@ -94,7 +94,7 @@ new ApexCharts(document.querySelector("#chart5"), options5).render();
 </script>
 
 <!-- 7. Timeline / Gráfico de rango — Ideal para procesos o tareas -->
- <div id="chart7"></div>
+ <div id="chart7 "></div>
 <script>
 var options7 = {
   chart: {
