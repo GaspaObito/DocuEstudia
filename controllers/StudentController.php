@@ -21,6 +21,7 @@ $NombreStu = ''; $ApellidoStu = ''; $TipoDcto = ''; $TelefonoStu = ''; $FechaNac
 
 /* Variables del formulario */
 $IdObs = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
+$_SESSION['IdMateria'] = isset($_POST['NumeroModificar']) ? intval($_POST['NumeroModificar']) : 0;
 $IdGrado = $IdObs;
 $isUpdate = $IdObs > 0;
 

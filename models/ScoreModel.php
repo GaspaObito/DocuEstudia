@@ -100,20 +100,20 @@ function searchScore($conexion, $dni = null)
 }
 
 /* -------- READ ALL SCORE HISTORY -------- */
-function viewHistory($conexion, $IdObs)
+function viewHistory($conexion, $IdObs,$IdMateria)
 {
   // Inicializa la variable de consulta con la búsqueda de todos los profesores
-  $consultaSQL = "SELECT * from mt_notas WHERE IdObs= ?";
+  $consultaSQL = "SELECT * from mt_notas WHERE IdObs= ? AND IdMateria=?";
   // Consulta para contar el total
-  $sqlCount = "SELECT COUNT(*) AS total FROM mt_notas WHERE IdObs= ?";
+  $sqlCount = "SELECT COUNT(*) AS total FROM mt_notas WHERE IdObs= ? AND IdMateria=?";
 
   $stmt = $conexion->prepare($consultaSQL);
-  $stmt->bind_param("i", $IdObs);
+  $stmt->bind_param("ii", $IdObs,$IdMateria);
   $stmt->execute();
   $result = $stmt->get_result();
 
   $stmtCount = $conexion->prepare($sqlCount);
-  $stmtCount->bind_param("i", $IdObs);
+  $stmtCount->bind_param("ii", $IdObs,$IdMateria);
   $stmtCount->execute();
   $total = $stmtCount->get_result()->fetch_assoc()['total'];
 

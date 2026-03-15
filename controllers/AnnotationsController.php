@@ -42,6 +42,8 @@ switch ($action) {
       
     /* -------- CREATE -------- */
     case 'create':
+      $Nom_Prof = $_POST["Nom_Prof"];
+      $EmailUser = $_POST["EmailUser"];
       if (createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la anotacion #' . $IdObs];
         require_once(__DIR__ . "/../views/reports/PhpMailer.php");
@@ -53,8 +55,6 @@ switch ($action) {
 
     /* -------- UPDATE -------- */
     case 'update':
-      $idAnot = $_POST["NumIdAnnotation"];
-      $EmailUser = $_POST["EmailUser"];
       if (updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion)) {
         $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la anotacion y se Envio el correo#' . $idAnot];
       } else {

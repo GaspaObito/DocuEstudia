@@ -12,9 +12,11 @@ $result = $conexion->query("SELECT a.IdMateria, b.NomMateria,
     AVG(CASE WHEN Periodo = 4 THEN Nota END) AS P4
 FROM mt_notas a
 INNER JOIN mt_materias b ON a.IdMateria = b.IdMateria 
-WHERE a.IdObs = '$IdObs'
-GROUP BY a.IdMateria,b.NomMateria
-ORDER BY b.NomMateria;");
+WHERE a.IdObs = '$IdObs' GROUP BY a.IdMateria,b.NomMateria ORDER BY b.NomMateria;");
+
+$DatosTeacher = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.IdMateria,mm.NomMateria
+   FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria
+   WHERE u.IdUser='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");
 
 $html = ''; // inicializar antes de concatenar
 
@@ -55,13 +57,14 @@ ob_start();
         <tr>
           <td><strong>Nombre:</strong> <?php echo $fila['NombreCompleto'] ?></td>
           <td><strong>Fecha:</strong> <?php echo date("d/m/Y"); ?></td>
+          <td><strong>Nombre del Grupo:</strong> <?php echo $fila['NomGrupo'] ?></td>
         </tr>
         <tr>
-          <td><strong>Grado:</strong><?php echo $fila['NomGrado'] ?> </td>
-          <td><strong>Grupo:</strong><?php echo $fila['IdGrupo'] ?></td>
+          <td><strong>Grado:</strong> <?php echo $fila['NomGrado'] ?> </td>
+          <td><strong>Grupo:</strong> <?php echo $fila['IdGrupo'] ?></td>
         </tr>
         <tr>
-          <td><strong>Periodo:</strong> 2</td>
+         
         </tr>
       </table>
     <?php } ?>

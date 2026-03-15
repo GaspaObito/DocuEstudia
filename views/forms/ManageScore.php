@@ -15,7 +15,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
         </h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/matter/MatterxTeacher.php?action=listarMATTERxTEACHER">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+           <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
@@ -34,7 +34,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
           <fieldset>
             <input type="hidden" name="IdNota_Actual" value="<?php echo htmlspecialchars($IdNota) ?>">
             <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+           <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">
             <?php endif; ?>
             <div>

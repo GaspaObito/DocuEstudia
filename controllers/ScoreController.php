@@ -50,7 +50,7 @@ if ($method === 'POST') {
     /* -------- CREATE -------- */
     case 'createScore':
       if (createScore($conexion, $IdObs, $IdMateria, $Periodo, $Nota, $Observacion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdObs];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la Nota #' . $IdMateria];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
       }
@@ -94,7 +94,8 @@ if ($method === 'POST') {
     /* -------- READ HISTORY -------- */
     case 'viewHistory': //History Annotations
       $IdObs = $_POST["IdObs"];
-      $resultados = viewHistory($conexion, $IdObs);
+      $IdMateria = $_SESSION['IdMateria'];
+      $resultados = viewHistory($conexion, $IdObs,$IdMateria);
       $ScoreHistory = $resultados['notasEstudiante'];
       $totalFilas = $resultados['totalFilas'];
     break;

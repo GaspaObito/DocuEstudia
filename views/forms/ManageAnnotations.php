@@ -35,7 +35,6 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
             <input type="hidden" name="EmailUser" value="<?php echo $fila['Email']; ?>">
           <?php } ?>
           <fieldset>
-            <input type="hidden" name="NumIdAnnotation" value="<?php echo $idAnot; ?>">
             <input type="hidden" name="IdObs" value="<?php echo $IdObs; ?>">
             <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <input type="hidden" name="Nom_Prof" value="<?php echo $_SESSION['NombreProfe'] ?>">

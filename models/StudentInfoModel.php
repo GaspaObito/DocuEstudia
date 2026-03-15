@@ -14,8 +14,8 @@ $Id_Profe = $_SESSION['user_id'];
 
 $datos = [];
 /* -------- DatosUsuario -------- */
-$DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*, c.NomGrado, i.NomImg
-   FROM observador o  LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN usuarios u ON u.IdUser = o.IdUser LEFT JOIN imagenes i ON i.IdImg= u.IdImg  
+$DatosUsuario = mysqli_query($conexion, "SELECT o.*,CONCAT(u.Nombre, ' ', u.Apellido) AS NombreCompleto,u.*,d.NomGrupo, c.NomGrado, i.NomImg
+   FROM observador o LEFT JOIN mt_grados c ON o.IdGrado = c.IdGrado LEFT JOIN mt_grupos d ON d.IdGrupo = o.IdGrupo LEFT JOIN usuarios u ON u.IdUser = o.IdUser LEFT JOIN imagenes i ON i.IdImg= u.IdImg  
    WHERE o.IdObs='$IdObs'") or die("ERROR AL TRAER LOS DATOS");
 
   while ($extraido = mysqli_fetch_array($DatosUsuario)) {

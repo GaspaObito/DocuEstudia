@@ -91,7 +91,7 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
             </div>
         </div>
         <div>
-          <label>Area *</label>
+          <label>Tipo de jornada / carga horaria *</label>
           <div class="setting">
             <input type="text" name="Area" class="Input_Text" value="<?php echo htmlspecialchars($AreaProf); ?>" placeholder="Area del Profesor" maxlength="30">
           </div>

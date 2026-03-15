@@ -22,7 +22,7 @@ try {
     $mail->addAddress($EmailUser); // correo dinámico del estudiante
     $mail->isHTML(true);
     $mail->Subject = 'Notas actualizadas DocuEstudia';
-    $mail->Body = 'Estimado estudiante, la Anotacion: ' . $idAnot . ' ha sido actualizada en el sistema.
+    $mail->Body = 'Estimado estudiante, El profesor: ' . $Nom_Prof . ' ha generado una anotacion en el sistema.
        <hr>
     <p style="font-size:24px;color:#555;">
         Atentamente,<br>

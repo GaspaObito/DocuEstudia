@@ -18,7 +18,6 @@ require_once(ROOT_PATH . "/controllers/MatterController.php");
         <table class="Custom_Table">
           <thead>
             <tr>
-              <th>IdMateria</th>
               <th>NomMateria</th>
               <th>NomGrado</th>
               <th>IdGrupo</th>
@@ -28,14 +27,12 @@ require_once(ROOT_PATH . "/controllers/MatterController.php");
           <tbody>
             <?php while ($extraido = mysqli_fetch_array($consultar)) { ?>
               <tr>
-                <td><?php echo $extraido['IdMateria'] ?></td>
                 <td><?php echo $extraido['NomMateria'] ?></td>
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
                 <td class="td_Actions">
                   <form action="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php" method="POST">
-                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrado'] ?>">
-                    <?php $_SESSION['IdMateria'] = $extraido['IdMateria'] ?>
+                    <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdMateria'] ?>">
                     <input type="hidden" name="action" value="listarNOTAS">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">

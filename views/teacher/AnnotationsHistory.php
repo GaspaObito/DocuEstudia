@@ -14,7 +14,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
         <h1 id="TitleStart">ANOTACIONES <i class="fa-solid fa-book"></i></h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/forms/ManageAnnotations.php">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+           <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
@@ -46,7 +46,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
                 <td><?php echo $extraido['FecCreacion'] ?></td>
                 <td><?php echo $extraido['FecModif'] ?></td>
                 <td class="td_Actions">
-                  <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+                 <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
                     <form action="<?php echo BASE_URL; ?>/controllers/AnnotationsController.php" method="post">
                       <input type="hidden" name="NumIdAnnotation" value="<?php echo $extraido['IdAnot'] ?>">
                       <input type="hidden" name="action" value="delete">

@@ -14,7 +14,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
         <h1 id="TitleStart">HISTORICO DE NOTAS <i class="fa-solid fa-book"></i></h1>
         <div>
           <a href="<?php echo BASE_URL; ?>/views/forms/ManageScore.php">
-            <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+           <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
               <div class="botonAtras">
                 <div class="margen__boton">
                   <svg class="navbar-icon" style="margin:0;">
@@ -48,7 +48,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
                 <td><?php echo $extraido['FechCreado']; ?></td>
                 <td><?php echo $extraido['FechActualizado']; ?></td>
                 <td class="td_Actions">
-                  <?php if (isset($_SESSION['IdRol']) && in_array($_SESSION['IdRol'], [2, 3])): ?>
+                 <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
                     <form action="<?php echo BASE_URL; ?>/views/score/ScoreHistory.php" method="post">
                       <input type="hidden" name="NumIdScore" value="<?php echo $extraido['IdNota'] ?>">
                       <input type="hidden" name="action" value="deleteScore">
