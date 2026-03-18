@@ -70,8 +70,13 @@ function Evolucion_por_Periodo($conexion)
 /* -------- 4. Estudiantes en Riesgo | type: donut chart -------- */
 function Estudiantes_en_Riesgo($conexion)
 {
-  $sql = "SELECT u.Nombre, u.Apellido, n.Nota
-    FROM mt_notas n JOIN observador o ON o.IdObs = n.IdObs JOIN usuarios u ON u.IdUser = o.IdUser WHERE n.Nota < 3";
+  $sql = "SELECT u.IdUser, u.Nombre, u.Apellido, COUNT(*) AS CantidadNotasBajas
+FROM mt_notas n
+JOIN observador o ON o.IdObs = n.IdObs
+JOIN usuarios u ON u.IdUser = o.IdUser
+WHERE n.Nota < 3
+GROUP BY u.IdUser, u.Nombre, u.Apellido
+ORDER BY CantidadNotasBajas DESC;";
   $result = mysqli_query($conexion, $sql);
 
   $categories = [];
@@ -79,7 +84,7 @@ function Estudiantes_en_Riesgo($conexion)
 
   while ($row = mysqli_fetch_assoc($result)) {
     $categories[] = $row['Nombre'];
-    $data[] = round($row['Nota'], 2);
+    $data[] = $row['CantidadNotasBajas'];
   }
   return [
     'categories' => $categories,

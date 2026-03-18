@@ -36,8 +36,8 @@ if (isset($_POST["button_Auth"])) {
         $stmt->execute();
         $res = $stmt->get_result();
         $filaObs = $res->fetch_assoc();
-        $_SESSION['IdObs'] = $filaObs['IdObs'];
-        header("Location: " . BASE_URL . "/views/teacher/AnnotationsHistory.php");
+        $_SESSION['Id_Session'] = $filaObs['IdObs'];
+        header("Location: " . BASE_URL . "/views/teacher/AnnotationsHistory.php?action=listarAnotaciones");
         exit;
       }
     } else {

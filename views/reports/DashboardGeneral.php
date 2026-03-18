@@ -22,104 +22,38 @@ require_once(ROOT_PATH . "/controllers/DashboardController.php");
 
   <div id="chart" class="Dashboard"> </div>
 
-  <script>
-    var options = {
-      chart: {
-        height: 600,
-        type: '<?php echo $chartData["type"]; ?>'
-      },
-
-      series: [{
-        name: 'Promedio',
-        data: <?php echo json_encode($chartData['data']); ?>
-      }],
-
-      title: {
-        text: '<?php echo $chartData["Title"]; ?>',
-        align: 'center',
-        style: {fontSize: '24px', fontWeight: 'bold'}
-      },
-
-      subtitle: {text: '<?php echo $chartData["subTitle"]; ?>', align: 'center'},
-
-      xaxis: {
-        categories: <?php echo json_encode($chartData['categories']); ?>,
-        title: { text: '<?php echo $chartData["xTitle"]; ?>' }
-      },
-      
-      yaxis: {
-        title: { text: '<?php echo $chartData["yTitle"]; ?>' }
-      }
-    };
-    new ApexCharts(document.querySelector("#chart"), options).render();
-  </script>
-  
-<!-- 4. Donut — Distribución por categoría -->
-<div id="chart4 "></div>
 <script>
-var options4 = {
-  chart: {
-    type: "donut",
-    height: 350
-  },
-  series: [44, 33, 54],
-  labels: ["Ropa", "Calzado", "Accesorios"]
-};
-new ApexCharts(document.querySelector("#chart4"), options4).render();
-</script>
-
-<!-- 5. Mixto (Barras + Línea) — Ideal para ventas vs margen -->
- <div id="chart5 "></div>
-<script>
-var options5 = {
-  chart: {
-    type: 'line',
-    height: 350,
-    stacked: false
-  },
-  series: [
-    {
-      name: 'Ventas', type: 'column', data: [40, 60, 50, 90, 100, 80]
+  var options = {
+    chart: {
+      height: 600,
+      type: '<?php echo $chartData["type"]; ?>'
     },
-    {
-      name: 'Margen %', type: 'line', data: [20, 30, 25, 35, 40, 38]
-    }
-  ],
-  xaxis: {
-    categories: ['Ene','Feb','Mar','Abr','May','Jun']
-  }
-};
 
-new ApexCharts(document.querySelector("#chart5"), options5).render();
+    series: <?php echo json_encode($chartData['series']); ?>,
+    labels: <?php echo json_encode($chartData['labels'] ?? []); ?>,
+
+    title: {
+      text: '<?php echo $chartData["Title"]; ?>',
+      align: 'center',
+      style: {fontSize: '24px', fontWeight: 'bold'}
+    },
+
+    subtitle: {
+      text: '<?php echo $chartData["subTitle"]; ?>',
+      align: 'center'
+    },
+
+    <?php if (!empty($chartData['xaxis'])): ?>
+    xaxis: <?php echo json_encode($chartData['xaxis']); ?>,
+    <?php endif; ?>
+
+    <?php if (!empty($chartData['yaxis'])): ?>
+    yaxis: <?php echo json_encode($chartData['yaxis']); ?>,
+    <?php endif; ?>
+  };
+
+  new ApexCharts(document.querySelector("#chart"), options).render();
 </script>
-
-<!-- 7. Timeline / Gráfico de rango — Ideal para procesos o tareas -->
- <div id="chart7 "></div>
-<script>
-var options7 = {
-  chart: {
-    type: 'rangeBar',
-    height: 350
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true
-    }
-  },
-  series: [{
-    data: [
-      { x: 'Fase 1', y: [new Date('2025-01-01').getTime(), new Date('2025-01-10').getTime()] },
-      { x: 'Fase 2', y: [new Date('2025-01-11').getTime(), new Date('2025-01-20').getTime()] },
-      { x: 'Fase 3', y: [new Date('2025-01-11').getTime(), new Date('2025-01-20').getTime()] }
-    ]
-  }],
-  xaxis: {
-    type: 'datetime'
-  }
-};
-new ApexCharts(document.querySelector("#chart7"), options7).render();
-</script>
-
 </main>
 
 <?php include(ROOT_PATH . "/templates/HomeFooter.php"); ?>

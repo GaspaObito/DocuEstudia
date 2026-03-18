@@ -22,6 +22,7 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 }
 
 $_SESSION['alerts'] ??= [];
+$_SESSION['rol'] ??= '';
 function redirectTo($path)
 {
   echo "<script>location.href='" . BASE_URL . "$path'</script>";

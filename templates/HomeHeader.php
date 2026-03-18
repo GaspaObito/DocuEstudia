@@ -55,10 +55,6 @@
             <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">Observadores</a>
           <?php } ?>
 
-          <?php if ($_SESSION['rol'] == 3) { ?>
-            <a href="<?php echo BASE_URL; ?>/views/admin/ManageUsers.php?action=listar">Maestros</a>
-          <?php } ?>
-
           <?php if ($_SESSION['rol'] == 1) { ?>
             <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php">Anotaciones</a>
           <?php } ?>
@@ -84,4 +80,6 @@
       </ul>
     </nav>
   </header>
-  <?php require_once(__DIR__ . "/SliderBar.php"); ?>
+  <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3) { ?>
+    <?php require_once(__DIR__ . "/SliderBar.php"); ?>
+  <?php } ?>

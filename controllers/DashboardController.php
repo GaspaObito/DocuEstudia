@@ -7,22 +7,32 @@
 require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/DashboardModel.php");
 
-/* ---------- 2. ESTADO INICIAL ---------- */
-$Nombre = '';
-$Apellido = '';
-$DescFalta = '';
-
-/* Variables de vista */
-$totalFilas = 0;
-
-/* Variables del formulario */
-$idAnot = isset($_POST['NumFormulario']);
-$isUpdate = $idAnot > 0;
-
 /* ---------- 3. HELPERS ---------- */
 function goToAnnotationsList()
 {
   redirectTo("/views/reports/DashboardGeneral.php");
+}
+function prepararChartData($chartData)
+{
+  if (in_array($chartData['type'], ['pie', 'donut'])) {
+    $chartData['series'] = $chartData['data'];
+    $chartData['labels'] = $chartData['categories'];
+    // No incluir xaxis/yaxis
+    unset($chartData['xTitle'], $chartData['yTitle']);
+    unset($chartData['xaxis'], $chartData['yaxis']);
+  } else {
+    $chartData['series'] = [
+      ['name' => 'Promedio', 'data' => $chartData['data']]
+    ];
+    $chartData['xaxis'] = [
+      'categories' => $chartData['categories'],
+      'title' => ['text' => $chartData['xTitle']]
+    ];
+    $chartData['yaxis'] = [
+      'title' => ['text' => $chartData['yTitle']]
+    ];
+  }
+  return $chartData;
 }
 
 /* ---------- 4. ROUTING ---------- */
@@ -47,6 +57,7 @@ if ($method === 'GET') {
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar2 -------- */
@@ -62,6 +73,7 @@ if ($method === 'GET') {
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar3 -------- */
@@ -77,6 +89,7 @@ if ($method === 'GET') {
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar4 -------- */
@@ -92,6 +105,7 @@ if ($method === 'GET') {
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar5 -------- */
@@ -103,10 +117,11 @@ if ($method === 'GET') {
         'subTitle' => 'Número total de estudiantes matriculados en cada Grado',
         'xTitle' => 'Grados',
         'yTitle' => 'Cantidad de Estudiantes',
-        'type' => 'bar',
+        'type' => 'pie',
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar6 -------- */
@@ -118,10 +133,11 @@ if ($method === 'GET') {
         'subTitle' => 'Comparación del promedio general obtenido por cada grupo',
         'xTitle' => 'Grupos',
         'yTitle' => 'Promedio Académico',
-        'type' => 'bar',
+        'type' => 'bar', // o 'donut', o 'bar'
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar7 -------- */
@@ -129,14 +145,15 @@ if ($method === 'GET') {
       $data = Promedio_por_Grado($conexion);
 
       $chartData = [
-        'Title' => 'Total de Anotaciones por Estudiante',
-        'subTitle' => 'Cantidad total de observaciones registradas para cada estudiante',
-        'xTitle' => 'Estudiantes',
-        'yTitle' => 'Cantidad de Anotaciones',
-        'type' => 'bar',
+        'Title' => 'Promedio Académico por Grado',
+        'subTitle' => 'Comparación del promedio general obtenido por cada grado',
+        'xTitle' => 'Grados',
+        'yTitle' => 'Promedio Académico',
+        'type' => 'donut',
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
 
     /* -------- Listar8 -------- */
@@ -152,6 +169,7 @@ if ($method === 'GET') {
         'categories' => $data['categories'],
         'data' => $data['data']
       ];
+      $chartData = prepararChartData($chartData);
       break;
   }
 }

@@ -95,3 +95,16 @@ switch ($action) {
       break;
   }
 }
+if ($method === 'GET') {
+
+  switch ($action) {
+  /* -------- READ ANNOTATIONS BY STUDENT -------- */
+  case 'listarAnotaciones':
+    $IdObs = $_SESSION['Id_Session'];
+    $contador = 1;
+    $resultados = readAnnotation($conexion, $IdObs);
+    $anotacionesConsulta = $resultados['consultar'];
+    $totalFilas = $resultados['totalFilas'];
+  break;
+  }
+}
