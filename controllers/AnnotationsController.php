@@ -8,7 +8,7 @@ require_once(__DIR__ . "/../config/config.php");
 require_once(ROOT_PATH . "/models/AnnotationsModel.php");
 
 /* ---------- 2. ESTADO INICIAL ---------- */
-$Nombre = ''; $Apellido = ''; $DescFalta = ''; $TipoFalta ='';
+$Nombre = ''; $Apellido = ''; $DescFalta = ''; $TipoFalta =''; $idAnot =''; 
 $FecModif='';
 /* Variables de vista */
 $totalFilas = 0;
@@ -45,7 +45,7 @@ switch ($action) {
       $Nom_Prof = $_POST["Nom_Prof"];
       $EmailUser = $_POST["EmailUser"];
       if (createAnnotation($conexion, $nameTeacher, $IdObs, $tipoFalta, $descripcion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la anotacion #' . $IdObs];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se creo Correctamente la anotacion y se Envio el correo #' . $IdObs];
         require_once(__DIR__ . "/../views/reports/PhpMailer.php");
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $IdObs];
@@ -56,7 +56,7 @@ switch ($action) {
     /* -------- UPDATE -------- */
     case 'update':
       if (updateAnnotation($conexion, $nameTeacher, $idAnot, $tipoFalta, $descripcion)) {
-        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la anotacion y se Envio el correo#' . $idAnot];
+        $_SESSION['alerts'][] = ['type' => 'success', 'text' => 'Se actualizo Correctamente la anotacion#' . $idAnot];
       } else {
         $_SESSION['alerts'][] = ['type' => 'danger', 'text' => 'ERROR en la ejecucion #' . $idAnot];
       }

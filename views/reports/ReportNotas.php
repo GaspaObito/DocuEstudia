@@ -12,7 +12,7 @@ $result = $conexion->query("SELECT a.IdMateria, b.NomMateria,
     AVG(CASE WHEN Periodo = 4 THEN Nota END) AS P4
 FROM mt_notas a
 INNER JOIN mt_materias b ON a.IdMateria = b.IdMateria 
-WHERE a.IdObs = '$IdObs' GROUP BY a.IdMateria,b.NomMateria ORDER BY b.NomMateria;");
+WHERE a.IdObs = '$IdObs' AND Periodo <= '$IdPeriodo' GROUP BY a.IdMateria,b.NomMateria ORDER BY b.NomMateria;");
 
 $DatosTeacher = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.IdMateria,mm.NomMateria
    FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria
@@ -64,7 +64,7 @@ ob_start();
           <td><strong>Grupo:</strong> <?php echo $fila['IdGrupo'] ?></td>
         </tr>
         <tr>
-         
+
         </tr>
       </table>
     <?php } ?>
@@ -85,7 +85,33 @@ ob_start();
     </thead>
     <tbody>
       <?php while ($row = $result->fetch_assoc()):
-        $acumulado = ($row['P1'] + $row['P2'] + $row['P3'] + $row['P4']) / 4;
+        // Determinar cuántos periodos incluir
+        $periodoSeleccionado = (int) $IdPeriodo;
+
+        // Inicializar acumulado y contador
+        $sumNotas = 0;
+        $contador = 0;
+
+        // Sumar solo hasta el periodo elegido
+        if ($periodoSeleccionado >= 1 && $row['P1'] > 0) {
+          $sumNotas += $row['P1'];
+          $contador++;
+        }
+        if ($periodoSeleccionado >= 2 && $row['P2'] > 0) {
+          $sumNotas += $row['P2'];
+          $contador++;
+        }
+        if ($periodoSeleccionado >= 3 && $row['P3'] > 0) {
+          $sumNotas += $row['P3'];
+          $contador++;
+        }
+        if ($periodoSeleccionado >= 4 && $row['P4'] > 0) {
+          $sumNotas += $row['P4'];
+          $contador++;
+        }
+
+        // Calcular acumulado dinámico
+        $acumulado = $contador > 0 ? $sumNotas / $contador : 0;
         if ($acumulado >= 4.7) {
           $valoracion = 'Superior';
         } elseif ($acumulado >= 4.0) {

@@ -74,6 +74,7 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
               <th>Apellido</th>
               <th>Grado</th>
               <th>Grupo</th>
+              <th>Periodo</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -85,17 +86,23 @@ require_once(ROOT_PATH . "/controllers/StudentController.php");
                 <td><?php echo $extraido['Apellido'] ?></td>
                 <td><?php echo $extraido['NomGrado'] ?></td>
                 <td><?php echo $extraido['IdGrupo'] ?></td>
-                <td class="td_Actions">
-                  <!-- CHANGE ANNOTATION SCORE STUDENT -->
-                  <form action="<?php echo BASE_URL; ?>/views/reports/ReportNotas.php" method="post">
+                <form action="<?php echo BASE_URL; ?>/views/reports/ReportNotas.php" method="post">
+                  <td> <select name="Periodo" class="Input_Text">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                  </td>
+                  <td class="td_Actions">
                     <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
-                    <input type="hidden" name="action" >
+                    <input type="hidden" name="action">
                     <button class="custom-button" type="submit">
                       <svg class="navbar-icon" style="margin:0">
                         <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-FilePDF"></use>
                       </svg>
                     </button>
-                  </form>
+                </form>
                 </td>
               </tr>
             <?php } ?>

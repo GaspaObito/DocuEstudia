@@ -82,6 +82,7 @@ require_once(ROOT_PATH . "/controllers/AnnotationsController.php");
           <?php if ($_SESSION['rol'] == 2 || $_SESSION['rol'] == 3): ?>
             <div class="alinear-boton">
               <input type="hidden" name="action" value="<?php echo $isUpdate ? 'update' : 'create'; ?>">
+              <input type="hidden" name="NumIdAnnotation" value="<?php echo htmlspecialchars($idAnot); ?>">
               <button type="submit" name="SendAnnotation" class="boton"><i class="fa-solid fa-paper-plane"></i> ENVIAR ANOTACION</button>
             </div>
           <?php endif; ?>

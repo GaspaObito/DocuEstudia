@@ -19,8 +19,8 @@ require_once(ROOT_PATH . "/models/StudentInfoModel.php");
       <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NumDcto'] ?>">
     </div>
     <div class="usuario__campo">
-      <label>Asignatura:</label>
-      <input readonly class="Input_Text" type="text" value="<?php echo $extraido['NomMateria'] ?>">
+      <label>Tipo de jornada / carga horaria:</label>
+      <input readonly class="Input_Text" type="text" value="<?php echo $extraido['AreaProf'] ?>">
     </div>
     <div class="usuario__campo">
       <label>Email:</label>

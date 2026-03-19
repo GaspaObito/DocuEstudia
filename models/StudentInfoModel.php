@@ -10,6 +10,7 @@ if (isset($_POST['NumeroModificar'])) {
    $_SESSION['Id_Session'] = $_POST['NumeroModificar'];
 }
 $IdObs = $_SESSION['Id_Session']??0;
+$IdPeriodo = isset($_POST['Periodo']) ? intval($_POST['Periodo']) : 0;
 $Id_Profe = $_SESSION['user_id'];
 
 $datos = [];
@@ -43,6 +44,6 @@ $DatosHistorialEscolar = mysqli_query($conexion, "SELECT o.*, i.*, i.AnteriorEsc
    WHERE o.IdObs = '$IdObs'") or die("ERROR AL TRAER LOS DATOS");
 
 /* -------- DatosTeacher -------- */
-$DatosTeacher = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AsigAcadeProf,p.IdMateria,mm.NomMateria
+$DatosTeacher = mysqli_query($conexion, "SELECT CONCAT(Nombre, ' ', Apellido) AS NombreCompleto, u.*, i.NomImg,p.AreaProf,p.IdMateria,mm.NomMateria
    FROM usuarios u LEFT JOIN imagenes i ON i.IdImg = u.IdImg LEFT JOIN profesor p ON p.IdUser = u.IdUser LEFT JOIN mt_materias mm ON mm.IdMateria = p.IdMateria
    WHERE u.IdUser='$Id_Profe'") or die("ERROR AL TRAER LOS DATOS");

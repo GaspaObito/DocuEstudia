@@ -56,7 +56,7 @@
           <?php } ?>
 
           <?php if ($_SESSION['rol'] == 1) { ?>
-            <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php">Anotaciones</a>
+            <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsHistory.php?action=listarAnotaciones">Anotaciones</a>
           <?php } ?>
 
           <form action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="POST">

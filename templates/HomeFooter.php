@@ -9,10 +9,10 @@
     <div class="footer-menu">
       <?php
       if (isset( $_SESSION['user_id'])) { ?>
-        <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
-        <a href="<?php echo BASE_URL; ?>/EscanearCodigos.php">Acerca de</a>
+          <a href="<?php echo BASE_URL; ?>/index.php">Inicio</a>
+          <a href="#">Acerca de</a>
         <?php if (($_SESSION['rol'] == 2)) { ?>
-          <a href="<?php echo BASE_URL; ?>/controllers/teacher/AnnotationsSearch.php">Observadores</a>
+          <a href="<?php echo BASE_URL; ?>/views/teacher/AnnotationsSearch.php">Observadores</a>
         <?php } ?>
         <?php if ($_SESSION['rol'] == 3) { ?>
           <a href="<?php echo BASE_URL; ?>/controllers/admin/ManageUsers.php?action=listar">Maestros</a>
@@ -41,5 +41,8 @@
     <a href="https://github.com/GaspaObito/DocuEstudia"> Observador</a>
   </p>
 </footer>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

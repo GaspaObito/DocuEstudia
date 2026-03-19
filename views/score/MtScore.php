@@ -140,6 +140,7 @@ require_once(ROOT_PATH . "/controllers/ScoreController.php");
               </form>
               <form action="<?php echo BASE_URL; ?>/views/forms/ManageScore.php" method="post">
                 <input type="hidden" name="NumIdScore" value="<?php echo $extraido['IdNota']; ?>">
+                 <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdObs'] ?>">
                 <input type="hidden" name="action" value="readScore">
                 <button type="submit" class="custom-button">
                   <svg class="navbar-icon" style="margin:0">
