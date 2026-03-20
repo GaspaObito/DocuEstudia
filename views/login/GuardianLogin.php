@@ -3,25 +3,27 @@ define("PAGE_CSS", "Login");
 require_once(__DIR__ . "/../../config/config.php");
 require_once(ROOT_PATH . "/templates/HomeHeader.php");
 ?>
-<main class="ContainerGeneral">
+<main class="ContainerGeneral" style="padding: 0;">
   <div class="bienvenido">
     <div class="bienvenido__login">
-      <h1 id="TitleStart"><i class="fa-solid fa-lock"></i> INICIAR SESION</h1>
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 4rem;">
+        <i id="TitleStart" class="fa-solid fa-lock fa-4x"></i>
+        <h1></i> INICIAR SESION</h1>
+      </div>
       <br>
       <form class="Form_Acudiente" action="<?php echo BASE_URL; ?>/models/auth/UserAuth.php" method="post">
         <div>
           <label>Correo Electronico</label>
-          <div class="contacto">
-            <i class="fa-solid fa-user fa-2x"></i>
-            <input class="Input_Text" type="text" name="Correo" placeholder="E-mail">
+          <div class="input-group">
+            <input class="Input_Text" type="text" name="Correo" placeholder="Digite Email">
+            <i class="fa-solid fa-envelope"></i>
           </div>
         </div>
         <div>
-          <label>Constraseña</label>
-          <div class="contacto">
-            <i class="fa-solid fa-key fa-2x"></i>
-            <input class="Input_Text" type="password" name="Contrasena" placeholder="Constraseña" id="ShowPassW">
-            <i><input class="ShowPass" type="checkbox" onclick="ShowPassword()"></i>
+          <label>Contraseña</label>
+          <div class="input-group">
+            <input class="Input_Text" type="password" name="Contrasena" placeholder="Digite Clave" id="ShowPassW">
+            <i class="fa-solid fa-eye toggle-eye" onclick="ShowPassword()"></i>
           </div>
         </div>
         <!-- ALERTAS -->
@@ -31,10 +33,10 @@ require_once(ROOT_PATH . "/templates/HomeHeader.php");
         </div>
       </form>
     </div>
-    <div class="bienvenido__login BannerStudent">
-      <h1 id="TitleStart" style="margin-bottom: 5rem;">ESTUDIANTE</h1>
-      <div style="color:white">
-        <h2 id="TitleStart">Contactenos</h2>
+    <div class="bienvenido__login BannerStudent" style="color:white;">
+      <h1 style="display: flex;margin: 8.5rem 0 18.5rem 0;justify-content: center;">ESTUDIANTE</h1>
+      <div>
+        <h2>Contactenos</h2>
         <div class="contacto">
           <i class="fa-solid fa-phone fa-2x"></i>
           <label>(+57) 359 876 6548</label>

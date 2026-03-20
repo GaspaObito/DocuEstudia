@@ -1,4 +1,5 @@
 /*INICIA Bloque InicioSesion Para PROFESOR ADMIN*/
+
 .bienvenido {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -31,6 +32,20 @@
   margin: -17px;
   margin-top: -6px;
   position: relative;
+}
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 1.5rem 0 1.5rem 0;
+}
+
+.input-group i {
+  position: absolute;
+  right: 10px; /* ícono a la derecha */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  cursor: pointer;
 }
 /*FINALIZA Bloque InicioSesion Para PROFESOR ADMIN*/
 
