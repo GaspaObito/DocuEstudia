@@ -101,8 +101,8 @@ require_once(ROOT_PATH . "/controllers/TeacherController.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php?action=crear">
-      <button class="boton"><i class="fa-solid fa-plus"></i> AÑADIR PROFESOR</button>
+    <a class="boton" href="<?php echo BASE_URL; ?>/views/forms/ManageTeacher.php?action=crear">
+      <i class="fa-solid fa-plus"></i> AÑADIR PROFESOR
     </a>
     <button class="boton" onclick="exportarExcel()">
       <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX

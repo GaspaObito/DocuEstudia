@@ -8,13 +8,17 @@
    BUTTON GLOBAL
 ========================================= */
 /*Boton General*/
+  
 .boton {
-  padding: 1.2rem 5.5rem 1.5rem 5.2rem;
+  display: block;
+  padding: 1.5rem;
+  text-align: center;
   background: var(--Color_Button);
   box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.11),0px 2px 4px -1px rgba(0, 0, 0, 0.07);
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
   transition: 0.3s ease;
   color: var(--blanco);
 }
@@ -116,14 +120,15 @@ input,textarea,select.Input_Text {
 }
 .formulario__campos1 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  list-style: none;
+  margin: 2rem 0;
 }
-.list_Reports a{
-  margin: 0 4rem 0 4rem;
-  text-decoration: none;
-  text-align: center;
+.formulario > fieldset > .formulario__campos1 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 /*Imagen Modificar*/
 .imagenChange {

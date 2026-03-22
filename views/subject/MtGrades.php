@@ -53,9 +53,10 @@ require_once(ROOT_PATH . "/controllers/Group_GradeController.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php">
-      <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> AÑADIR GRUPO</button>
+    <a class="boton" href="<?php echo BASE_URL; ?>/views/forms/ManageGrades.php">
+      <i class="fa-solid fa-plus"></i> AÑADIR GRADO</button>
     </a>
+    
     <button class="boton" onclick="exportarExcel()">
       <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
     </button>

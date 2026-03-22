@@ -6,17 +6,20 @@ require_once(ROOT_PATH . "/controllers/DashboardController.php");
 ?>
 <main class="ContainerGeneral">
   
-  <h1 id="TitleStart">DASHBOARDS <i class="fa-solid fa-chart-line"></i></h1>
-  <ul class="formulario__campos1 list_Reports">
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar1">Promedio por Materia</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar2">Promedio por Estudiante</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar3">Evolucion por Periodo</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar4">Estudiantes en Riesgo</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar5">Total estudiantes por Grado</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar6">Promedio por Grupo</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar7">Promedio por Grado</a>
-    <a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar8">Total Anotaciones por Estudiante</a>
+<h1 id="TitleStart">DASHBOARDS <i class="fa-solid fa-chart-line"></i></h1>
+<fieldset>
+
+  <ul class="formulario__campos1">
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar1">Promedio por Materia</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar2">Promedio por Estudiante</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar3">Evolución por Periodo</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar4">Estudiantes en Riesgo</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar5">Total estudiantes por Grado</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar6">Promedio por Grupo</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar7">Promedio por Grado</a></li>
+    <li><a class="boton" href="<?php echo BASE_URL; ?>/views/reports/DashboardGeneral.php?action=Listar8">Total Anotaciones por Estudiante</a></li>
   </ul>
+</fieldset>
   <!-- 1. Línea — (Ventas y Compras) -->
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 

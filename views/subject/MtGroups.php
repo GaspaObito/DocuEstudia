@@ -32,7 +32,8 @@ require_once(ROOT_PATH . "/controllers/Group_GradeController.php");
                 <form action="<?php echo BASE_URL; ?>/controllers/Group_GradeController.php" method="post">
                   <input type="hidden" name="NumeroModificar" value="<?php echo $extraido['IdGrupo']; ?>">
                   <input type="hidden" name="action" value="deleteGroup">
-                  <button type="submit" class="custom-button" onclick="return confirm('¿Está seguro de eliminar este grupo?')">
+                  <button type="submit" class="custom-button"
+                    onclick="return confirm('¿Está seguro de eliminar este grupo?')">
                     <svg class="navbar-icon" style="margin:0">
                       <use href="<?php echo BASE_URL; ?>/assets/images/svg/Sprite.svg#icon-trash"></use>
                     </svg>
@@ -55,8 +56,8 @@ require_once(ROOT_PATH . "/controllers/Group_GradeController.php");
     </div>
   </div>
   <div class="alinear-boton">
-    <a href="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php">
-      <button class="boton" type="submit"><i class="fa-solid fa-plus"></i> AÑADIR GRUPO</button>
+    <a class="boton" href="<?php echo BASE_URL; ?>/views/forms/ManageGroups.php">
+      <i class="fa-solid fa-plus"></i> AÑADIR GRUPO
     </a>
     <button class="boton" onclick="exportarExcel()">
       <i class="fa-solid fa-file-excel"></i> EXPORTAR XLSX
