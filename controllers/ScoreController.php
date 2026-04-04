@@ -22,8 +22,8 @@ if (isset($_POST['NumIdScore']) ) {
 /* ---------- 3. HELPERS ---------- */
 function goToScoreList()
 {
-  if ($_SESSION['IdRol'] == 2) { // Profesor
-    redirectTo("/views/score/ScoreHistory.php");
+  if ($_SESSION['rol'] == 2) { // Profesor
+    redirectTo("/views/forms/ManageScore.php");
   } else { // Admin
     redirectTo("/views/score/MtScore.php?action=listar");
   }

@@ -11,8 +11,8 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
     define("DB_PASS", "");
     define("DB_NAME", "docuestudia");
 } else {
-    // 🌍 Configuración PRODUCCIÓN (ej: InfinityFree)
-    define("BASE_URL", "https://fiction-controversy-gene-kevin.trycloudflare.com/DocuEstudia");
+    // 🌍 Configuración PRODUCCIÓN command: cloudflared --url http://localhost
+    define("BASE_URL", "https://signal-colorado-bottles-spa.trycloudflare.com/DocuEstudia");
     define("ROOT_PATH", $_SERVER['DOCUMENT_ROOT'] . "/DocuEstudia");
 
     define("DB_HOST", "sql123.epizy.com"); // Lo da el hosting
